@@ -37,9 +37,15 @@ public class Assert {
         System.out.println(green + "Test passed!" + reset);
     }
 
-
-
     public static void assertEquals(Object expected, Object actual) throws ComparisonFailure {
         assertEquals((String)null, (Object)expected, (Object)actual);
+    }
+
+    public static void assertEqual(String message, Object expected, Object actual) {
+        try {
+            assertEquals(message, expected, actual);
+        } catch (ComparisonFailure e) {
+            e.message();
+        }
     }
 }
