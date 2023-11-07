@@ -31,7 +31,7 @@ public class Main extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon originalIcon = new ImageIcon("poc/interface/sprite_personnage.png");
+                ImageIcon originalIcon = new ImageIcon("ressources/interface/sprite_personnage.png");
                 Image img = originalIcon.getImage();
                 g.drawImage(img, imageX, imageY, imageWidth, imageHeight, null);
             }
