@@ -10,7 +10,7 @@ public class TestsFighter {
     @Test
     public void getHp_shouldReturnTheActualHp() {
         // arange
-        int expected = 3;
+        int expected = 100;
         Warrior fighter = new Warrior("Philippe", Type.FIRE);
 
         // act
@@ -20,14 +20,14 @@ public class TestsFighter {
         try {
             Assert.assertEquals("An error occured for method getHp!", expected, result);
         } catch (ComparisonFailure e) {
-            e.getMessage();
+            e.message();
         }
     }
 
     @Test
     public void getDefense_shouldReturnTheFighterDefense() {
         // arange
-        int expected = 9;
+        int expected = 100;
         Warrior fighter = new Warrior("Gwendal", Type.AIR);
 
         // act
@@ -37,7 +37,7 @@ public class TestsFighter {
         try {
             Assert.assertEquals("An error occured for method getDefense!", expected, result);
         } catch (ComparisonFailure e) {
-            e.getMessage();
+            e.message();
         }
 
     }

@@ -1,6 +1,9 @@
 package tests;
 
 public class Assert {
+    private static final String green = "\u001B[32m";
+    private static final String reset = "\u001B[0m";
+
     protected Assert() {
     }
 
@@ -21,6 +24,9 @@ public class Assert {
             if (expected instanceof String && actual instanceof String) {
                 String cleanMessage = message == null ? "" : message;
                 throw new ComparisonFailure(cleanMessage, (String)expected, (String)actual);
+            } else if (expected instanceof Integer && actual instanceof Integer) {
+                String cleanMessage = message == null ? "" : message;
+                throw new ComparisonFailure(cleanMessage, (Integer)expected, (Integer)actual);
             } else {
                 String expectedString = String.valueOf(expected);
                 String actualString = String.valueOf(actual);
@@ -28,7 +34,10 @@ public class Assert {
                 throw new ComparisonFailure(cleanMessage, expectedString, actualString);
             }
         }
+        System.out.println(green + "Test passed!" + reset);
     }
+
+
 
     public static void assertEquals(Object expected, Object actual) throws ComparisonFailure {
         assertEquals((String)null, (Object)expected, (Object)actual);

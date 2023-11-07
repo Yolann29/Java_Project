@@ -19,6 +19,7 @@ public abstract class Fighter {
         this.type = type;
         this.name = name;
         this.hp = 100;
+        this.defense = 100;
         this.items = new ArrayList<>();
     }
 
