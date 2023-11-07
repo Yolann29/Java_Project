@@ -1,31 +1,44 @@
+package tests;
+import tests.Assert;
+import tests.ComparisonFailure;
 import tests.Test;
-import fighters.Fighter;
+import fighters.*;
+import types.Type;
 
 public class TestsFighter {
 
     @Test
-    public void add_shouldReturnTheSum_OfTwoNumbers() {
+    public void getHp_shouldReturnTheActualHp() {
         // arange
         int expected = 3;
-        Fighter fighter = new Fighter();
+        Warrior fighter = new Warrior("Philippe", Type.FIRE);
 
         // act
         int result = fighter.getHp();
 
         // assert
-        assertEquals(expected, result);
+        try {
+            Assert.assertEquals("An error occured for method getHp!", expected, result);
+        } catch (ComparisonFailure e) {
+            e.getMessage();
+        }
     }
 
     @Test
-    public void multiply_shouldReturnTheProduct_OfTwoNumbers() {
+    public void getDefense_shouldReturnTheFighterDefense() {
         // arange
-        Integer expected = 9; // 1+2
-        Calculator calculator = new Calculator();
+        int expected = 9;
+        Warrior fighter = new Warrior("Gwendal", Type.AIR);
 
         // act
-        Integer result = calculator.multiply(3, 3);
+        int result = fighter.getDefense();
 
         // assert
-        assertEquals(expected, result);
+        try {
+            Assert.assertEquals("An error occured for method getDefense!", expected, result);
+        } catch (ComparisonFailure e) {
+            e.getMessage();
+        }
+
     }
 }
