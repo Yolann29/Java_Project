@@ -1,0 +1,6 @@
+Voici les idées pour aller plus loin:
+
+- Les dégats de l'arme peuvent varier en fonction de son type, du type de l'ennemi et du type du porteur
+Par exemple, une arme eau fera plus de dégats sur un ennemi eau. Mais dans le cas ou le porteur de l'arme feu
+est un combattant de type eau, les dégats de l'arme seront normal.
+- L'arme peut être porté seulement si le combattant à le niveau adéquat.
