@@ -8,4 +8,8 @@ public abstract class Weapon {
     protected int damage;
     protected int level;
     protected Attack[] attacks;
+
+    public String getName() {
+        return name;
+    }
 }

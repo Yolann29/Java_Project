@@ -26,7 +26,7 @@ public abstract class Fighter {
     public void pickWeapon(Weapon weapon) {
         if (this.weapon == null) {
             this.weapon = weapon;
-            System.out.println(String.format("%s pick %s", this.name));
+            System.out.printf("%s pick %s%n", this.name, weapon.getName());
         }
     }
 
