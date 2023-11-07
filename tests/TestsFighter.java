@@ -4,6 +4,7 @@ import tests.ComparisonFailure;
 import tests.Test;
 import fighters.*;
 import types.Type;
+import weapons.*;
 
 public class TestsFighter {
 
@@ -57,5 +58,21 @@ public class TestsFighter {
 
         // assert
         Assert.assertEqual("An error occured for method getName empty!", expected, result);
+    }
+
+    @Test(enabled = true)
+    public void getWeapon_shouldReturnTheFighterWeapon() {
+        // arange
+        Warrior fighter = new Warrior("Gwendal", Type.AIR);
+        Sword sword = new Sword();
+
+        // act
+        Weapon result1 = fighter.getWeapon();
+        fighter.pickWeapon(sword);
+        Weapon result2 = fighter.getWeapon();
+
+        // assert
+        Assert.assertEqual("An error occured for method getWeapon null!", null, result1);
+        Assert.assertEqual("An error occured for method getWeapon!", sword, result2);
     }
 }

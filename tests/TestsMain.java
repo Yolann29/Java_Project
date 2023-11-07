@@ -7,9 +7,9 @@ public class TestsMain {
         TestsFighter testsFighter = new TestsFighter();
         Method[] methods = testsFighter.getClass().getDeclaredMethods();
         for (Method method : methods) {
-            Test testAnnotation = method.getAnnotation(Test.class);
+            Test test = method.getAnnotation(Test.class);
 
-            if (testAnnotation.enabled()) {
+            if (test.enabled()) {
                 try {
                     method.invoke(testsFighter.getClass().getDeclaredConstructor().newInstance());
                 } catch (Exception e) {
