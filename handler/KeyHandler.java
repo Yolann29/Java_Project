@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
+
+    public boolean top, bottom, right, left;
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -14,19 +17,19 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         if(code == KeyEvent.VK_UP){
-            System.out.println("touche up pressed");
+            top = true;
         }
 
         if(code == KeyEvent.VK_DOWN){
-            System.out.println("touche down pressed");
+            bottom = true;
         }
 
         if(code == KeyEvent.VK_RIGHT){
-            System.out.println("touche right pressed");
+            right = true;
         }
 
         if(code == KeyEvent.VK_LEFT){
-            System.out.println("touche left pressed");
+            left = true;
         }
 
     }
@@ -36,19 +39,19 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         if(code == KeyEvent.VK_UP){
-            System.out.println("touche up released");
+            top = false;
         }
 
         if(code == KeyEvent.VK_DOWN){
-            System.out.println("touche down released");
+            bottom = false;
         }
 
         if(code == KeyEvent.VK_RIGHT){
-            System.out.println("touche right released");
+            right = false;
         }
 
         if(code == KeyEvent.VK_LEFT){
-            System.out.println("touche left released");
+            left = false;
         }
 
     }

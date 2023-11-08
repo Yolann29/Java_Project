@@ -1,25 +1,36 @@
 package views;
 
+import handler.KeyHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class GamePanel extends JPanel implements Runnable, KeyListener {
+public class GamePanel extends JPanel implements Runnable {
 
-    public static int FRAME_WIDTH = 650;
-    public static int FRAME_HEIGHT = 600;
-    public static int MAX_FPS = 60;
-    private boolean top, bottom, right, left;
+    final public static int FRAME_WIDTH = 650;
+    final public static int FRAME_HEIGHT = 600;
+    final public static int MAX_FPS = 60;
+
+    private int characterPositionX = 100;
+    private int characterPositionY = 100;
+
+    //TEMPORAIRE POUR FOLLOWUP
+    private double tempCharacterPositionX = 300;
+    private long startTime = System.currentTimeMillis();
+
+    private final int velocity = 10;
 
     Thread gameLoop = null;
+    KeyHandler keyHandler = new KeyHandler();
 
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setBackground(Color.GRAY);
         this.setDoubleBuffered(true);
-        this.addKeyListener(this);
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
 
     }
 
@@ -54,54 +65,34 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void update(){
 
+        long currentTime = System.currentTimeMillis();
+        double elapsedTime = (currentTime - startTime) / 1000.0; // Convertir en secondes
+
+        // Utiliser sin pour obtenir une position douce de droite à gauche
+        tempCharacterPositionX = Math.sin(elapsedTime) * 100 + 300;
+
+        System.out.println(tempCharacterPositionX);
+
+
+       if(keyHandler.top){
+           characterPositionY = characterPositionY - velocity;
+       } else if (keyHandler.right){
+           characterPositionX = characterPositionX + velocity;
+       } else if (keyHandler.left){
+           characterPositionX = characterPositionX - velocity;
+       } else if (keyHandler.bottom){
+           characterPositionY = characterPositionY + velocity;
+       }
+
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
+        g.setColor(Color.red);
+        g.fillRect((int) tempCharacterPositionX, 0, 100, 50);
+        g.setColor(Color.blue);
+        g.fillRect(characterPositionX, characterPositionY, 50, 50);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_A){
-            top = true;
-            System.out.println(top);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            bottom = true;
-            System.out.println(bottom);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            right = true;
-            System.out.println(right);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            left = true;
-            System.out.println(left);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_UP){
-            top = false;
-            System.out.println(top);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            bottom = false;
-            System.out.println(bottom);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            right = false;
-            System.out.println(right);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            left = false;
-            System.out.println(left);
-        }
-    }
 }
