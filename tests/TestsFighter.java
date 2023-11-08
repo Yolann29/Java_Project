@@ -22,7 +22,7 @@ public class TestsFighter {
     public void getDefense_shouldReturnTheFighterDefense() {
         // arange
         int expected = 100;
-        Warrior fighter = new Warrior("Gwendal", Type.AIR);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
 
         // act
         int result = fighter.getDefense();
@@ -35,7 +35,7 @@ public class TestsFighter {
     public void getName_shouldReturnTheFighterName() {
         // arange
         String expected = "Gwendal";
-        Warrior fighter = new Warrior("Gwendal", Type.AIR);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
 
         // act
         String result = fighter.getName();
@@ -48,7 +48,7 @@ public class TestsFighter {
     public void getName_shouldReturnTheFighterNameEmpty() {
         // arange
         String expected = "";
-        Warrior fighter = new Warrior("", Type.AIR);
+        Warrior fighter = new Warrior("", Type.PLANT);
 
         // act
         String result = fighter.getName();
@@ -60,7 +60,7 @@ public class TestsFighter {
     @Test(enabled = true)
     public void getWeapon_shouldReturnTheFighterWeapon() {
         // arange
-        Warrior fighter = new Warrior("Gwendal", Type.AIR);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
         FireSword sword = new FireSword();
 
         // act
