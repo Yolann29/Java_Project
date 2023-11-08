@@ -2,7 +2,6 @@ package controller;
 
 import models.fighters.Fighter;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Arena {

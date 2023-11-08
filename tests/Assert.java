@@ -1,4 +1,3 @@
-package tests;
 
 public class Assert {
     private static final String green = "\u001B[32m";
