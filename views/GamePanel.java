@@ -1,17 +1,15 @@
 package views;
 
-import handler.KeyHandler;
+import controller.handler.KeyHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements Runnable {
 
     final public static int FRAME_WIDTH = 650;
     final public static int FRAME_HEIGHT = 600;
     final public static int MAX_FPS = 60;
-
     private int characterPositionX = 100;
     private int characterPositionY = 100;
 
