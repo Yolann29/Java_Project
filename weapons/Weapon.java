@@ -1,6 +1,6 @@
 package weapons;
 import types.Type;
-import attacks.Attack;
+import weapons.attacks.Attack;
 
 public abstract class Weapon {
     protected String name;
