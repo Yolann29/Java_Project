@@ -20,6 +20,6 @@ public class ComparisonFailure extends Exception {
     }
 
     public void message() {
-        System.out.println(red + this.getMessage() + reset);
+        Output.writeOutput(red + this.getMessage() + reset);
     }
 }

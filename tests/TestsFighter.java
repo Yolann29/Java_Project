@@ -15,7 +15,7 @@ public class TestsFighter {
         int result = fighter.getHp();
 
         // assert
-        Assert.assertEqual("An error occured for method getHp!", expected, result);
+        Assert.assertEqual("An error occured for method getHp (Test1)!", expected, result);
     }
 
     @Test(enabled = true)
@@ -28,7 +28,7 @@ public class TestsFighter {
         int result = fighter.getDefense();
 
         // assert
-        Assert.assertEqual("An error occured for method getDefense!", expected, result);
+        Assert.assertEqual("An error occured for method getDefense Test2)!", expected, result);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class TestsFighter {
         String result = fighter.getName();
 
         // assert
-        Assert.assertEqual("An error occured for method getName!", expected, result);
+        Assert.assertEqual("An error occured for method getName Test3)!", expected, result);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class TestsFighter {
         String result = fighter.getName();
 
         // assert
-        Assert.assertEqual("An error occured for method getName empty!", expected, result);
+        Assert.assertEqual("An error occured for method getName empty (Test4)!", expected, result);
     }
 
     @Test(enabled = true)
@@ -69,7 +69,43 @@ public class TestsFighter {
         Weapon result2 = fighter.getWeapon();
 
         // assert
-        Assert.assertEqual("An error occured for method getWeapon null!", null, result1);
-        Assert.assertEqual("An error occured for method getWeapon!", sword, result2);
+        Assert.assertEqual("An error occured for method getWeapon null (Test5)!", null, result1);
+        Assert.assertEqual("An error occured for method getWeapon (Test6)!", sword, result2);
+    }
+
+    @Test(enabled = true)
+    public void getWeapon_shouldReturnTheFighterWeaponReplaced() {
+        // arange
+        Warrior fighter = new Warrior("Gwendal", Type.AIR);
+        FireSword firesword = new FireSword();
+        IceSword icesword = new IceSword();
+
+        // act
+        fighter.pickWeapon(icesword);
+        Weapon result1 = fighter.getWeapon();
+        fighter.pickWeapon(firesword);
+        Weapon result2 = fighter.getWeapon();
+
+        // assert
+        Assert.assertEqual("An error occured for method getWeapon (Test7)!", icesword, result1);
+        Assert.assertEqual("An error occured for method getWeapon (Test8)!", firesword, result2);
+    }
+
+    @Test(enabled = true)
+    public void attack_shouldRemoveTheRightHp() {
+        // arange
+        Warrior fighterOffense = new Warrior("Gwendal", Type.AIR);
+        Warrior fighterDefense = new Warrior("Arthur", Type.FIRE);
+        FireSword firesword = new FireSword();
+        IceSword icesword = new IceSword();
+
+        // act
+        fighterOffense.pickWeapon(icesword);
+        fighterDefense.pickWeapon(firesword);
+        //fighterOffense.attack(fighterDefense);
+
+        // assert
+        //Assert.assertEqual("An error occured for method getWeapon (Test7)!", icesword, result1);
+        //Assert.assertEqual("An error occured for method getWeapon (Test8)!", firesword, result2);
     }
 }
