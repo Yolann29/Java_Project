@@ -1,4 +1,4 @@
-package types;
+package models.types;
 
 public enum Type {
     FIRE,

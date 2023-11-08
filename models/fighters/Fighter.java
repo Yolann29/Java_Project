@@ -1,7 +1,7 @@
-package fighters;
-import types.Type;
-import weapons.Weapon;
-import items.Item;
+package models.fighters;
+import models.types.Type;
+import models.weapons.Weapon;
+import models.items.Item;
 
 import java.util.ArrayList;
 

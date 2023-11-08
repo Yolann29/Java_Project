@@ -1,7 +1,7 @@
 package tests;
-import fighters.*;
-import types.Type;
-import weapons.*;
+import models.fighters.*;
+import models.types.Type;
+import models.weapons.*;
 
 public class TestsFighter {
 
@@ -61,7 +61,7 @@ public class TestsFighter {
     public void getWeapon_shouldReturnTheFighterWeapon() {
         // arange
         Warrior fighter = new Warrior("Gwendal", Type.AIR);
-        Sword sword = new Sword();
+        FireSword sword = new FireSword();
 
         // act
         Weapon result1 = fighter.getWeapon();
