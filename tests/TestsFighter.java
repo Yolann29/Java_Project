@@ -1,4 +1,3 @@
-package tests;
 import models.fighters.*;
 import models.types.Type;
 import models.weapons.*;
