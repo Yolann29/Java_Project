@@ -24,10 +24,13 @@ public abstract class Fighter {
     }
 
     public void pickWeapon(Weapon weapon) {
-        if (this.weapon == null) {
-            this.weapon = weapon;
-            System.out.printf("%s pick %s%n", this.name, weapon.getName());
+        if(this.weapon == null){
+            System.out.println(String.format("%s picked %s", this.name, weapon.getName()));
+        } else {
+            System.out.println(String.format("%s replaced his %s by %s", this.name, this.weapon.getName(), weapon.getName()));
         }
+        this.weapon = weapon;
+
     }
 
     public String getName() {
