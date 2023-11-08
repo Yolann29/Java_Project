@@ -1,5 +1,5 @@
 package fighters;
-import types.Type;
+import fighters.types.Type;
 
 public class Warrior extends Fighter {
     public Warrior(String name, Type type) {

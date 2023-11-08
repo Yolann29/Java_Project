@@ -1,10 +1,7 @@
 package tests;
-import tests.Assert;
-import tests.ComparisonFailure;
-import tests.Test;
 import fighters.*;
-import types.Type;
-import weapons.*;
+import fighters.types.Type;
+import fighters.weapons.*;
 
 public class TestsFighter {
 

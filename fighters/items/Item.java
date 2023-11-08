@@ -1,4 +1,4 @@
-package items;
+package fighters.items;
 
 public abstract class Item {
 }

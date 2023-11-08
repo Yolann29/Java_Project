@@ -1,4 +1,4 @@
-package types;
+package fighters.types;
 
 public enum Type {
     FIRE,
