@@ -31,7 +31,7 @@ public abstract class Fighter {
     }
 
     public boolean canAttack(Fighter fighter) {
-        return true;
+        return this.getHp() != 0;
     }
 
 
