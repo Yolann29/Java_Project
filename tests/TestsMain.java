@@ -1,5 +1,3 @@
-package tests;
-
 import java.lang.reflect.Method;
 
 public class TestsMain {

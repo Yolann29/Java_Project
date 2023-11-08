@@ -1,4 +1,3 @@
-package tests;
 import fighters.*;
 import fighters.types.Type;
 import fighters.weapons.*;

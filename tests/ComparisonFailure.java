@@ -1,7 +1,3 @@
-package tests;
-
-import java.io.PrintStream;
-
 public class ComparisonFailure extends Exception {
     private Object expected;
     private Object actual;

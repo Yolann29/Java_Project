@@ -30,6 +30,11 @@ public abstract class Fighter {
         }
     }
 
+    public boolean canAttack(Fighter fighter) {
+        return true;
+    }
+
+
     public String getName() {
         return name;
     }
