@@ -2,8 +2,10 @@ package models.fighters;
 import models.types.Type;
 import models.weapons.Weapon;
 import models.items.Item;
+import models.weapons.attacks.Attack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Fighter {
     protected String name;
@@ -33,6 +35,49 @@ public abstract class Fighter {
 
     }
 
+    public void pickItem(Item item){
+        this.items.add(item);
+        System.out.println(String.format("%s picked %s", this.name, item.getName()));
+    }
+
+    public void pickItems(List<Item> items){
+        for (Item item : items) {
+            this.pickItem(item);
+        }
+    }
+
+    public Item item(int index){
+        if(index >= this.items.size()){
+            return null;
+        }
+        return this.items.get(index);
+    }
+
+    public void useItem(int index){
+        Item item = this.item(index);
+
+        if(item.getName().equalsIgnoreCase("Heal Potion")){
+            this.hp = Math.min(100, this.hp + item.getHeal());
+            System.out.println(String.format("%s used %s and healed %d hp", this.name, item.getName(), item.getHeal()));
+            this.getItems().remove(index);
+        } else if(item.getName().equalsIgnoreCase("Damage Booster")){
+            this.weapon.boostDamage(item.getDamage());
+            System.out.println(String.format("%s used %s and boosted his weapon damage by %d", this.name, item.getName(), item.getDamage()));
+            this.getItems().remove(index);
+        }
+    }
+
+    public boolean attack(Fighter target, Attack attack){
+        target.takeDamage(this.weapon.getDamage() + attack.getDamage());
+        return true;
+
+    }
+
+    public void takeDamage(int damage){
+        this.hp = Math.max(0, this.hp - damage);
+    }
+
+
     public String getName() {
         return name;
     }
@@ -56,6 +101,7 @@ public abstract class Fighter {
     public ArrayList<Item> getItems() {
         return items;
     }
+
 
     public int getLevel() {
         return level;

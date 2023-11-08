@@ -9,13 +9,19 @@ public abstract class Weapon {
     protected int damage;
     protected int level;
     protected Attack[] attacks;
+    protected Attack currentAttack;
 
-    public Weapon(String name, Type type, int damage, int level, Attack[] attacks) {
+    public Weapon(String name, Type type, int damage, int level) {
         this.name = name;
         this.type = type;
         this.damage = damage;
         this.level = level;
-        this.attacks = attacks;
+        this.attacks = new Attack[4];
+    }
+
+
+    public void boostDamage(int damage){
+        this.damage += damage;
     }
 
     public String getName() {
@@ -36,9 +42,5 @@ public abstract class Weapon {
 
     public Attack[] getAttacks() {
         return attacks;
-    }
-
-    public void attack(Fighter fighter){
-        //TODO: implement attack
     }
 }
