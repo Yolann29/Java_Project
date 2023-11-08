@@ -7,7 +7,6 @@ public class KeyHandler implements KeyListener {
 
     public boolean top, bottom, right, left;
 
-    @Override
     public void keyTyped(KeyEvent e) {
 
     }
@@ -52,6 +51,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_LEFT){
             left = false;
+
         }
 
     }
