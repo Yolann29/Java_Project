@@ -1,9 +1,14 @@
 package views;
 
 import controller.handler.KeyHandler;
+import views.dialog.DialogActions;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -21,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameLoop = null;
     KeyHandler keyHandler = new KeyHandler();
+    BufferedImage image;
 
     public GamePanel() {
 
@@ -30,7 +36,21 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+        loadRessources();
 
+        DialogActions da = new DialogActions();
+        this.add(da);
+
+
+    }
+
+    public void loadRessources(){
+
+        try{
+            image = ImageIO.read(new File("ressources/interface/sprite_personnage.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -68,10 +88,9 @@ public class GamePanel extends JPanel implements Runnable {
         long currentTime = System.currentTimeMillis();
         double elapsedTime = (currentTime - startTime) / 1000.0; // Convertir en secondes
 
-        // Utiliser sin pour obtenir une position douce de droite à gauche
         tempCharacterPositionX = Math.sin(elapsedTime) * 100 + 300;
 
-        System.out.println(tempCharacterPositionX);
+//        System.out.println(tempCharacterPositionX);
 
 
        if(keyHandler.top){
@@ -92,7 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.setColor(Color.red);
         g.fillRect((int) tempCharacterPositionX, 0, 100, 50);
         g.setColor(Color.blue);
-        g.fillRect(characterPositionX, characterPositionY, 50, 50);
+        g.drawImage(image, characterPositionX, characterPositionY, 100, 190, null);
     }
 
 }
