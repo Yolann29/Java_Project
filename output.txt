@@ -1,0 +1,11 @@
+Tests Fighter
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+<span style="color: green;">Test passed!</span>
+Tests Weapon
+<span style="color: green;">Test passed!</span>

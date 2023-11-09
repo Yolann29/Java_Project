@@ -34,7 +34,7 @@ public class Assert {
                 throw new ComparisonFailure(cleanMessage, expectedString, actualString);
             }
         }
-        Output.writeOutput(green + "Test passed!" + reset);
+        Output.update("<span style=\"color: green;\">Test passed!</span>");
     }
 
     public static void assertEquals(Object expected, Object actual) throws ComparisonFailure {
