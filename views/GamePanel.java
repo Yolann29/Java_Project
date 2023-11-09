@@ -1,6 +1,7 @@
 package views;
 
 import controller.Arena;
+import controller.entities.Player;
 import controller.handler.KeyHandler;
 import models.fighters.Fighter;
 import models.fighters.Warrior;
@@ -26,6 +27,12 @@ public class GamePanel extends JPanel implements Runnable {
     final public static int MAX_FPS = 60;
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
+    final private KeyHandler keyHandler = new KeyHandler();
+    final private WorldPanel worldPanel;
+    final private Player nathanPlayer;
+//    final private ArenaPanel arenaPanel;
+//    final private DialogActions dialogActions;
+    final private Arena arena;
 
     Thread gameLoop = null;
 //    KeyHandler keyHandler = new KeyHandler();
@@ -41,15 +48,19 @@ public class GamePanel extends JPanel implements Runnable {
         victor.pickWeapon(icesword);
         nathan.pickItems(Arrays.asList(healPotion, damageBooster));
 
-        Arena arena = new Arena(nathan, victor);
+        arena = new Arena(nathan, victor);
+        nathanPlayer = new Player(this, keyHandler);
+        this.worldPanel = new WorldPanel(nathanPlayer);
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
 
-        this.add(new ArenaPanel(), BorderLayout.CENTER);
-        this.add(new DialogActions(arena), BorderLayout.SOUTH);
-
+        this.add(worldPanel, BorderLayout.CENTER);
+//        arenaPanel = new ArenaPanel();
+//        dialogActions = new DialogActions(arena);
+//        this.add(arenaPanel, BorderLayout.CENTER);
+//        this.add(dialogActions, BorderLayout.SOUTH);
     }
 
     public void startGameLoop(){
@@ -66,7 +77,6 @@ public class GamePanel extends JPanel implements Runnable {
         int imageCount = 0;
 
         while(gameLoop != null){
-
             update();
             repaint();
 
@@ -80,13 +90,19 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
-
+            worldPanel.update();
+//        if (keyHandler.changePanel) {
+//            this.removeAll();
+//            this.add(worldPanel, BorderLayout.CENTER);
+//        } else {
+//            this.removeAll();
+//            this.add(arenaPanel, BorderLayout.CENTER);
+//            this.add(dialogActions, BorderLayout.SOUTH);
+//        }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-
-
     }
 
 }

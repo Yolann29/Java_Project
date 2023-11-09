@@ -15,4 +15,16 @@ public class Entity {
     public int getSpeed() {
         return speed;
     }
+
+    protected void setX(int x) {
+        this.x = x;
+    }
+
+    protected void setY(int y) {
+        this.y = y;
+    }
+
+    protected void setSpeed(int speed) {
+        this.speed = speed;
+    }
 }
