@@ -1,3 +1,5 @@
+package controller;
+
 import controller.Arena;
 import models.fighters.Fighter;
 import models.fighters.Warrior;
@@ -11,6 +13,7 @@ import models.weapons.Weapon;
 import views.GamePanel;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class Main {
 
@@ -22,6 +25,7 @@ public class Main {
             JFrame window = new JFrame("T-JAV-501");
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             window.setResizable(false);
+            window.setIgnoreRepaint(true);
 
             GamePanel gamePanel = new GamePanel();
             window.add(gamePanel);

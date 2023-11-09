@@ -18,7 +18,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameLoop = null;
 //    KeyHandler keyHandler = new KeyHandler();
-
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -63,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
+
     }
 
 }

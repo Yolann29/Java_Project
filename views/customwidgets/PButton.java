@@ -6,13 +6,16 @@ import java.awt.*;
 public class PButton extends JButton {
 
 
-    Color dialogColor = new Color(40, 79, 104);
+    Color dialogColor = new Color(13, 81, 96);
+    Color color;
+
     public PButton(String text){
         super(text);
-        this.setOpaque(false);
-        this.setContentAreaFilled(false);
+//        this.color = color;
+//        this.setContentAreaFilled(false);
         this.setPreferredSize(new Dimension(100, 50));
-        this.setBorderPainted(false);
+//        this.setBorderPainted(false);
+        this.setBackground(new Color(0,0,0,0));
         this.setForeground(Color.WHITE);
         this.setFocusPainted(false);
         this.setFont(new Font("Courier", Font.BOLD, 20));
@@ -23,19 +26,18 @@ public class PButton extends JButton {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
+        g2.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
+        g.setColor(this.dialogColor);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+//        g2.setColor(Color.WHITE);
+//        g2.drawRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
 
-        g.setColor(dialogColor);
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+//        //hover
+//        if (getModel().isRollover()) {
+//            g2.setColor(new Color(255, 255, 255, 100));
+//            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 0, 0);
+//        }
 
-        if (getModel().isPressed()) {
-            this.setForeground(Color.BLACK);
-        } else if (getModel().isRollover()) {
-            this.setForeground(Color.WHITE);
-            dialogColor =  new Color(40, 79, 104).darker();
-        } else {
-            this.setForeground(Color.WHITE);
-            dialogColor =  new Color(40, 79, 104);
-        }
         super.paintComponent(g);
     }
 }
