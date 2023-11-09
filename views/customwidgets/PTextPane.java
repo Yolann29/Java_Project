@@ -41,7 +41,7 @@ public class PTextPane extends JTextPane {
 
         @Override
         protected void done() {
-            // L'exécution est terminée, vous pouvez ajouter des actions ici si nécessaire
+            System.out.println("Done");
         }
     }
 

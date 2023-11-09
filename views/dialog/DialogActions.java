@@ -48,7 +48,7 @@ public class DialogActions extends JPanel {
 
         attack.addActionListener(e -> {
 
-            textPane.setTextWithTypingEffect("Choose your attack !");
+            textPane    .setTextWithTypingEffect("Choose your attack !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
 
