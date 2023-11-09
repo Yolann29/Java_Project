@@ -48,7 +48,7 @@ public class DialogActions extends JPanel {
 
         attack.addActionListener(e -> {
 
-            textPane.setText("Choose your attack !");
+            textPane.setTextWithTypingEffect("Choose your attack !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
 
@@ -59,7 +59,7 @@ public class DialogActions extends JPanel {
 
                     attackButton.addActionListener(e1 -> {
                         arena.attack(arena.getFighter1(), arena.getFighter2(), weaponAttack);
-                        textPane.setText(String.format("%s used %s on %s!", arena.getFighter1().getName(), weaponAttack.getName(), arena.getFighter2().getName()));
+                        textPane.setTextWithTypingEffect(String.format("%s used %s on %s!", arena.getFighter1().getName(), weaponAttack.getName(), arena.getFighter2().getName()));
                         System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
                         System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
                         buttonsPannel.removeAll();
@@ -75,7 +75,7 @@ public class DialogActions extends JPanel {
 
         //ITEMS BUTTON
         items.addActionListener(e -> {
-            textPane.setText("Choose your item !");
+            textPane.setTextWithTypingEffect("Choose your item !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
 
@@ -85,7 +85,7 @@ public class DialogActions extends JPanel {
 
                 itemButton.addActionListener(e1 -> {
                     arena.getFighter1().useItem(item);
-                    textPane.setText(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
+                    textPane.setTextWithTypingEffect(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
                     System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
                     System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
                     buttonsPannel.removeAll();

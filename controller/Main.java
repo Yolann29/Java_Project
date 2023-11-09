@@ -1,19 +1,7 @@
 package controller;
 
-import controller.Arena;
-import models.fighters.Fighter;
-import models.fighters.Warrior;
-import models.items.DamageBooster;
-import models.items.HealPotion;
-import models.items.Item;
-import models.types.Type;
-import models.weapons.FireSword;
-import models.weapons.IceSword;
-import models.weapons.Weapon;
 import views.GamePanel;
 import javax.swing.*;
-import java.awt.*;
-import java.util.Arrays;
 
 public class Main {
 
