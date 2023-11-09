@@ -17,9 +17,6 @@ import java.util.Arrays;
 
 public class Main {
 
-        final public static int FRAME_WIDTH = 650;
-        final public static int FRAME_HEIGHT = 600;
-
         public static void main(String[] args) {
 
             JFrame window = new JFrame("T-JAV-501");

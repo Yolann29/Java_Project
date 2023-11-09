@@ -1,6 +1,7 @@
 package controller;
 
 import models.fighters.Fighter;
+import models.weapons.attacks.Attack;
 
 import java.util.Scanner;
 
@@ -8,21 +9,19 @@ public class Arena {
 
     private Fighter fighter1;
     private Fighter fighter2;
+    Scanner scanner = new Scanner(System.in);
 
     public Arena(Fighter fighter1, Fighter fighter2){
         this.fighter1 = fighter1;
         this.fighter2 = fighter2;
-        fight();
     }
 
     public void fight(){
 
         do {
-
-            boolean attack = false;
             boolean item = false;
 
-            Scanner scanner = new Scanner(System.in);
+
             System.out.println(String.format("%s HP: %d", fighter1.getName(), fighter1.getHp()));
             System.out.println(String.format("%s HP: %d", fighter2.getName(), fighter2.getHp()));
 
@@ -34,31 +33,7 @@ public class Arena {
 
             //SI CHOIX D'ATTAQUER
             if (choice == 1) {
-                System.out.println("Choose your attack");
-
-                for (int i = 0; i < fighter1.getWeapon().getAttacks().length; i++) {
-                    if (fighter1.getWeapon().getAttacks()[i] != null) {
-                        System.out.println(String.format("%d. %s", i + 1, fighter1.getWeapon().getAttacks()[i].getName()));
-                    } else {
-                        System.out.println(String.format("%d. No attack available", i + 1));
-                    }
-                }
-
-                do {
-
-                    int attackChoice = scanner.nextInt();
-
-                    if (fighter1.getWeapon().getAttacks()[attackChoice - 1] != null) {
-                        if (fighter1.attack(fighter2, fighter1.getWeapon().getAttacks()[attackChoice - 1])) {
-                            System.out.println(String.format("%s use %s on %s!", fighter1.getName(), fighter1.getWeapon().getAttacks()[attackChoice - 1].getName(), fighter2.getName()));
-                        }
-                        attack = true;
-                    } else {
-                        System.out.println("You can't do that");
-                    }
-
-                } while (!attack);
-
+//                attack();
             }
 
             //SI CHOIX D'ITEMS
@@ -104,5 +79,20 @@ public class Arena {
 
     }
 
+    public void attack(Fighter attacker, Fighter target, Attack attack){
+        if (attack != null) {
+            if (attacker.attack(target, attack)) {
+                System.out.println(String.format("%s use %s on %s!", attacker.getName(), attack.getName(), target.getName()));
+            }
+        }
+    }
+
+    public Fighter getFighter1() {
+        return fighter1;
+    }
+
+    public Fighter getFighter2() {
+        return fighter2;
+    }
 }
 

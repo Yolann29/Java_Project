@@ -53,17 +53,38 @@ public abstract class Fighter {
         return this.items.get(index);
     }
 
+    public Item item(Item item){
+        if(this.items.contains(item)){
+            return item;
+        }
+        return null;
+    }
+
+    public void useItem(Item item){
+        if(this.items.contains(item)){
+            this.items.remove(item);
+        }
+
+        ItemEffection(item);
+    }
+
     public void useItem(int index){
         Item item = this.item(index);
+        this.getItems().remove(index);
 
+        ItemEffection(item);
+
+
+    }
+
+    private void ItemEffection(Item item) {
         if(item.getName().equalsIgnoreCase("Heal Potion")){
             this.hp = Math.min(100, this.hp + item.getHeal());
             System.out.println(String.format("%s used %s and healed %d hp", this.name, item.getName(), item.getHeal()));
-            this.getItems().remove(index);
+
         } else if(item.getName().equalsIgnoreCase("Damage Booster")){
             this.weapon.boostDamage(item.getDamage());
             System.out.println(String.format("%s used %s and boosted his weapon damage by %d", this.name, item.getName(), item.getDamage()));
-            this.getItems().remove(index);
         }
     }
 

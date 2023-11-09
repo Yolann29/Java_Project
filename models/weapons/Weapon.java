@@ -43,4 +43,8 @@ public abstract class Weapon {
     public Attack[] getAttacks() {
         return attacks;
     }
+
+//    public Attack getAttack(Attack attack) {
+//        return attacks;
+//    }
 }
