@@ -28,13 +28,8 @@ public class PTextPane extends JTextPane {
         protected Void doInBackground() throws Exception {
             for (int i = 0; i <= fullText.length(); i++) {
                 final String partialText = fullText.substring(0, i);
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        setText(partialText);
-                    }
-                });
-                Thread.sleep(25); // Ajustez cela en fonction de la vitesse que vous souhaitez
+                setText(partialText);
+                Thread.sleep(25);
             }
             return null;
         }

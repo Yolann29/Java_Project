@@ -16,6 +16,8 @@ public abstract class Fighter {
     protected ArrayList<Item> items;
     protected int level;
     protected int experience = 0;
+    protected long walkingTime = 0;
+    protected long damageTime = 0;
 
     public Fighter(String name, Type type) {
         this.type = type;
@@ -130,5 +132,17 @@ public abstract class Fighter {
 
     public int getExperience() {
         return experience;
+    }
+
+    public long getWalkingTime() {
+        return walkingTime;
+    }
+
+    public boolean isDead(){
+        return getHp() < 1;
+    }
+
+    public void setWalkingTime(long walkingTime) {
+        this.walkingTime = walkingTime;
     }
 }

@@ -1,7 +1,6 @@
 package views;
 
 import controller.Arena;
-import controller.handler.KeyHandler;
 import models.fighters.Fighter;
 import models.fighters.Warrior;
 import models.items.DamageBooster;
@@ -13,12 +12,8 @@ import models.weapons.IceSword;
 import models.weapons.Weapon;
 import views.dialog.DialogActions;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -26,6 +21,8 @@ public class GamePanel extends JPanel implements Runnable {
     final public static int MAX_FPS = 60;
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
+
+    Arena arena;
 
     Thread gameLoop = null;
 //    KeyHandler keyHandler = new KeyHandler();
@@ -41,14 +38,15 @@ public class GamePanel extends JPanel implements Runnable {
         victor.pickWeapon(icesword);
         nathan.pickItems(Arrays.asList(healPotion, damageBooster));
 
-        Arena arena = new Arena(nathan, victor);
+        arena = new Arena(nathan, victor);
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
 
-        this.add(new ArenaPanel(arena), BorderLayout.CENTER);
-        this.add(new DialogActions(arena), BorderLayout.SOUTH);
+        DialogActions da = new DialogActions(arena);
+        this.add(new ArenaPanel(arena, da), BorderLayout.CENTER);
+        this.add(da, BorderLayout.SOUTH);
 
     }
 
@@ -80,6 +78,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
+
+        arena.update();
 
     }
 

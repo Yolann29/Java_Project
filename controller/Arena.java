@@ -2,6 +2,8 @@ package controller;
 
 import models.fighters.Fighter;
 import models.weapons.attacks.Attack;
+import models.weapons.attacks.Strike;
+import views.customwidgets.PTextPane;
 
 import java.util.Scanner;
 
@@ -9,6 +11,14 @@ public class Arena {
 
     private Fighter fighter1;
     private Fighter fighter2;
+
+    private Fighter attacker;
+    private Fighter target;
+    private Attack attack;
+
+    private boolean isYourTurn = true;
+    PTextPane textPane;
+
     Scanner scanner = new Scanner(System.in);
 
     public Arena(Fighter fighter1, Fighter fighter2){
@@ -16,75 +26,51 @@ public class Arena {
         this.fighter2 = fighter2;
     }
 
-    public void fight(){
+    public void startAttack(Fighter attacker, Fighter target, Attack attack){
 
-        do {
-            boolean item = false;
+        this.attacker = attacker;
+        this.target = target;
+        this.attack = attack;
 
+        if (attack != null && attacker.getWalkingTime() == 0) {
+            this.attacker.setWalkingTime(System.currentTimeMillis());
+            this.textPane.setTextWithTypingEffect(String.format("%s use %s on %s!", attacker.getName(), attack.getName(), target.getName()));
 
-            System.out.println(String.format("%s HP: %d", fighter1.getName(), fighter1.getHp()));
-            System.out.println(String.format("%s HP: %d", fighter2.getName(), fighter2.getHp()));
+        }
+    }
 
-            System.out.println("Your turn, what do you want to do?");
-            System.out.println("1. Attack");
-            System.out.println("2. Use item");
-
-            int choice = scanner.nextInt();
-
-            //SI CHOIX D'ATTAQUER
-            if (choice == 1) {
-//                attack();
+    public void applyAttack(){
+        if(attack != null){
+            if(attacker.attack(target, attack)){
+                this.target = null;
+                this.attack = null;
             }
+        }
+    }
 
-            //SI CHOIX D'ITEMS
-            if(choice == 2){
-                System.out.println("Choose your item");
 
-                System.out.println("0. Cancel");
-                for (int i = 0; i < fighter1.getItems().size(); i++) {
+    public void switchTurn(){
+        this.isYourTurn = !this.isYourTurn;
+        if(isYourTurn){
+            this.textPane.setTextWithTypingEffect("Your turn!");
+        }
+        this.attacker = null;
+    }
 
-                    System.out.println(String.format("%d. %s", i + 1, fighter1.item(i).getName()));
-                }
+    public void update() {
 
-                do{
-
-                    int itemChoice = scanner.nextInt();
-
-                    if(itemChoice == 0){
-                        break;
-                    }
-                    if(fighter1.item(itemChoice - 1) != null){
-                        fighter1.useItem(itemChoice - 1);
-                        item = true;
-                    } else {
-                        System.out.println("You can't do that");
-                    }
-
-                } while (!item);
-
-            }
-
-            if(fighter2.getHp() > 0){
-                fighter2.attack(fighter1, fighter2.getWeapon().getAttacks()[0]);
-                System.out.println(String.format("%s use %s on %s!", fighter2.getName(), fighter2.getWeapon().getAttacks()[0].getName(), fighter1.getName()));
-            }
-
-        } while(fighter1.getHp() > 0 && fighter2.getHp() > 0);
-
-        if(fighter1.getHp() > 0){
-            System.out.println(String.format("%s won!", fighter1.getName()));
-        } else {
-            System.out.println(String.format("%s won!", fighter2.getName()));
+        if(!isYourTurn && attacker != fighter2 && !fighter2.isDead()){
+            startAttack(fighter2, fighter1, new Strike());
         }
 
     }
 
-    public void attack(Fighter attacker, Fighter target, Attack attack){
-        if (attack != null) {
-            if (attacker.attack(target, attack)) {
-                System.out.println(String.format("%s use %s on %s!", attacker.getName(), attack.getName(), target.getName()));
-            }
-        }
+    public void setTextPane(PTextPane textPane) {
+        this.textPane = textPane;
+    }
+
+    public boolean isYourTurn() {
+        return isYourTurn;
     }
 
     public Fighter getFighter1() {
