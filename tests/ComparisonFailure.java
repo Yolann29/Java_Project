@@ -16,6 +16,6 @@ public class ComparisonFailure extends Exception {
     }
 
     public void message() {
-        System.out.println(red + this.getMessage() + reset);
+        Output.update("<span style=\"color: red;\">this.getMessage()</span>");
     }
 }
