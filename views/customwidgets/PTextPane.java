@@ -1,12 +1,18 @@
 package views.customwidgets;
 
+import controller.Arena;
 import javax.swing.*;
 import java.awt.*;
 
 public class PTextPane extends JTextPane {
 
     private String fullText;
+    private Arena arena;
 
+    public PTextPane(String text, Arena arena) {
+        this(text);
+        this.arena = arena;
+    }
     public PTextPane(String text) {
         super();
         this.setEditable(false);
@@ -18,6 +24,8 @@ public class PTextPane extends JTextPane {
 
         startTypingEffect();
     }
+
+
 
     private void startTypingEffect() {
         new TypeTextTask().execute();
@@ -36,11 +44,16 @@ public class PTextPane extends JTextPane {
 
         @Override
         protected void done() {
-            System.out.println("Done");
+            if(arena.getFighter1() != null && arena.getFighter1().isUsingItem()){
+                arena.getFighter1().setUsingItem(false);
+                arena.switchTurn();
+
+            }
         }
     }
 
     public void setTextWithTypingEffect(String text) {
+
         this.fullText = text;
         startTypingEffect();
     }

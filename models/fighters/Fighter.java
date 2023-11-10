@@ -11,18 +11,20 @@ public abstract class Fighter {
     protected String name;
     protected Type type;
     protected int hp;
+    protected int maxHp;
     protected int defense;
     protected Weapon weapon;
     protected ArrayList<Item> items;
-    protected int level;
+    protected int level = 1;
     protected int experience = 0;
     protected long walkingTime = 0;
     protected long damageTime = 0;
-
+    protected boolean usingItem = false;
     public Fighter(String name, Type type) {
         this.type = type;
         this.name = name;
-        this.hp = 100;
+        this.maxHp = 100;
+        this.hp = maxHp;
         this.defense = 100;
         this.items = new ArrayList<>();
     }
@@ -65,18 +67,16 @@ public abstract class Fighter {
     public void useItem(Item item){
         if(this.items.contains(item)){
             this.items.remove(item);
+            ItemEffection(item);
+            this.setUsingItem(true);
         }
-
-        ItemEffection(item);
     }
 
     public void useItem(int index){
         Item item = this.item(index);
         this.getItems().remove(index);
-
         ItemEffection(item);
-
-
+        this.setUsingItem(true);
     }
 
     private void ItemEffection(Item item) {
@@ -144,5 +144,17 @@ public abstract class Fighter {
 
     public void setWalkingTime(long walkingTime) {
         this.walkingTime = walkingTime;
+    }
+
+    public boolean isUsingItem() {
+        return usingItem;
+    }
+
+    public void setUsingItem(boolean usingItem) {
+        this.usingItem = usingItem;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
     }
 }

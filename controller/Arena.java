@@ -5,6 +5,7 @@ import models.weapons.attacks.Attack;
 import models.weapons.attacks.Strike;
 import views.customwidgets.PTextPane;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Arena {
@@ -59,8 +60,10 @@ public class Arena {
 
     public void update() {
 
-        if(!isYourTurn && attacker != fighter2 && !fighter2.isDead()){
-            startAttack(fighter2, fighter1, new Strike());
+        if(!isYourTurn && attacker != fighter2 && !fighter2.isDead() && !fighter1.isUsingItem()){
+            System.out.println("Attacks bot : " + fighter2.getWeapon().getWeaponAttacks());
+            System.out.println("Attacks lenght : " + fighter2.getWeapon().getWeaponAttacks().length);
+            startAttack(fighter2, fighter1, fighter2.getWeapon().getWeaponAttacks()[new Random().nextInt(fighter2.getWeapon().getNumberAttacks())]);
         }
 
     }

@@ -1,11 +1,9 @@
 package models.weapons;
-import models.fighters.Fighter;
 import models.types.Type;
 import models.weapons.attacks.Attack;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -16,17 +14,18 @@ public abstract class Weapon {
     protected Type type;
     protected int damage;
     protected int level;
-    protected Attack[] attacks;
-    protected Attack currentAttack;
+    protected Attack[] weaponAttacks;
+    protected int numberAttacks;
 
     public Weapon(String name, Type type, int damage, int level, int numberAttacks) {
         this.name = name;
         this.type = type;
         this.damage = damage;
         this.level = level;
-        this.attacks = new Attack[4];
+        this.weaponAttacks = new Attack[4];
+        this.numberAttacks = numberAttacks;
         if (numberAttacks > 4) {
-            numberAttacks = 4;
+            this.numberAttacks = 4;
         }
 
         List<Class<?>> allAttacks = getAllAttacks();
@@ -38,7 +37,7 @@ public abstract class Weapon {
                 index = random.nextInt(allAttacks.size());
                 Class<?> attackClass = allAttacks.get(index);
                 allAttacks.remove(index);
-                this.attacks[i] = (Attack) attackClass.getDeclaredConstructor().newInstance();
+                this.weaponAttacks[i] = (Attack) attackClass.getDeclaredConstructor().newInstance();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -86,22 +85,26 @@ public abstract class Weapon {
         return level;
     }
 
-    public Attack[] getAttacks() {
-        return attacks;
+    public Attack[] getWeaponAttacks() {
+        return weaponAttacks;
     }
 
 
     public Attack[] getAttack(Attack attack) {
-        return attacks;
+        return weaponAttacks;
     }
 
     public String[] getNameAttacks() {
-        String[] attackNames = new String[attacks.length];
-        for (int i = 0; i < attacks.length; i++) {
-            if (attacks[i] != null) {
-                attackNames[i] = attacks[i].getName();
+        String[] attackNames = new String[weaponAttacks.length];
+        for (int i = 0; i < weaponAttacks.length; i++) {
+            if (weaponAttacks[i] != null) {
+                attackNames[i] = weaponAttacks[i].getName();
             }
         }
         return attackNames;
+    }
+
+    public int getNumberAttacks() {
+        return numberAttacks;
     }
 }

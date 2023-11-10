@@ -39,7 +39,7 @@ public class DialogActions extends JPanel {
 
         attack = new PButton("> Attack");
         items = new PButton("> Items");
-        textPane = new PTextPane("Your turn !");
+        textPane = new PTextPane("Your turn !", arena);
 
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
@@ -55,7 +55,7 @@ public class DialogActions extends JPanel {
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
 
-            for (Attack weaponAttack : arena.getFighter1().getWeapon().getAttacks()) {
+            for (Attack weaponAttack : arena.getFighter1().getWeapon().getWeaponAttacks()) {
                 if (weaponAttack != null) {
                     PButton attackButton = new PButton("> " + weaponAttack.getName());
                     buttonsPannel.add(attackButton);
@@ -86,7 +86,6 @@ public class DialogActions extends JPanel {
                 buttonsPannel.add(itemButton);
 
                 itemButton.addActionListener(e1 -> {
-                    arena.switchTurn();
                     arena.getFighter1().useItem(item);
                     textPane.setTextWithTypingEffect(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
                     System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
@@ -95,7 +94,6 @@ public class DialogActions extends JPanel {
                     buttonsPannel.add(attack);
                     buttonsPannel.add(items);
                     buttonsPannel.revalidate();
-
 
                 });
             }

@@ -10,6 +10,6 @@ import java.util.Random;
 public class IceSword extends Weapon {
 
     public IceSword() {
-        super("IceSword", Type.WATER, 5, 1, 1);
+        super("IceSword", Type.WATER, 10, 1, 4);
     }
 }
