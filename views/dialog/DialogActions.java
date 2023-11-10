@@ -19,6 +19,9 @@ public class DialogActions extends JPanel {
     private Color dialogColor = new Color(40, 79, 104);
     private Image texture;
     private Arena arena;
+    private PButton attack;
+    private PButton items;
+    PTextPane textPane;
 
     public DialogActions(Arena arena){
         this.arena = arena;
@@ -34,21 +37,21 @@ public class DialogActions extends JPanel {
         buttonsPannel.setPreferredSize(new Dimension(320, 100));
         buttonsPannel.setBackground(new Color(0,0,0,0));
 
-        PButton attack = new PButton("> Attack");
-        PButton items = new PButton("> Items");
-        PTextPane textPane = new PTextPane("Your turn !");
-
+        attack = new PButton("> Attack");
+        items = new PButton("> Items");
+        textPane = new PTextPane("Your turn !");
 
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
+
         System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
         System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
 
+        arena.setTextPane(textPane);
         //ATTACK BUTTON
-
         attack.addActionListener(e -> {
 
-            textPane.setText("Choose your attack !");
+            textPane.setTextWithTypingEffect("Choose your attack !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
 
@@ -58,8 +61,7 @@ public class DialogActions extends JPanel {
                     buttonsPannel.add(attackButton);
 
                     attackButton.addActionListener(e1 -> {
-                        arena.attack(arena.getFighter1(), arena.getFighter2(), weaponAttack);
-                        textPane.setText(String.format("%s used %s on %s!", arena.getFighter1().getName(), weaponAttack.getName(), arena.getFighter2().getName()));
+                        arena.startAttack(arena.getFighter1(), arena.getFighter2(), weaponAttack);
                         System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
                         System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
                         buttonsPannel.removeAll();
@@ -75,7 +77,7 @@ public class DialogActions extends JPanel {
 
         //ITEMS BUTTON
         items.addActionListener(e -> {
-            textPane.setText("Choose your item !");
+            textPane.setTextWithTypingEffect("Choose your item !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
 
@@ -84,14 +86,16 @@ public class DialogActions extends JPanel {
                 buttonsPannel.add(itemButton);
 
                 itemButton.addActionListener(e1 -> {
+                    arena.switchTurn();
                     arena.getFighter1().useItem(item);
-                    textPane.setText(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
+                    textPane.setTextWithTypingEffect(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
                     System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
                     System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
                     buttonsPannel.removeAll();
                     buttonsPannel.add(attack);
                     buttonsPannel.add(items);
                     buttonsPannel.revalidate();
+
 
                 });
             }
@@ -104,9 +108,10 @@ public class DialogActions extends JPanel {
 
     }
 
-//    public void showActions(JPanel buttonsPannel){
-//        buttonsPannel.add(att)
-//    }
+
+    public void setDialogText(String text){
+        textPane.setText(text);
+    }
 
     public void loadRessources(){
 
@@ -125,6 +130,11 @@ public class DialogActions extends JPanel {
 //        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.drawImage(texture, 0, 0, null);
 
+    }
+
+    public void setInteraction(boolean interaction){
+        attack.setEnabled(interaction);
+        items.setEnabled(interaction);
     }
 
 

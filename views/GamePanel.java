@@ -14,12 +14,8 @@ import models.weapons.IceSword;
 import models.weapons.Weapon;
 import views.dialog.DialogActions;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -34,7 +30,6 @@ public class GamePanel extends JPanel implements Runnable {
     final public static int FRAME_HEIGHT = 600;
     final private KeyHandler keyHandler = new KeyHandler();
     final private WorldPanel worldPanel;
-    final private Player nathanPlayer;
     final private ArenaPanel arenaPanel;
     final private DialogActions dialogActions;
     final private Arena arena;
@@ -54,20 +49,19 @@ public class GamePanel extends JPanel implements Runnable {
         nathan.pickItems(Arrays.asList(healPotion, damageBooster));
 
         arena = new Arena(nathan, victor);
-        nathanPlayer = new Player(this, keyHandler);
+        Player nathanPlayer = new Player(this, keyHandler);
         this.worldPanel = new WorldPanel(nathanPlayer);
-
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
-        arenaPanel = new ArenaPanel();
         dialogActions = new DialogActions(arena);
-//        this.add(arenaPanel, BorderLayout.CENTER);
-//        this.add(dialogActions, BorderLayout.SOUTH);
+        arenaPanel = new ArenaPanel(arena, dialogActions);
         this.add(worldPanel, BorderLayout.CENTER);
+        this.add(arenaPanel, BorderLayout.CENTER);
+        this.add(dialogActions, BorderLayout.SOUTH);
     }
 
     public void startGameLoop(){
@@ -113,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         worldPanel.update();
+        arena.update();
     }
 
     public void paintComponent(Graphics g){
