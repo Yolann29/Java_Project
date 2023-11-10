@@ -1,7 +1,5 @@
 package views;
 
-import views.customwidgets.PButton;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

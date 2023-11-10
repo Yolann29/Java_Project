@@ -1,8 +1,12 @@
 package controller.entities;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class Entity {
 
     private int x, y, speed;
+
 
     public int getX() {
         return x;

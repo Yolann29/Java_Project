@@ -24,14 +24,19 @@ import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
 
+    final public static int TileSize = 32;
+    final public static int columns = 23; //736
+    final public static int rows = 18; //576
+    final public static int WorldHeight = rows*TileSize;
+    final public static int WorldWidth = columns*TileSize;
     final public static int MAX_FPS = 60;
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
     final private KeyHandler keyHandler = new KeyHandler();
     final private WorldPanel worldPanel;
     final private Player nathanPlayer;
-//    final private ArenaPanel arenaPanel;
-//    final private DialogActions dialogActions;
+    final private ArenaPanel arenaPanel;
+    final private DialogActions dialogActions;
     final private Arena arena;
 
     Thread gameLoop = null;
@@ -55,12 +60,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
 
-        this.add(worldPanel, BorderLayout.CENTER);
-//        arenaPanel = new ArenaPanel();
-//        dialogActions = new DialogActions(arena);
+        arenaPanel = new ArenaPanel();
+        dialogActions = new DialogActions(arena);
 //        this.add(arenaPanel, BorderLayout.CENTER);
 //        this.add(dialogActions, BorderLayout.SOUTH);
+        this.add(worldPanel, BorderLayout.CENTER);
     }
 
     public void startGameLoop(){
@@ -90,15 +97,22 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
-            worldPanel.update();
-//        if (keyHandler.changePanel) {
-//            this.removeAll();
-//            this.add(worldPanel, BorderLayout.CENTER);
-//        } else {
-//            this.removeAll();
-//            this.add(arenaPanel, BorderLayout.CENTER);
-//            this.add(dialogActions, BorderLayout.SOUTH);
-//        }
+        if (keyHandler.changing) {
+            if (keyHandler.changePanel) {
+                this.remove(arenaPanel);
+                this.remove(dialogActions);
+                this.add(worldPanel, BorderLayout.CENTER);
+                this.revalidate();
+                this.repaint();
+            } else {
+                this.remove(worldPanel);
+                this.add(arenaPanel, BorderLayout.CENTER);
+                this.add(dialogActions, BorderLayout.SOUTH);
+                this.revalidate();
+                this.repaint();
+            }
+        }
+        worldPanel.update();
     }
 
     public void paintComponent(Graphics g){
