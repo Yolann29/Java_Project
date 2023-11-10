@@ -1,6 +1,7 @@
 package views.dialog;
 
 import controller.Arena;
+import controller.handler.KeyHandler;
 import models.items.Item;
 import models.weapons.attacks.Attack;
 import views.GamePanel;
@@ -44,9 +45,6 @@ public class DialogActions extends JPanel {
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
 
-        System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
-        System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
-
         arena.setTextPane(textPane);
         //ATTACK BUTTON
         attack.addActionListener(e -> {
@@ -85,9 +83,8 @@ public class DialogActions extends JPanel {
 
                 itemButton.addActionListener(e1 -> {
                     arena.getFighter1().useItem(item);
+                    this.setInteraction(false);
                     textPane.setTextWithTypingEffect(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
-                    System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
-                    System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
                     buttonsPannel.removeAll();
                     buttonsPannel.add(attack);
                     buttonsPannel.add(items);
@@ -122,8 +119,6 @@ public class DialogActions extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        //antialisaing
-//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.drawImage(texture, 0, 0, null);
 
     }

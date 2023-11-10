@@ -53,7 +53,6 @@ public class PTextPane extends JTextPane {
     }
 
     public void setTextWithTypingEffect(String text) {
-
         this.fullText = text;
         startTypingEffect();
     }

@@ -8,6 +8,6 @@ import models.weapons.attacks.Wave;
 
 public class FireSword extends Weapon {
     public FireSword() {
-        super("FireSword", Type.FIRE, 20, 1, 4);
+        super("FireSword", Type.FIRE, 15, 1, 4);
     }
 }

@@ -82,11 +82,9 @@ public abstract class Fighter {
     private void ItemEffection(Item item) {
         if(item.getName().equalsIgnoreCase("Heal Potion")){
             this.hp = Math.min(100, this.hp + item.getHeal());
-            System.out.println(String.format("%s used %s and healed %d hp", this.name, item.getName(), item.getHeal()));
 
         } else if(item.getName().equalsIgnoreCase("Damage Booster")){
             this.weapon.boostDamage(item.getDamage());
-            System.out.println(String.format("%s used %s and boosted his weapon damage by %d", this.name, item.getName(), item.getDamage()));
         }
     }
 

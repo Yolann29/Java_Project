@@ -29,16 +29,16 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
 
         Fighter nathan = new Warrior("Nathan", Type.FIRE);
-        Fighter victor = new Warrior("Victor", Type.ELECTRICITY);
+        Fighter bot = new Warrior("Bot", Type.ELECTRICITY);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
         Item healPotion = new HealPotion();
         Item damageBooster = new DamageBooster();
         nathan.pickWeapon(firesword);
-        victor.pickWeapon(icesword);
+        bot.pickWeapon(icesword);
         nathan.pickItems(Arrays.asList(healPotion, damageBooster));
 
-        arena = new Arena(nathan, victor);
+        arena = new Arena(nathan, bot);
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);

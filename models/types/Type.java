@@ -1,23 +1,35 @@
 package models.types;
 
+import java.awt.*;
+
 public enum Type {
-    FIRE("Fire","Water"),
-    WATER("Water", "Electricity"),
-    PLANT("Plant", "Fire"),
-    GROUND("Ground", "Plant"),
-    ELECTRICITY("Electricity", "Ground");
+    FIRE("Fire","Water", new Color(255, 81, 31)),
+    WATER("Water", "Elec", new Color(0, 162, 255)),
+    PLANT("Plant", "Fire", new Color(0, 194, 0)),
+    GROUND("Ground", "Plant", new Color(141, 63, 34)),
+    ELECTRICITY("Elec", "Ground", new Color(220, 207, 0));
 
 
     private String name;
     private String weakness;
+    private Color color;
 
-    Type(String name, String weakness) {
+    Type(String name, String weakness, Color color) {
         this.name = name;
         this.weakness = weakness;
+        this.color = color;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getWeakness(){
+        return this.weakness;
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 
 }

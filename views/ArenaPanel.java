@@ -19,6 +19,8 @@ public class ArenaPanel extends JPanel {
     DialogActions da;
     boolean endGame = false;
 
+    boolean fighter1DamageTaken = false;
+    boolean fighter2DamageTaken = false;
 
     public ArenaPanel(Arena arena, DialogActions da) {
         this.da = da;
@@ -41,15 +43,25 @@ public class ArenaPanel extends JPanel {
 
     public void drawInfoBar(Graphics2D g2, Fighter fighter, int x){
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        //NAME
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 20));
         g2.drawString(fighter.getName(), x - 20, 210);
+        //LEVEL
         g2.setColor(Color.YELLOW);
         g2.drawString("Lv." + fighter.getLevel(), x + 90, 210);
-        g2.setColor(Color.WHITE);
+        //TYPE
+        g2.setColor(fighter.getWeapon().getType().getColor());
+        g2.fillRoundRect(x - 20, 235, fighter.getWeapon().getType().getName().length() * 10 + 3, 15, 5, 5);
         g2.setFont(new Font("Courier", Font.BOLD, 12));
+        g2.setColor(Color.WHITE);
+        g2.drawString(fighter.getWeapon().getType().getName(), x - 10, 247);
+        //HP
+        if(fighter.getHp() < 50) g2.setColor(Color.YELLOW);
+        if(fighter.getHp() < 20) g2.setColor(Color.RED);
         g2.drawString("Hp." + fighter.getHp() + "/" + fighter.getMaxHp(), x + 70, 245);
-
+        //HP BAR
         g2.setColor(Color.RED);
         g2.fillRoundRect(x - 20, 220, 150, 8, 20, 30);
         g2.setColor(Color.GREEN);
@@ -64,13 +76,23 @@ public class ArenaPanel extends JPanel {
 
 
         if(timeInSec >= 1 && timeInSec <= 1.3) {
+            if(reversed){
+                this.fighter1DamageTaken = true;
+            } else {
+                this.fighter2DamageTaken = true;
+            }
             AnimationManager.WARRIOR_ATTACK.paint(g2, x, 270, 96, 96, reversed);
             drawInfoBar(g2, fighter, x);
         } else if (timeInSec < 1){
             AnimationManager.WARRIOR_WALK.paint(g2, x, 270, 96, 96, reversed);
             drawInfoBar(g2, fighter, x);
         } else {
-            arena.applyAttack();
+            arena.applyAttack(g2);
+            if(reversed){
+                this.fighter1DamageTaken = false;
+            } else {
+                this.fighter2DamageTaken = false;
+            }
             int reversedX = startX + (int) (370 * Math.max(0, 1 - (timeInSec - 1.3))  * (reversed?-1:1));
             AnimationManager.WARRIOR_WALK.paint(g2, reversedX, 270, 96, 96, !reversed);
             drawInfoBar(g2, fighter, reversedX);
@@ -89,6 +111,8 @@ public class ArenaPanel extends JPanel {
         //BACKGROUND
         g.drawImage(background, 0, 0, null);
 
+        g.setColor(Color.ORANGE);
+
         //ANIMATION
         //JOUEUR 1
         if (arena.getFighter1().isDead()) {
@@ -97,7 +121,7 @@ public class ArenaPanel extends JPanel {
         } else if (arena.getFighter1().getWalkingTime() != 0) {
             moveToTarget(g2, arena.getFighter1(), 100, false);
         } else {
-            if(!endGame) AnimationManager.WARRIOR_IDLE.paint(g2, 100, 270, 96, 96, false);
+            if(!endGame && !this.fighter1DamageTaken) AnimationManager.WARRIOR_IDLE.paint(g2, 100, 270, 96, 96, false);
             drawInfoBar(g2, arena.getFighter1(), 100);
         }
 
@@ -108,8 +132,14 @@ public class ArenaPanel extends JPanel {
         } else if (arena.getFighter2().getWalkingTime() != 0) {
             moveToTarget(g2, arena.getFighter2(), 550, true);
         } else {
-            if(!endGame) AnimationManager.WARRIOR_IDLE.paint(g2, 550, 270, 96, 96, true);
+            if(!endGame && !this.fighter2DamageTaken) AnimationManager.WARRIOR_IDLE.paint(g2, 550, 270, 96, 96, true);
             drawInfoBar(g2, arena.getFighter2(), 550);
+        }
+
+        if(this.fighter1DamageTaken){
+            AnimationManager.WARRIOR_HIT.paint(g2, 100, 270, 96, 96, false);
+        } else if (this.fighter2DamageTaken){
+            AnimationManager.WARRIOR_HIT.paint(g2, 550, 270, 96, 96, true);
         }
 
         da.setInteraction(arena.getFighter1().getWalkingTime() == 0
