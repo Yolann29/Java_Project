@@ -17,6 +17,7 @@ public class ArenaPanel extends JPanel {
     Image profile_background;
     Arena arena;
     DialogActions da;
+    boolean endGame = false;
 
 
     public ArenaPanel(Arena arena, DialogActions da) {
@@ -39,16 +40,20 @@ public class ArenaPanel extends JPanel {
     }
 
     public void drawInfoBar(Graphics2D g2, Fighter fighter, int x){
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 20));
         g2.drawString(fighter.getName(), x - 20, 210);
         g2.setColor(Color.YELLOW);
         g2.drawString("Lv." + fighter.getLevel(), x + 90, 210);
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Courier", Font.BOLD, 12));
+        g2.drawString("Hp." + fighter.getHp() + "/" + fighter.getMaxHp(), x + 70, 245);
 
         g2.setColor(Color.RED);
-        g2.fillRect(x - 20, 220, 150, 8);
+        g2.fillRoundRect(x - 20, 220, 150, 8, 20, 30);
         g2.setColor(Color.GREEN);
-        g2.fillRect(x - 20, 220, (int) (150 * ((float) fighter.getHp() / fighter.getMaxHp())), 8);
+        g2.fillRoundRect(x - 20, 220, (int) (150 * ((float) fighter.getHp() / fighter.getMaxHp())), 8, 20, 30);
     }
 
     public void moveToTarget(Graphics2D g2, Fighter fighter, int startX, boolean reversed){
@@ -78,29 +83,32 @@ public class ArenaPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
         //BACKGROUND
         g.drawImage(background, 0, 0, null);
 
-        if(arena.getFighter1().isDead()){
+        //ANIMATION
+        //JOUEUR 1
+        if (arena.getFighter1().isDead()) {
             AnimationManager.WARRIOR_DEAD.paint(g2, 100, 270, 96, 96, false);
             drawInfoBar(g2, arena.getFighter1(), 100);
-        } else if(arena.getFighter1().getWalkingTime() != 0){
+        } else if (arena.getFighter1().getWalkingTime() != 0) {
             moveToTarget(g2, arena.getFighter1(), 100, false);
         } else {
-            AnimationManager.WARRIOR_IDLE.paint(g2, 100, 270, 96, 96, false);
+            if(!endGame) AnimationManager.WARRIOR_IDLE.paint(g2, 100, 270, 96, 96, false);
             drawInfoBar(g2, arena.getFighter1(), 100);
         }
 
-        if(arena.getFighter2().isDead()){
+        //JOUEUR 2
+        if (arena.getFighter2().isDead()) {
             AnimationManager.WARRIOR_DEAD.paint(g2, 550, 270, 96, 96, true);
             drawInfoBar(g2, arena.getFighter2(), 550);
-        } else if(arena.getFighter2().getWalkingTime() != 0){
+        } else if (arena.getFighter2().getWalkingTime() != 0) {
             moveToTarget(g2, arena.getFighter2(), 550, true);
         } else {
-            AnimationManager.WARRIOR_IDLE.paint(g2, 550, 270, 96, 96, true);
+            if(!endGame) AnimationManager.WARRIOR_IDLE.paint(g2, 550, 270, 96, 96, true);
             drawInfoBar(g2, arena.getFighter2(), 550);
         }
 
@@ -112,9 +120,17 @@ public class ArenaPanel extends JPanel {
 
         if(!arena.getFighter1().isDead() && arena.getFighter2().isDead()){
             da.setDialogText(arena.getFighter1().getName() + " won !");
+            if(arena.getFighter1().getWalkingTime() == 0){
+                endGame = true;
+                AnimationManager.WARRIOR_JUMP.paint(g2, 100, 270, 96, 96, false);
+            }
         }
         if(!arena.getFighter2().isDead() && arena.getFighter1().isDead()){
             da.setDialogText(arena.getFighter2().getName() + " won !");
+            if(arena.getFighter2().getWalkingTime() == 0){
+                endGame = true;
+                AnimationManager.WARRIOR_JUMP.paint(g2, 550, 270, 96, 96, true);
+            }
         }
 
     }

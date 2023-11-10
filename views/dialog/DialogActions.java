@@ -57,13 +57,11 @@ public class DialogActions extends JPanel {
 
             for (Attack weaponAttack : arena.getFighter1().getWeapon().getWeaponAttacks()) {
                 if (weaponAttack != null) {
-                    PButton attackButton = new PButton("> " + weaponAttack.getName());
+                    PButton attackButton = new PButton("> " + weaponAttack.getName() + " (" + weaponAttack.getDamage() + ")");
                     buttonsPannel.add(attackButton);
 
                     attackButton.addActionListener(e1 -> {
                         arena.startAttack(arena.getFighter1(), arena.getFighter2(), weaponAttack);
-                        System.out.println(String.format("%s HP: %d", arena.getFighter1().getName(), arena.getFighter1().getHp()));
-                        System.out.println(String.format("%s HP: %d", arena.getFighter2().getName(), arena.getFighter2().getHp()));
                         buttonsPannel.removeAll();
                         buttonsPannel.add(attack);
                         buttonsPannel.add(items);

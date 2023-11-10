@@ -18,7 +18,7 @@ public class PButton extends JButton {
         this.setBackground(new Color(0,0,0,0));
         this.setForeground(Color.WHITE);
         this.setFocusPainted(false);
-        this.setFont(new Font("Courier", Font.BOLD, 20));
+        this.setFont(new Font("Courier", Font.BOLD, 16));
 
     }
 
