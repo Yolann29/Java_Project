@@ -23,8 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     final public static int TileSize = 32;
     final public static int columns = 23; //736
     final public static int rows = 18; //576
-    final public static int WorldHeight = rows*TileSize;
-    final public static int WorldWidth = columns*TileSize;
+    final public static int worldHeight = rows*TileSize;
+    final public static int worldWidth = columns*TileSize;
     final public static int MAX_FPS = 60;
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         arena = new Arena(nathan, victor);
         Player nathanPlayer = new Player(this, keyHandler);
-        this.worldPanel = new WorldPanel(nathanPlayer);
+        this.worldPanel = new WorldPanel(this, nathanPlayer);
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
@@ -96,15 +96,13 @@ public class GamePanel extends JPanel implements Runnable {
                 this.remove(arenaPanel);
                 this.remove(dialogActions);
                 this.add(worldPanel, BorderLayout.CENTER);
-                this.revalidate();
-                this.repaint();
             } else {
                 this.remove(worldPanel);
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(dialogActions, BorderLayout.SOUTH);
-                this.revalidate();
-                this.repaint();
             }
+            this.revalidate();
+            this.repaint();
         }
         worldPanel.update();
         arena.update();

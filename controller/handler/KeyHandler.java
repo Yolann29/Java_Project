@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean top, bottom, right, left;
+    public boolean top, bottom, right, left, jump;
     public boolean changing = false, changePanel = false;
 
     public void keyTyped(KeyEvent e) {
@@ -37,6 +37,10 @@ public class KeyHandler implements KeyListener {
             changing = true;
         }
 
+        if (code == KeyEvent.VK_SPACE) {
+            jump = true;
+        }
+
     }
 
     @Override
@@ -62,6 +66,5 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ESCAPE){
             changing = false;
         }
-
     }
 }

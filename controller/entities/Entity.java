@@ -6,7 +6,8 @@ import java.awt.image.BufferedImage;
 public class Entity {
 
     private int x, y, speed;
-
+    private String direction;
+    private boolean reversed;
 
     public int getX() {
         return x;
@@ -20,6 +21,14 @@ public class Entity {
         return speed;
     }
 
+    public String getDirection() {
+        return direction;
+    }
+
+    public boolean isReversed() {
+        return reversed;
+    }
+
     protected void setX(int x) {
         this.x = x;
     }
@@ -30,5 +39,13 @@ public class Entity {
 
     protected void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    protected void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    protected void setReversed(boolean reversed) {
+        this.reversed = reversed;
     }
 }
