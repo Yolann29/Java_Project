@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
         nathan.pickItems(Arrays.asList(healPotion, damageBooster));
 
         arena = new Arena(nathan, victor);
-        player = new Player(this, keyHandler);
+        player = new Player(this, keyHandler, "Magician");
         this.worldPanel = new WorldPanel(this, player);
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);

@@ -9,11 +9,13 @@ import java.awt.*;
 public class NotPlayer extends Entity {
 
     GamePanel gamePanel;
-    private String movement;
+    private final String movement;
+    private final String classe;
 
-    public NotPlayer(GamePanel gamePanel, int positionX, int positionY, String movement) {
+    public NotPlayer(GamePanel gamePanel, int positionX, int positionY, String movement, String classe) {
         this.gamePanel = gamePanel;
         this.movement = movement;
+        this.classe = classe;
         setDefault(positionX, positionY);
     }
 
@@ -76,18 +78,54 @@ public class NotPlayer extends Entity {
         switch(this.getDirection()) {
             case "up":
             case "down":
-                AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                switch(classe) {
+                    case "Vagrant":
+                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                        case "Warrior":
+                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Magician":
+                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                }
                 break;
             case "left":
                 this.setReversed(true);
-                AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
+                switch(classe) {
+                    case "Vagrant":
+                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Warrior":
+                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Magician":
+                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                }
                 break;
             case "right":
                 this.setReversed(false);
-                AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
+                switch(classe) {
+                    case "Vagrant":
+                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Warrior":
+                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Magician":
+                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                }
                 break;
             case "idle":
-                AnimationManager.WARRIOR_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                switch(classe) {
+                    case "Vagrant":
+                        AnimationManager.VAGRANT_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Warrior":
+                        AnimationManager.WARRIOR_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Magician":
+                        AnimationManager.MAGICIAN_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                }
                 break;
         }
     }
