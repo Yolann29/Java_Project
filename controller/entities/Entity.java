@@ -1,13 +1,18 @@
 package controller.entities;
 
+import controller.manager.TileManager;
+import views.GamePanel;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Entity {
 
-    private int x, y, speed;
+    private int worldX, worldY, x, y, speed;
     private String direction;
-    private boolean reversed;
+    protected boolean reversed;
+    public boolean collisionOn;
+    protected Rectangle solidArea;
 
     public int getX() {
         return x;
@@ -15,6 +20,14 @@ public class Entity {
 
     public int getY() {
         return y;
+    }
+
+    public int getWorldX() {
+        return worldX;
+    }
+
+    public int getWorldY() {
+        return worldY;
     }
 
     public int getSpeed() {
@@ -29,12 +42,24 @@ public class Entity {
         return reversed;
     }
 
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
+
     protected void setX(int x) {
         this.x = x;
     }
 
     protected void setY(int y) {
         this.y = y;
+    }
+
+    protected void setWorldX(int worldX) {
+        this.worldX = worldX;
+    }
+
+    protected void setWorldY(int worldY) {
+        this.worldY = worldY;
     }
 
     protected void setSpeed(int speed) {
