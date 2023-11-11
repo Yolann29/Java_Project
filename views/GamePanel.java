@@ -3,6 +3,7 @@ package views;
 import controller.Arena;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
+import controller.manager.Collision;
 import models.fighters.Fighter;
 import models.fighters.Warrior;
 import models.items.DamageBooster;
@@ -20,19 +21,26 @@ import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    final public static int TileSize = 32;
+    final public static int tileSize = 64;
     final public static int columns = 23; //736
     final public static int rows = 18; //576
-    final public static int worldHeight = rows*TileSize;
-    final public static int worldWidth = columns*TileSize;
+    final public static int worldColumns = 38;
+    final public static int worldRows = 17;
+    final public static int worldWidth = worldColumns * tileSize;
+    final public static int worldHeight = worldRows * tileSize;
+
     final public static int MAX_FPS = 60;
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
+    public int imageCount;
+
     final private KeyHandler keyHandler = new KeyHandler();
+    final public Collision collision = new Collision(this);
     final private WorldPanel worldPanel;
     final private ArenaPanel arenaPanel;
     final private DialogActions dialogActions;
     final private Arena arena;
+    final public Player player;
 
     Thread gameLoop = null;
 //    KeyHandler keyHandler = new KeyHandler();
@@ -49,8 +57,8 @@ public class GamePanel extends JPanel implements Runnable {
         nathan.pickItems(Arrays.asList(healPotion, damageBooster));
 
         arena = new Arena(nathan, victor);
-        Player nathanPlayer = new Player(this, keyHandler);
-        this.worldPanel = new WorldPanel(this, nathanPlayer);
+        player = new Player(this, keyHandler);
+        this.worldPanel = new WorldPanel(this, player);
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
@@ -75,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        int imageCount = 0;
+        imageCount = 0;
 
         while(gameLoop != null){
             update();
@@ -83,6 +91,10 @@ public class GamePanel extends JPanel implements Runnable {
 
             try {
                 Thread.sleep(1000/MAX_FPS);
+                imageCount++;
+                if (imageCount == 200) {
+                    imageCount = 0;
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

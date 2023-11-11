@@ -66,5 +66,9 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ESCAPE){
             changing = false;
         }
+
+        if (code == KeyEvent.VK_SPACE) {
+            jump = false;
+        }
     }
 }
