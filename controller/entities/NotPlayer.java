@@ -67,6 +67,7 @@ public class NotPlayer extends Entity {
                 } else {
                     this.setDirection("idle");
                 }
+                break;
             case "attack":
                 if (gamePanel.imageCount <= 50 && gamePanel.imageCount > 0) {
                     this.setDirection("attack");
@@ -101,26 +102,26 @@ public class NotPlayer extends Entity {
                 this.setReversed(true);
                 switch(classe) {
                     case "Vagrant":
-                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
                         break;
                     case "Warrior":
-                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
                         break;
                     case "Magician":
-                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
                 }
                 break;
             case "right":
                 this.setReversed(false);
                 switch(classe) {
                     case "Vagrant":
-                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        AnimationManager.VAGRANT_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
                         break;
                     case "Warrior":
-                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
                         break;
                     case "Magician":
-                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
                 }
                 break;
             case "idle":

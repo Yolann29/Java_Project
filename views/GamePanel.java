@@ -15,6 +15,8 @@ import models.weapons.IceSword;
 import models.weapons.Weapon;
 import views.customwidgets.PButton;
 import views.dialog.DialogActions;
+import views.dialog.FightLauncher;
+import views.dialog.MerchantShop;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +40,8 @@ public class GamePanel extends JPanel implements Runnable {
     final private KeyHandler keyHandler = new KeyHandler();
     final public Collision collision = new Collision(this);
     final private WorldPanel worldPanel;
-    final private JPanel fightLauncher;
+    final private FightLauncher fightLauncher;
+    final private MerchantShop merchantShop;
 
     private ArenaPanel arenaPanel;
     private DialogActions dialogActions;
@@ -49,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameLoop = null;
     public GamePanel() {
 
-        Fighter playerFighter = new Warrior("Nathan", Type.FIRE);
+        playerFighter = new Warrior("Nathan", Type.FIRE);
         Fighter encounter = new Warrior("First Encounter", Type.WATER);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
@@ -62,8 +65,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.arena = new Arena(playerFighter, encounter);
         this.dialogActions = new DialogActions(arena);
         this.arenaPanel = new ArenaPanel(arena, dialogActions);
-        this.player = new Player(this, keyHandler, "Vagrant");
+        this.player = new Player(this, keyHandler, "Magician");
         this.worldPanel = new WorldPanel(this,keyHandler, player);
+        this.fightLauncher = new FightLauncher(keyHandler);
+        this.merchantShop = new MerchantShop(this, worldPanel);
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
@@ -74,15 +79,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.add(arenaPanel);
         this.add(dialogActions);
         this.add(worldPanel, BorderLayout.CENTER);
-
-        fightLauncher = new JPanel();
-        fightLauncher.setLayout(new BorderLayout());
-        PButton fight = new PButton("Fight");
-        fightLauncher.add(fight);
-        fight.addActionListener(e -> {
-            keyHandler.overWorld = false;
-        });
-        fightLauncher.revalidate();
     }
 
     public void startGameLoop(){
@@ -122,6 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (isPanelAdded(this, worldPanel)) {
                 this.add(worldPanel, BorderLayout.CENTER);
             }
+
             if (worldPanel.fighterClose) {
                 if (isPanelAdded(this, fightLauncher)) {
                     this.add(fightLauncher, BorderLayout.SOUTH);
@@ -129,13 +126,22 @@ public class GamePanel extends JPanel implements Runnable {
             } else {
                 this.remove(fightLauncher);
             }
+
+            if (worldPanel.merchantClose) {
+                if (isPanelAdded(this, merchantShop)) {
+                    this.add(merchantShop, BorderLayout.SOUTH);
+                }
+            } else {
+                this.remove(merchantShop);
+            }
         } else {
+            this.remove(merchantShop);
             this.remove(fightLauncher);
             this.remove(worldPanel);
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, dialogActions)) {
-//                arena = new Arena(playerFighter, worldPanel.fighterEncountered);
-//                dialogActions = new DialogActions(arena);
-//                arenaPanel = new ArenaPanel(arena, dialogActions);
+                arena = new Arena(playerFighter, worldPanel.fighterEncountered);
+                dialogActions = new DialogActions(arena);
+                arenaPanel = new ArenaPanel(arena, dialogActions);
 
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(dialogActions, BorderLayout.SOUTH);
