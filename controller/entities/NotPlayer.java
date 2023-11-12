@@ -67,6 +67,14 @@ public class NotPlayer extends Entity {
                 } else {
                     this.setDirection("idle");
                 }
+            case "attack":
+                if (gamePanel.imageCount <= 50 && gamePanel.imageCount > 0) {
+                    this.setDirection("attack");
+                } else if (gamePanel.imageCount <= 150 && gamePanel.imageCount > 100) {
+                    this.setDirection("attack");
+                } else {
+                    this.setDirection("idle");
+                }
         }
     }
 
@@ -125,6 +133,18 @@ public class NotPlayer extends Entity {
                         break;
                     case "Magician":
                         AnimationManager.MAGICIAN_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                }
+                break;
+            case "attack":
+                switch(classe) {
+                    case "Vagrant":
+                        AnimationManager.VAGRANT_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Warrior":
+                        AnimationManager.WARRIOR_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Magician":
+                        AnimationManager.MAGICIAN_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
                 break;
         }

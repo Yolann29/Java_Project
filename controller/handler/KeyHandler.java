@@ -5,8 +5,8 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean top, bottom, right, left, jump;
-    public boolean changing = false, changePanel = false;
+    public boolean top, bottom, right, left, jump, attack;
+    public boolean changing = false, overWorld = true;
 
     public void keyTyped(KeyEvent e) {
 
@@ -33,12 +33,16 @@ public class KeyHandler implements KeyListener {
         }
 
         if (code == KeyEvent.VK_ESCAPE) {
-            changePanel = !changePanel;
+            overWorld = !overWorld;
             changing = true;
         }
 
         if (code == KeyEvent.VK_SPACE) {
             jump = true;
+        }
+
+        if (code == KeyEvent.VK_A) {
+            attack = true;
         }
 
     }
@@ -69,6 +73,10 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_SPACE) {
             jump = false;
+        }
+
+        if (code == KeyEvent.VK_A) {
+            attack = false;
         }
     }
 }

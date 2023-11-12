@@ -13,6 +13,7 @@ import models.types.Type;
 import models.weapons.FireSword;
 import models.weapons.IceSword;
 import models.weapons.Weapon;
+import views.customwidgets.PButton;
 import views.dialog.DialogActions;
 
 import javax.swing.*;
@@ -37,39 +38,51 @@ public class GamePanel extends JPanel implements Runnable {
     final private KeyHandler keyHandler = new KeyHandler();
     final public Collision collision = new Collision(this);
     final private WorldPanel worldPanel;
-    final private ArenaPanel arenaPanel;
-    final private DialogActions dialogActions;
-    final private Arena arena;
+    final private JPanel fightLauncher;
+
+    private ArenaPanel arenaPanel;
+    private DialogActions dialogActions;
+    private Arena arena;
     final public Player player;
+    public Fighter playerFighter;
 
     Thread gameLoop = null;
-//    KeyHandler keyHandler = new KeyHandler();
     public GamePanel() {
 
-        Fighter nathan = new Warrior("Nathan", Type.FIRE);
-        Fighter victor = new Warrior("Victor", Type.ELECTRICITY);
+        Fighter playerFighter = new Warrior("Nathan", Type.FIRE);
+        Fighter encounter = new Warrior("First Encounter", Type.WATER);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
         Item healPotion = new HealPotion();
         Item damageBooster = new DamageBooster();
-        nathan.pickWeapon(firesword);
-        victor.pickWeapon(icesword);
-        nathan.pickItems(Arrays.asList(healPotion, damageBooster));
+        playerFighter.pickWeapon(firesword);
+        encounter.pickWeapon(icesword);
+        playerFighter.pickItems(Arrays.asList(healPotion, damageBooster));
 
-        arena = new Arena(nathan, victor);
-        player = new Player(this, keyHandler, "Magician");
-        this.worldPanel = new WorldPanel(this, player);
+        this.arena = new Arena(playerFighter, encounter);
+        this.dialogActions = new DialogActions(arena);
+        this.arenaPanel = new ArenaPanel(arena, dialogActions);
+        this.player = new Player(this, keyHandler, "Vagrant");
+        this.worldPanel = new WorldPanel(this,keyHandler, player);
+
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
-        dialogActions = new DialogActions(arena);
-        arenaPanel = new ArenaPanel(arena, dialogActions);
+        this.add(arenaPanel);
+        this.add(dialogActions);
         this.add(worldPanel, BorderLayout.CENTER);
-        this.add(arenaPanel, BorderLayout.CENTER);
-        this.add(dialogActions, BorderLayout.SOUTH);
+
+        fightLauncher = new JPanel();
+        fightLauncher.setLayout(new BorderLayout());
+        PButton fight = new PButton("Fight");
+        fightLauncher.add(fight);
+        fight.addActionListener(e -> {
+            keyHandler.overWorld = false;
+        });
+        fightLauncher.revalidate();
     }
 
     public void startGameLoop(){
@@ -103,19 +116,33 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
-        if (keyHandler.changing) {
-            if (keyHandler.changePanel) {
-                this.remove(arenaPanel);
-                this.remove(dialogActions);
+        if (keyHandler.overWorld) {
+            this.remove(dialogActions);
+            this.remove(arenaPanel);
+            if (isPanelAdded(this, worldPanel)) {
                 this.add(worldPanel, BorderLayout.CENTER);
+            }
+            if (worldPanel.fighterClose) {
+                if (isPanelAdded(this, fightLauncher)) {
+                    this.add(fightLauncher, BorderLayout.SOUTH);
+                }
             } else {
-                this.remove(worldPanel);
+                this.remove(fightLauncher);
+            }
+        } else {
+            this.remove(fightLauncher);
+            this.remove(worldPanel);
+            if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, dialogActions)) {
+//                arena = new Arena(playerFighter, worldPanel.fighterEncountered);
+//                dialogActions = new DialogActions(arena);
+//                arenaPanel = new ArenaPanel(arena, dialogActions);
+
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(dialogActions, BorderLayout.SOUTH);
             }
-            this.revalidate();
-            this.repaint();
         }
+        this.revalidate();
+        this.repaint();
         worldPanel.update();
         arena.update();
     }
@@ -124,4 +151,13 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
     }
 
+    private static boolean isPanelAdded(Container container, Component panel) {
+        for (int i = 0; i < container.getComponentCount(); i++) {
+            Component component = container.getComponent(i);
+            if (component == panel) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

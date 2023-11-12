@@ -4,7 +4,7 @@ public class AnimationManager {
 
     public static final Animation VAGRANT_IDLE = new Animation("/sprites/vagrant/vagrant-idle-animation.png", 4, 125);
     public static final Animation VAGRANT_WALK = new Animation("/sprites/vagrant/vagrant-walk-animation.png", 4, 90);
-    public static final Animation VAGRANT_ATTACK = new Animation("/sprites/vagrant/vagrant-punch-animation.png", 4, 100);
+    public static final Animation VAGRANT_ATTACK = new Animation("/sprites/vagrant/vagrant-punch-animation.png", 4, 60);
     public static final Animation VAGRANT_HIT = new Animation("/sprites/vagrant/vagrant-damage-animation.png", 2, 100);
     public static final Animation VAGRANT_DEAD = new Animation("/sprites/vagrant/vagrant-dead-animation.png", 1, 100);
     public static final Animation VAGRANT_JUMP = new Animation("/sprites/vagrant/vagrant-jump-animation.png", 4, 100);

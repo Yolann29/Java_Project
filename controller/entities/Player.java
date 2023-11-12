@@ -70,6 +70,8 @@ public class Player extends Entity {
             }
         } else if (keyHandler.jump) {
             this.setDirection("jump");
+        } else if (keyHandler.attack) {
+            this.setDirection("attack");
         } else {
             this.setDirection("idle");
         }
@@ -153,6 +155,19 @@ public class Player extends Entity {
                     case "Magician":
                         AnimationManager.MAGICIAN_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
+                break;
+            case "attack":
+                switch(classe) {
+                    case "Vagrant":
+                        AnimationManager.VAGRANT_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Warrior":
+                        AnimationManager.WARRIOR_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Magician":
+                        AnimationManager.MAGICIAN_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                }
+                break;
         }
     }
 
