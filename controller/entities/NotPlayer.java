@@ -94,6 +94,9 @@ public class NotPlayer extends Entity {
                         case "Warrior":
                         AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
+                    case "Archer":
+                        AnimationManager.ARCHER_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
                     case "Magician":
                         AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
@@ -106,6 +109,9 @@ public class NotPlayer extends Entity {
                         break;
                     case "Warrior":
                         AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
+                        break;
+                    case "Archer":
+                        AnimationManager.ARCHER_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
                     case "Magician":
                         AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
@@ -120,6 +126,9 @@ public class NotPlayer extends Entity {
                     case "Warrior":
                         AnimationManager.WARRIOR_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
                         break;
+                    case "Archer":
+                        AnimationManager.ARCHER_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
                     case "Magician":
                         AnimationManager.MAGICIAN_WALK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
                 }
@@ -132,6 +141,9 @@ public class NotPlayer extends Entity {
                     case "Warrior":
                         AnimationManager.WARRIOR_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
+                    case "Archer":
+                        AnimationManager.ARCHER_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
                     case "Magician":
                         AnimationManager.MAGICIAN_IDLE.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
@@ -143,6 +155,9 @@ public class NotPlayer extends Entity {
                         break;
                     case "Warrior":
                         AnimationManager.WARRIOR_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Archer":
+                        AnimationManager.ARCHER_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
                     case "Magician":
                         AnimationManager.MAGICIAN_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());

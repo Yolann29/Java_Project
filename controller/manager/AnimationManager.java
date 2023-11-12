@@ -24,6 +24,9 @@ public class AnimationManager {
     public static final Animation ARCHER_IDLE = new Animation("/sprites/archer/archer-idle-animation.png", 4, 175);
     public static final Animation ARCHER_WALK = new Animation("/sprites/archer/archer-walk-animation.png", 4, 75);
     public static final Animation ARCHER_ATTACK = new Animation("/sprites/archer/archer-shoot-animation.png", 4, 100);
+    public static final Animation ARCHER_HIT = new Animation("/sprites/archer/archer-damage-animation.png", 2, 125);
+    public static final Animation ARCHER_DEAD = new Animation("/sprites/archer/archer-dead-animation.png", 1, 100);
+    public static final Animation ARCHER_JUMP = new Animation("/sprites/archer/archer-jump-animation.png", 4, 100);
     public static final Animation ARCHER_OBJECT = new Animation("/sprites/archer/archer-arrow-animation.png", 1, 100);
 
     //MAGICIAN

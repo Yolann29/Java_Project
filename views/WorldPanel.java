@@ -40,14 +40,14 @@ public class WorldPanel extends JPanel {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
         this.player = player;
-        this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, "left-right", "Magician");
-        this.fighterEncounteredNPC1 = new Warrior("Weak Magician", Type.ELECTRICITY);
+        this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, "left-right", "Archer");
+        this.fighterEncounteredNPC1 = new Warrior("Medium Archer", Type.ELECTRICITY);
         fighterEncounteredNPC1.pickWeapon(new IceSword());
         this.npc2 = new NotPlayer(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, "circle", "Vagrant");
         this.fighterEncounteredNPC2 = new Warrior("Weak Vagrant", Type.WATER);
         fighterEncounteredNPC2.pickWeapon(new IceSword());
-        this.npc3 = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, "up-down", "Vagrant");
-        this.fighterEncounteredNPC3 = new Warrior("Medium Vagrant", Type.GROUND);
+        this.npc3 = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, "up-down", "Archer");
+        this.fighterEncounteredNPC3 = new Warrior("Weak Archer", Type.GROUND);
         fighterEncounteredNPC3.pickWeapon(new IceSword());
         this.npc4 = new NotPlayer(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, null, "Magician");
         this.fighterEncounteredNPC4 = new Warrior("Great Magician", Type.WATER);

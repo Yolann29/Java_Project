@@ -102,6 +102,9 @@ public class Player extends Entity {
                     case "Warrior":
                         AnimationManager.WARRIOR_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
+                    case "Archer":
+                        AnimationManager.ARCHER_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
                     case "Magician":
                         AnimationManager.MAGICIAN_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
@@ -114,6 +117,9 @@ public class Player extends Entity {
                         break;
                     case "Warrior":
                         AnimationManager.WARRIOR_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Archer":
+                        AnimationManager.ARCHER_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
                     case "Magician":
                         AnimationManager.MAGICIAN_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
@@ -128,6 +134,9 @@ public class Player extends Entity {
                     case "Warrior":
                         AnimationManager.WARRIOR_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
+                    case "Archer":
+                        AnimationManager.ARCHER_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
                     case "Magician":
                         AnimationManager.MAGICIAN_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
@@ -139,6 +148,9 @@ public class Player extends Entity {
                         break;
                     case "Warrior":
                         AnimationManager.WARRIOR_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Archer":
+                        AnimationManager.ARCHER_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
                     case "Magician":
                         AnimationManager.MAGICIAN_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
@@ -152,6 +164,9 @@ public class Player extends Entity {
                     case "Warrior":
                         AnimationManager.WARRIOR_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
+                    case "Archer":
+                        AnimationManager.ARCHER_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
                     case "Magician":
                         AnimationManager.MAGICIAN_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 }
@@ -163,6 +178,9 @@ public class Player extends Entity {
                         break;
                     case "Warrior":
                         AnimationManager.WARRIOR_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                        break;
+                    case "Archer":
+                        AnimationManager.ARCHER_ATTACK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                         break;
                     case "Magician":
                         AnimationManager.MAGICIAN_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
