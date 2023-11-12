@@ -18,7 +18,7 @@ public class TileManager {
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        tiles = new Tile[11];
+        tiles = new Tile[12];
         getTilesImages();
         mapTileNum = new int[GamePanel.worldColumns][GamePanel.worldRows];
         getMap("/textures/floor/map");
@@ -50,6 +50,25 @@ public class TileManager {
             tiles[6] = new Tile();
             tiles[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/wallLeft.png")));
             tiles[6].collision = true;
+
+            tiles[7] = new Tile();
+            tiles[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/floor-cobble.png")));
+            tiles[7].collision = true;
+
+            tiles[8] = new Tile();
+            tiles[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/wall-side.png")));
+            tiles[8].collision = true;
+
+            tiles[9] = new Tile();
+            tiles[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/floor-grass.png")));
+            tiles[9].collision = true;
+
+            tiles[10] = new Tile();
+            tiles[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/tree-bottom.png")));
+            tiles[10].collision = true;
+
+            tiles[11] = new Tile();
+            tiles[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/tree-top.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -86,7 +105,7 @@ public class TileManager {
         int worldColumn = 0;
         int worldRow = 0;
 
-        while(worldColumn < GamePanel.worldColumns && worldRow < GamePanel.worldRows) {
+        while (worldColumn < GamePanel.worldColumns && worldRow < GamePanel.worldRows) {
 
             int tilesIndex = mapTileNum[worldColumn][worldRow];
             int worldX = worldColumn * GamePanel.tileSize;
@@ -94,12 +113,41 @@ public class TileManager {
             int screenX = gamePanel.player.screenX + (worldX - gamePanel.player.getWorldX());
             int screenY = gamePanel.player.screenY + (worldY - gamePanel.player.getWorldY());
 
-            g2.drawImage(tiles[tilesIndex].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
+            g2.drawImage(tiles[0].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
+            if (tilesIndex != 11) {
+                g2.drawImage(tiles[tilesIndex].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
+            }
+
             worldColumn++;
             if (worldColumn == GamePanel.worldColumns) {
                 worldColumn = 0;
                 worldRow++;
             }
         }
+    }
+
+        public void drawTopPlayer(Graphics2D g2) {
+
+            int worldColumn = 0;
+            int worldRow = 0;
+
+            while(worldColumn < GamePanel.worldColumns && worldRow < GamePanel.worldRows) {
+
+                int tilesIndex = mapTileNum[worldColumn][worldRow];
+                int worldX = worldColumn * GamePanel.tileSize;
+                int worldY = worldRow * GamePanel.tileSize;
+                int screenX = gamePanel.player.screenX + (worldX - gamePanel.player.getWorldX());
+                int screenY = gamePanel.player.screenY + (worldY - gamePanel.player.getWorldY());
+
+                if (tilesIndex == 11) {
+                    g2.drawImage(tiles[tilesIndex].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
+                }
+
+                worldColumn++;
+                if (worldColumn == GamePanel.worldColumns) {
+                    worldColumn = 0;
+                    worldRow++;
+                }
+            }
     }
 }
