@@ -4,7 +4,6 @@ import controller.Arena;
 import controller.manager.AnimationManager;
 import models.fighters.Fighter;
 import views.dialog.DialogActions;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
