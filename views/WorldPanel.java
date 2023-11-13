@@ -25,6 +25,7 @@ public class WorldPanel extends JPanel {
     final private NotPlayer npc3;
     final private NotPlayer npc4;
     final private NotPlayer npc5;
+    final private NotPlayer pursuer;
     final private NotPlayer merchant;
 
     public boolean fighterClose = false;
@@ -35,6 +36,7 @@ public class WorldPanel extends JPanel {
     Fighter fighterEncounteredNPC3;
     Fighter fighterEncounteredNPC4;
     Fighter fighterEncounteredNPC5;
+    Fighter fighterEncounteredPursuer;
     public NotPlayer npcEncounter;
 
     public WorldPanel(GamePanel gamePanel, KeyHandler keyHandler, Player player) {
@@ -56,6 +58,9 @@ public class WorldPanel extends JPanel {
         this.npc5 = new NotPlayer(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, "attack", "Warrior");
         this.fighterEncounteredNPC5 = new Warrior("Great Warrior", Type.FIRE);
         fighterEncounteredNPC5.pickWeapon(new FireSword());
+        this.pursuer = new NotPlayer(gamePanel, 24*GamePanel.tileSize, 11*GamePanel.tileSize, "smart", "Warrior");
+        this.fighterEncounteredPursuer = new Warrior("Great Warrior", Type.FIRE);
+        fighterEncounteredNPC5.pickWeapon(new FireSword());
         this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, null, "Vagrant");
         this.tileManager = new TileManager(gamePanel);
         this.addKeyListener(player.getKeyHandler());
@@ -67,6 +72,7 @@ public class WorldPanel extends JPanel {
         npc2.update();
         npc3.update();
         npc5.update();
+        pursuer.update();
         player.update();
 
         if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc1.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc1.getWorldY() - GamePanel.tileSize)) {
@@ -119,55 +125,56 @@ public class WorldPanel extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        tileManager.draw(g2);
-
-        if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc1.getWorldY()) {
-            npc2.draw(g2);
-            npc3.draw(g2);
-            npc4.draw(g2);
+        if (player.changeMap) {
+            tileManager.changeMap();
+            tileManager.draw(g2);
             player.draw(g2);
-            npc1.draw(g2);
-            npc5.draw(g2);
-            merchant.draw(g2);
-
-        } else if (player.getWorldX() < (npc2.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc2.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc2.getWorldY()) {
-            npc1.draw(g2);
-            npc3.draw(g2);
-            npc4.draw(g2);
-            player.draw(g2);
-            npc2.draw(g2);
-            npc5.draw(g2);
-            merchant.draw(g2);
-
-        } else if (player.getWorldX() < (npc3.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc3.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc3.getWorldY()) {
-            npc1.draw(g2);
-            npc2.draw(g2);
-            npc4.draw(g2);
-            player.draw(g2);
-            npc3.draw(g2);
-            npc5.draw(g2);
-            merchant.draw(g2);
-
-        } else if (player.getWorldX() < (npc4.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc4.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc4.getWorldY()) {
-            npc1.draw(g2);
-            npc2.draw(g2);
-            npc3.draw(g2);
-            player.draw(g2);
-            npc4.draw(g2);
-            npc5.draw(g2);
-            merchant.draw(g2);
-
+            player.changeMap = false;
         } else {
-            npc1.draw(g2);
-            npc2.draw(g2);
-            npc3.draw(g2);
-            npc4.draw(g2);
-            player.draw(g2);
-            npc5.draw(g2);
-            merchant.draw(g2);
+            tileManager.draw(g2);
+
+            if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc1.getWorldY()) {
+                npc2.draw(g2);
+                npc3.draw(g2);
+                npc4.draw(g2);
+                player.draw(g2);
+                npc1.draw(g2);
+
+            } else if (player.getWorldX() < (npc2.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc2.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc2.getWorldY()) {
+                npc1.draw(g2);
+                npc3.draw(g2);
+                npc4.draw(g2);
+                player.draw(g2);
+                npc2.draw(g2);
+
+            } else if (player.getWorldX() < (npc3.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc3.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc3.getWorldY()) {
+                npc1.draw(g2);
+                npc2.draw(g2);
+                npc4.draw(g2);
+                player.draw(g2);
+                npc3.draw(g2);
+
+            } else if (player.getWorldX() < (npc4.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc4.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc4.getWorldY()) {
+                npc1.draw(g2);
+                npc2.draw(g2);
+                npc3.draw(g2);
+                player.draw(g2);
+                npc4.draw(g2);
+
+            } else {
+                npc1.draw(g2);
+                npc2.draw(g2);
+                npc3.draw(g2);
+                npc4.draw(g2);
+                player.draw(g2);
+            }
         }
 
+        npc5.draw(g2);
+        merchant.draw(g2);
+
         tileManager.drawTopPlayer(g2);
+        pursuer.draw(g2);
         g2.dispose();
     }
 }

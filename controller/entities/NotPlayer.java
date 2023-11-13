@@ -78,6 +78,23 @@ public class NotPlayer extends Entity {
                 } else {
                     this.setDirection("idle");
                 }
+                break;
+            case "smart":
+                if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
+                    this.setDirection("right");
+                    this.setWorldX(this.getWorldX() + this.getSpeed());
+                } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
+                    this.setDirection("left");
+                    this.setWorldX(this.getWorldX() - this.getSpeed());
+                } else if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
+                    this.setDirection("down");
+                    this.setWorldY(this.getWorldY() + this.getSpeed());
+                } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
+                    this.setDirection("up");
+                    this.setWorldY(this.getWorldY() - this.getSpeed());
+                } else {
+                    this.setDirection("attack");
+                }
         }
     }
 

@@ -19,6 +19,7 @@ public class Player extends Entity {
     public int screenX;
     public int screenY;
     public String classe;
+    public boolean changeMap = false;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, String classe) {
         this.gamePanel = gamePanel;
@@ -64,9 +65,11 @@ public class Player extends Entity {
                             this.setWorldY(this.getWorldY() + this.getSpeed());
                             break;
                         case "left":
+                            changeMap = true;
                             this.setWorldX(GamePanel.worldWidth - 64 - this.getSpeed());
                             break;
                         case "right":
+                            changeMap = true;
                             this.setWorldX(this.getSpeed());
                             break;
                     }

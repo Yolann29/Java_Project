@@ -21,6 +21,7 @@ import views.dialog.MerchantShop;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -98,17 +99,29 @@ public class GamePanel extends JPanel implements Runnable {
         imageCount = 0;
 
         while(gameLoop != null){
-            update();
-            repaint();
 
-            try {
-                Thread.sleep(1000/MAX_FPS);
-                imageCount++;
-                if (imageCount == 200) {
-                    imageCount = 0;
+            if (!keyHandler.pause) {
+                update();
+                repaint();
+
+                try {
+
+                    Thread.sleep(1000 / MAX_FPS);
+                    imageCount++;
+                    if (imageCount == 200) {
+                        imageCount = 0;
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } else {
+
+                try {
+
+                    Thread.sleep(1000 / MAX_FPS);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
         }

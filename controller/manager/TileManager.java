@@ -8,20 +8,35 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
 public class TileManager {
 
     GamePanel gamePanel;
     public static Tile[] tiles;
     public static int[][] mapTileNum;
+    public static int[][] mapTileNum1;
+    public static int[][] mapTileNum2;
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        tiles = new Tile[12];
+        tiles = new Tile[13];
         getTilesImages();
         mapTileNum = new int[GamePanel.worldColumns][GamePanel.worldRows];
-        getMap("/textures/floor/map");
+        mapTileNum1 = new int[GamePanel.worldColumns][GamePanel.worldRows];
+        mapTileNum2 = new int[GamePanel.worldColumns][GamePanel.worldRows];
+
+        int column = 0;
+        int row = 0;
+        for (int i = 0; i < mapTileNum1.length; i++) {
+            for (int j = 0; j < mapTileNum1[0].length; j++) {
+                mapTileNum1[i][j] = 29;
+            }
+        }
+        getMap("/textures/floor/map.csv");
     }
 
     public void getTilesImages() {
@@ -69,6 +84,10 @@ public class TileManager {
 
             tiles[11] = new Tile();
             tiles[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/tree-top.png")));
+
+            tiles[12] = new Tile();
+            tiles[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/floor-cobble.png")));
+            tiles[12].collision = true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,14 +98,35 @@ public class TileManager {
             InputStream map = getClass().getResourceAsStream(mapPath);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(map)));
 
+            Random random = new Random();
             int column = 0;
             int row = 0;
+            ArrayList<Integer> tilesRandom = new ArrayList<Integer>(Arrays.asList(0,11));
             while(column < GamePanel.worldColumns && row < GamePanel.worldRows) {
                 String line = bufferedReader.readLine();
                 while(column < GamePanel.worldColumns) {
-                    String[] numbers = line.split(" ");
+                    String[] numbers = line.split(",");
                     int num = Integer.parseInt(numbers[column]);
                     mapTileNum[column][row] = num;
+                    if (row == 0 || column == 0 || column == GamePanel.worldColumns - 1 || row == GamePanel.worldRows - 1) {
+                        if (num == 2 || num == 5 || num == 12) {
+                            mapTileNum1[column][row] = 1;
+                        } else {
+                            mapTileNum1[column][row] = num;
+                        }
+                    } else {
+                        int index = random.nextInt(tilesRandom.size());
+                        if (mapTileNum1[column][row] == 29) {
+                            mapTileNum1[column][row] = tilesRandom.get(index);
+                            if (row ==GamePanel.worldRows - 2 && mapTileNum1[column][row] == 11) {
+                                mapTileNum1[column][row] = 0;
+                            }
+                        }
+                        if (mapTileNum1[column][row] == 11) {
+                            mapTileNum1[column][row + 1] = 10;
+                            mapTileNum1[column + 1][row + 1] = 0;
+                        }
+                    }
                     column++;
                 }
                 if (column == GamePanel.worldColumns) {
@@ -94,6 +134,7 @@ public class TileManager {
                     row++;
                 }
             }
+            mapTileNum2 = mapTileNum;
             bufferedReader.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,28 +167,36 @@ public class TileManager {
         }
     }
 
-        public void drawTopPlayer(Graphics2D g2) {
+    public void changeMap() {
+        if (mapTileNum == mapTileNum1)
+            mapTileNum = mapTileNum2;
+        else {
+            mapTileNum = mapTileNum1;
+        }
+    }
 
-            int worldColumn = 0;
-            int worldRow = 0;
+    public void drawTopPlayer(Graphics2D g2) {
 
-            while(worldColumn < GamePanel.worldColumns && worldRow < GamePanel.worldRows) {
+        int worldColumn = 0;
+        int worldRow = 0;
 
-                int tilesIndex = mapTileNum[worldColumn][worldRow];
-                int worldX = worldColumn * GamePanel.tileSize;
-                int worldY = worldRow * GamePanel.tileSize;
-                int screenX = gamePanel.player.screenX + (worldX - gamePanel.player.getWorldX());
-                int screenY = gamePanel.player.screenY + (worldY - gamePanel.player.getWorldY());
+        while(worldColumn < GamePanel.worldColumns && worldRow < GamePanel.worldRows) {
 
-                if (tilesIndex == 11) {
-                    g2.drawImage(tiles[tilesIndex].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
-                }
+            int tilesIndex = mapTileNum[worldColumn][worldRow];
+            int worldX = worldColumn * GamePanel.tileSize;
+            int worldY = worldRow * GamePanel.tileSize;
+            int screenX = gamePanel.player.screenX + (worldX - gamePanel.player.getWorldX());
+            int screenY = gamePanel.player.screenY + (worldY - gamePanel.player.getWorldY());
 
-                worldColumn++;
-                if (worldColumn == GamePanel.worldColumns) {
-                    worldColumn = 0;
-                    worldRow++;
-                }
+            if (tilesIndex == 11) {
+                g2.drawImage(tiles[tilesIndex].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
             }
+
+            worldColumn++;
+            if (worldColumn == GamePanel.worldColumns) {
+                worldColumn = 0;
+                worldRow++;
+            }
+        }
     }
 }

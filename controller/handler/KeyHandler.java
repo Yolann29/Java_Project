@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean top, bottom, right, left, jump, attack;
+    public boolean top, bottom, right, left, jump, attack, pause;
     public boolean changing = false, overWorld = true;
 
     public void keyTyped(KeyEvent e) {
@@ -43,6 +43,10 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_A) {
             attack = true;
+        }
+
+        if (code == KeyEvent.VK_SEMICOLON) {
+            pause = !pause;
         }
 
     }
