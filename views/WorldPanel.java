@@ -35,6 +35,7 @@ public class WorldPanel extends JPanel {
     Fighter fighterEncounteredNPC3;
     Fighter fighterEncounteredNPC4;
     Fighter fighterEncounteredNPC5;
+    public NotPlayer npcEncounter;
 
     public WorldPanel(GamePanel gamePanel, KeyHandler keyHandler, Player player) {
         this.gamePanel = gamePanel;
@@ -70,30 +71,35 @@ public class WorldPanel extends JPanel {
 
         if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc1.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc1.getWorldY() - GamePanel.tileSize)) {
             fighterClose = true;
+            npcEncounter = npc1;
             if (fighterEncountered == null) {
                 fighterEncountered = fighterEncounteredNPC1;
             }
 
         } else if (player.getWorldX() < (npc2.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc2.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc2.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc2.getWorldY() - GamePanel.tileSize)) {
             fighterClose = true;
+            npcEncounter = npc2;
             if (fighterEncountered == null) {
                 fighterEncountered = fighterEncounteredNPC2;
             }
 
         } else if (player.getWorldX() < (npc3.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc3.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc3.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc3.getWorldY() - GamePanel.tileSize)) {
             fighterClose = true;
+            npcEncounter = npc3;
             if (fighterEncountered == null) {
                 fighterEncountered = fighterEncounteredNPC3;
             }
 
         } else if (player.getWorldX() < (npc4.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc4.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc4.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc4.getWorldY() - GamePanel.tileSize)) {
             fighterClose = true;
+            npcEncounter = npc4;
             if (fighterEncountered == null) {
                 fighterEncountered = fighterEncounteredNPC4;
             }
 
         } else if (player.getWorldX() < (npc5.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc5.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc5.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc5.getWorldY() - GamePanel.tileSize)) {
             fighterClose = true;
+            npcEncounter = npc5;
             if (fighterEncountered == null) {
                 fighterEncountered = fighterEncounteredNPC5;
             }
@@ -104,6 +110,7 @@ public class WorldPanel extends JPanel {
             fighterClose = false;
             merchantClose = false;
             fighterEncountered = null;
+            npcEncounter = null;
         }
     }
 

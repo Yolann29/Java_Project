@@ -155,4 +155,8 @@ public abstract class Fighter {
     public int getMaxHp() {
         return maxHp;
     }
+
+    public void restoreHpMax() {
+        this.hp = maxHp;
+    }
 }

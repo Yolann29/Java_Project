@@ -37,9 +37,9 @@ public class GamePanel extends JPanel implements Runnable {
     final public static int FRAME_HEIGHT = 600;
     public int imageCount;
 
-    final private KeyHandler keyHandler = new KeyHandler();
+    final public KeyHandler keyHandler = new KeyHandler();
     final public Collision collision = new Collision(this);
-    final private WorldPanel worldPanel;
+    final public WorldPanel worldPanel;
     final private FightLauncher fightLauncher;
     final private MerchantShop merchantShop;
 
@@ -64,8 +64,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.arena = new Arena(playerFighter, encounter);
         this.dialogActions = new DialogActions(arena);
-        this.arenaPanel = new ArenaPanel(arena, dialogActions);
         this.player = new Player(this, keyHandler, "Magician");
+        this.arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, "Archer");
         this.worldPanel = new WorldPanel(this,keyHandler, player);
         this.fightLauncher = new FightLauncher(keyHandler);
         this.merchantShop = new MerchantShop(this, worldPanel);
@@ -141,7 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, dialogActions)) {
                 arena = new Arena(playerFighter, worldPanel.fighterEncountered);
                 dialogActions = new DialogActions(arena);
-                arenaPanel = new ArenaPanel(arena, dialogActions);
+                arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, worldPanel.npcEncounter.classe);
 
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(dialogActions, BorderLayout.SOUTH);
