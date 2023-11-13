@@ -1,6 +1,7 @@
 package views;
 
 import controller.Arena;
+import controller.entities.NotPlayer;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.Collision;
@@ -47,22 +48,24 @@ public class GamePanel extends JPanel implements Runnable {
     private DialogActions dialogActions;
     private Arena arena;
     final public Player player;
+    public NotPlayer encounter;
     public Fighter playerFighter;
+    public Fighter encounterFighter;
 
     Thread gameLoop = null;
     public GamePanel() {
 
         playerFighter = new Warrior("Nathan", Type.FIRE);
-        Fighter encounter = new Warrior("First Encounter", Type.WATER);
+        encounterFighter = new Warrior("First Encounter", Type.WATER);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
         Item healPotion = new HealPotion();
         Item damageBooster = new DamageBooster();
         playerFighter.pickWeapon(firesword);
-        encounter.pickWeapon(icesword);
+        encounterFighter.pickWeapon(icesword);
         playerFighter.pickItems(Arrays.asList(healPotion, damageBooster));
 
-        this.arena = new Arena(playerFighter, encounter);
+        this.arena = new Arena(playerFighter, encounterFighter);
         this.dialogActions = new DialogActions(arena);
         this.player = new Player(this, keyHandler, "Magician");
         this.arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, "Archer");
@@ -122,6 +125,12 @@ public class GamePanel extends JPanel implements Runnable {
             if (worldPanel.fighterClose) {
                 if (isPanelAdded(this, fightLauncher)) {
                     this.add(fightLauncher, BorderLayout.SOUTH);
+                    if (worldPanel.npcEncounter != null) {
+                        encounter = worldPanel.npcEncounter;
+                    }
+                    if (worldPanel.fighterEncountered != null) {
+                        encounterFighter = worldPanel.fighterEncountered;
+                    }
                 }
             } else {
                 this.remove(fightLauncher);
@@ -139,9 +148,9 @@ public class GamePanel extends JPanel implements Runnable {
             this.remove(fightLauncher);
             this.remove(worldPanel);
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, dialogActions)) {
-                arena = new Arena(playerFighter, worldPanel.fighterEncountered);
+                arena = new Arena(playerFighter, encounterFighter);
                 dialogActions = new DialogActions(arena);
-                arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, worldPanel.npcEncounter.classe);
+                arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, encounter.classe);
 
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(dialogActions, BorderLayout.SOUTH);

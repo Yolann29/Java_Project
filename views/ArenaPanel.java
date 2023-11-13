@@ -127,6 +127,7 @@ public class ArenaPanel extends JPanel {
             initAnimation = 0;
             gamePanel.playerFighter.restoreHpMax();
             gamePanel.worldPanel.fighterEncountered.restoreHpMax();
+            gamePanel.worldPanel.fighterEncountered = null;
         }
     }
 
