@@ -35,6 +35,9 @@ public class Collision {
                 if (TileManager.tiles[indexTileNordOuest].isCollision() || TileManager.tiles[indexTileNordEst].isCollision()) {
                     entity.collisionOn = true;
                 }
+                if (TileManager.tiles[indexTileNordOuest].isDoor() || TileManager.tiles[indexTileNordEst].isDoor()) {
+                    entity.doorHere = true;
+                }
                 break;
             case "down":
                 bottomY = (solidAreaBottom + entity.getSpeed()) / GamePanel.tileSize;
@@ -42,6 +45,9 @@ public class Collision {
                 indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];
                 if (TileManager.tiles[indexTileSudOuest].isCollision() || TileManager.tiles[indexTileSudEst].isCollision()) {
                     entity.collisionOn = true;
+                }
+                if (TileManager.tiles[indexTileSudOuest].isDoor() || TileManager.tiles[indexTileSudEst].isDoor()) {
+                    entity.doorHere = true;
                 }
                 break;
             case "left":
@@ -51,6 +57,9 @@ public class Collision {
                 if (TileManager.tiles[indexTileNordOuest].isCollision() || TileManager.tiles[indexTileSudOuest].isCollision()) {
                     entity.collisionOn = true;
                 }
+                if (TileManager.tiles[indexTileNordOuest].isDoor() || TileManager.tiles[indexTileSudOuest].isDoor()) {
+                    entity.doorHere = true;
+                }
                 break;
             case "right":
                 rightX = (solidAreaRight + entity.getSpeed()) / GamePanel.tileSize;
@@ -58,6 +67,9 @@ public class Collision {
                 indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];
                 if (TileManager.tiles[indexTileNordEst].isCollision() || TileManager.tiles[indexTileSudEst].isCollision()) {
                     entity.collisionOn = true;
+                }
+                if (TileManager.tiles[indexTileNordEst].isDoor() || TileManager.tiles[indexTileSudEst].isDoor()) {
+                    entity.doorHere = true;
                 }
         }
     }

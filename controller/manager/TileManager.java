@@ -53,7 +53,7 @@ public class TileManager {
 
             tiles[7] = new Tile();
             tiles[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/floor-cobble.png")));
-            tiles[7].collision = true;
+            tiles[7].door = true;
 
             tiles[8] = new Tile();
             tiles[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/wall-side.png")));
@@ -61,7 +61,7 @@ public class TileManager {
 
             tiles[9] = new Tile();
             tiles[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/floor-grass.png")));
-            tiles[9].collision = true;
+            tiles[9].door = true;
 
             tiles[10] = new Tile();
             tiles[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/tree-bottom.png")));

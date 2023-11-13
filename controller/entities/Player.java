@@ -52,21 +52,39 @@ public class Player extends Entity {
                 this.setDirection("right");
             }
             collisionOn = false;
+            doorHere = false;
             gamePanel.collision.checkTile(this);
             if (!collisionOn) {
-                switch(this.getDirection()) {
-                    case "up":
-                        this.setWorldY(this.getWorldY() - this.getSpeed());
-                        break;
-                    case "down":
-                        this.setWorldY(this.getWorldY() + this.getSpeed());
-                        break;
-                    case "left":
-                        this.setWorldX(this.getWorldX() - this.getSpeed());
-                        break;
-                    case "right":
-                        this.setWorldX(this.getWorldX() + this.getSpeed());
-                        break;
+                if (doorHere) {
+                    switch(this.getDirection()) {
+                        case "up":
+                            this.setWorldY(this.getWorldY() - this.getSpeed());
+                            break;
+                        case "down":
+                            this.setWorldY(this.getWorldY() + this.getSpeed());
+                            break;
+                        case "left":
+                            this.setWorldX(GamePanel.worldWidth - 64 - this.getSpeed());
+                            break;
+                        case "right":
+                            this.setWorldX(this.getSpeed());
+                            break;
+                    }
+                } else {
+                    switch(this.getDirection()) {
+                        case "up":
+                            this.setWorldY(this.getWorldY() - this.getSpeed());
+                            break;
+                        case "down":
+                            this.setWorldY(this.getWorldY() + this.getSpeed());
+                            break;
+                        case "left":
+                            this.setWorldX(this.getWorldX() - this.getSpeed());
+                            break;
+                        case "right":
+                            this.setWorldX(this.getWorldX() + this.getSpeed());
+                            break;
+                    }
                 }
             }
         } else if (keyHandler.jump) {

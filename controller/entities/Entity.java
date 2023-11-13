@@ -11,7 +11,7 @@ public class Entity {
     private int worldX, worldY, x, y, speed;
     private String direction;
     protected boolean reversed;
-    public boolean collisionOn;
+    public boolean collisionOn, doorHere;
     protected Rectangle solidArea;
 
     public int getX() {
