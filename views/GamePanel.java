@@ -7,9 +7,6 @@ import controller.handler.KeyHandler;
 import controller.manager.Collision;
 import models.fighters.Fighter;
 import models.fighters.Warrior;
-import models.items.DamageBooster;
-import models.items.HealPotion;
-import models.items.Item;
 import models.types.Type;
 import models.weapons.FireSword;
 import models.weapons.IceSword;
@@ -21,7 +18,7 @@ import views.arena.MerchantShop;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -56,8 +53,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameLoop = null;
     public GamePanel() {
 
-        playerFighter = new Warrior("Nathan", Type.FIRE);
-        encounterFighter = new Warrior("First Encounter", Type.WATER);
+        playerFighter = new Warrior("Nathan", Type.FIRE, 50);
+        encounterFighter = new Warrior("First Encounter", Type.WATER, new Random().nextInt(10) + 1);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
         playerFighter.pickWeapon(firesword);
@@ -65,7 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.arena = new Arena(playerFighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);
-        this.player = new Player(this, keyHandler, "Magician");
+        this.player = new Player(this, keyHandler, "Warrior");
         this.encounter = new NotPlayer(this, 0,0,"left-right","Vagrant");
         this.encounter.fighter = encounterFighter;
         this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
@@ -78,7 +75,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(new BorderLayout());
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-//
         this.add(arenaPanel);
         this.add(actionsPanel);
         this.add(worldPanel, BorderLayout.CENTER);

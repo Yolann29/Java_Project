@@ -12,6 +12,7 @@ import models.weapons.IceSword;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class WorldPanel extends JPanel {
 
@@ -39,23 +40,23 @@ public class WorldPanel extends JPanel {
         this.player = player;
 
         this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, "left-right", "Archer");
-        npc1.fighter = new Warrior("Archer", Type.ELECTRICITY);
+        npc1.fighter = new Warrior("Archer", Type.ELECTRICITY, new Random().nextInt(700) + 100);
         npc1.fighter.pickWeapon(new IceSword());
 
         this.npc2 = new NotPlayer(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, "circle", "Vagrant");
-        npc2.fighter = new Warrior("Vagrant", Type.WATER);
+        npc2.fighter = new Warrior("Vagrant", Type.WATER, new Random().nextInt(1000) + 700);
         npc2.fighter.pickWeapon(new IceSword());
 
         this.npc3 = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, "up-down", "Archer");
-        npc3.fighter = new Warrior("Archer", Type.GROUND);
+        npc3.fighter = new Warrior("Archer", Type.GROUND, new Random().nextInt(700) + 100);
         npc3.fighter.pickWeapon(new IceSword());
 
         this.npc4 = new NotPlayer(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, null, "Magician");
-        npc4.fighter = new Warrior("Magician", Type.WATER);
+        npc4.fighter = new Warrior("Magician", Type.WATER, new Random().nextInt(1000) + 100);
         npc4.fighter.pickWeapon(new IceSword());
 
         this.npc5 = new NotPlayer(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, "attack", "Warrior");
-        npc5.fighter = new Warrior("Warrior", Type.FIRE);
+        npc5.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(1000) + 100);
         npc5.fighter.pickWeapon(new FireSword());
 
         this.pursuer = new NotPlayer(gamePanel, 24*GamePanel.tileSize, 11*GamePanel.tileSize, "smart", "Warrior");
@@ -103,6 +104,7 @@ public class WorldPanel extends JPanel {
             npcEncounter = notplayer;
             if (fighterEncountered == null) {
                 fighterEncountered = notplayer.fighter;
+//                keyHandler.overWorld = false;
 
             }
             return true;
@@ -115,6 +117,7 @@ public class WorldPanel extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
+
 
         if (player.changeMap) {
             tileManager.changeMap();

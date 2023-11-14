@@ -18,19 +18,20 @@ public abstract class Fighter {
     protected int defense;
     protected Weapon weapon;
     protected ArrayList<Item> items;
-    protected int level = 1;
-    protected int experience = 0;
+//    protected int level = 1;
+    protected int experience = 1;
     protected long walkingTime = 0;
     protected long damageTime = 0;
     protected boolean usingItem = false;
-    public Fighter(String name, Type type, int level) {
+    public Fighter(String name, Type type, int experience) {
+        this.experience = experience;
         this.type = type;
         this.name = name;
-        this.maxHp = 100;
+        this.maxHp = 100 + (this.getLevel() * 10);
         this.hp = maxHp;
         this.defense = 100;
         this.items = new ArrayList<>(Arrays.asList(new HealPotion(), new DamageBooster()));
-        this.level = level;
+
     }
 
     public void regenItems(){
@@ -97,7 +98,7 @@ public abstract class Fighter {
     }
 
     public boolean attack(Fighter target, Attack attack){
-        target.takeDamage(this.weapon.getDamage() + attack.getDamage());
+        target.takeDamage(this.weapon.getDamage() + attack.getDamage() + this.getLevel());
         return true;
 
     }
@@ -133,7 +134,7 @@ public abstract class Fighter {
 
 
     public int getLevel() {
-        return level;
+        return (int) Math.floor(Math.sqrt(experience) / 10 * 2);
     }
 
     public int getExperience() {
@@ -164,7 +165,12 @@ public abstract class Fighter {
         return maxHp;
     }
 
+    public void giveXp(int amount){
+        this.experience += amount;
+    }
+
     public void restoreHpMax() {
+        this.maxHp = this.getLevel() * 10 + 100;
         this.hp = maxHp;
     }
 

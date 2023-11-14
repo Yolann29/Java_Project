@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public class ArenaPanel extends JPanel {
 
@@ -120,7 +121,7 @@ public class ArenaPanel extends JPanel {
 
     }
 
-    public void quitArena(Entity entity) {
+    public void quitArena(Entity looser) {
         if (initAnimation == 0) {
             initAnimation = System.currentTimeMillis();
         }
@@ -134,9 +135,10 @@ public class ArenaPanel extends JPanel {
             arena.isYourTurn = true;
             arena.getFighter1().getWeapon().setDamage(arena.getFighter1().getWeapon().getInitialDamage());
             arena.getFighter1().regenItems();
+            arena.getFighter1().giveXp(arena.getFighter2().getLevel() * 100);
             gamePanel.worldPanel.fighterEncountered = null;
-            entity.setDirection("dead");
-            entity.isDead = true;
+            looser.setDirection("dead");
+            looser.isDead = true;
         }
     }
 
@@ -185,7 +187,7 @@ public class ArenaPanel extends JPanel {
                 && arena.isYourTurn());
 
         if(!arena.getFighter1().isDead() && arena.getFighter2().isDead()){
-            da.setDialogText(arena.getFighter1().getName() + " won !");
+            da.setDialogText(arena.getFighter1().getName() + " won " +  arena.getFighter2().getLevel() * 100 + "xp");
             if(arena.getFighter1().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, "jump")).paint(g2, 100, 270, 96, 96, false);
@@ -193,7 +195,7 @@ public class ArenaPanel extends JPanel {
             }
         }
         if(!arena.getFighter2().isDead() && arena.getFighter1().isDead()){
-            da.setDialogText(arena.getFighter2().getName() + " won !");
+            da.setDialogText(arena.getFighter2().getName() + " won " + arena.getFighter2().getLevel() * 100 + "xp");
             if(arena.getFighter2().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, "jump")).paint(g2, 550, 270, 96, 96, true);

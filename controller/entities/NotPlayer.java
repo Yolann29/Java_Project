@@ -1,9 +1,8 @@
 package controller.entities;
 
-import controller.handler.KeyHandler;
-import controller.manager.AnimationManager;
 import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
+import models.fighters.Warrior;
 import views.GamePanel;
 
 import java.awt.*;
@@ -101,11 +100,35 @@ public class NotPlayer extends Entity {
         }
     }
 
+    public void drawInfoBar(Graphics2D g2, int x, int y){
+
+        g2.setColor(Color.WHITE);
+//        g2.drawString(String.valueOf(this.fighter.getLevel()), x, y - 10);
+//        g2.fillRect(x, y - 10, GamePanel.tileSize, 5);
+        g2.setFont(new Font("Courier", Font.BOLD, 18));
+        if (this.fighter != null) {
+            g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
+
+            g2.setColor(Color.ORANGE);
+            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 5, y - 25, 50, 20, 10, 10);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Courier", Font.BOLD, 16));
+            g2.drawString("Lv." + this.fighter.getLevel(), x + (this.fighter.getName().length() * 7), y - 10);
+        } else {
+            g2.setColor(Color.GREEN.darker());
+            g2.fillRoundRect(x - 10, y - 26, "Merchant".length() * 12, 22, 10, 10);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Merchant", x - 5, y - 10);
+        }
+    }
+
     public void draw(Graphics2D g2) {
 
         int screenX = gamePanel.player.screenX + (this.getWorldX() - gamePanel.player.getWorldX());
         int screenY = gamePanel.player.screenY + (this.getWorldY() - gamePanel.player.getWorldY());
 
+        drawInfoBar(g2, screenX, screenY);
         switch(this.getDirection()) {
             case "up":
             case "down":

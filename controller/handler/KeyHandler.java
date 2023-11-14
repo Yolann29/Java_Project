@@ -16,26 +16,26 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_UP){
+        if(code == KeyEvent.VK_Z){
             top = true;
         }
 
-        if(code == KeyEvent.VK_DOWN){
+        if(code == KeyEvent.VK_S){
             bottom = true;
         }
 
-        if(code == KeyEvent.VK_RIGHT){
+        if(code == KeyEvent.VK_D){
             right = true;
         }
 
-        if(code == KeyEvent.VK_LEFT){
+        if(code == KeyEvent.VK_Q){
             left = true;
         }
 
-        if (code == KeyEvent.VK_ESCAPE) {
-            overWorld = !overWorld;
-            changing = true;
-        }
+//        if (code == KeyEvent.VK_ESCAPE) {
+//            overWorld = !overWorld;
+//            changing = true;
+//        }
 
         if (code == KeyEvent.VK_SPACE) {
             jump = true;
@@ -45,7 +45,7 @@ public class KeyHandler implements KeyListener {
             attack = true;
         }
 
-        if (code == KeyEvent.VK_SEMICOLON) {
+        if (code == KeyEvent.VK_ESCAPE) {
             pause = !pause;
         }
 
@@ -55,25 +55,25 @@ public class KeyHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_UP){
+        if(code == KeyEvent.VK_Z){
             top = false;
         }
 
-        if(code == KeyEvent.VK_DOWN){
+        if(code == KeyEvent.VK_S){
             bottom = false;
         }
 
-        if(code == KeyEvent.VK_RIGHT){
+        if(code == KeyEvent.VK_D){
             right = false;
         }
 
-        if(code == KeyEvent.VK_LEFT){
+        if(code == KeyEvent.VK_Q){
             left = false;
         }
 
-        if(code == KeyEvent.VK_ESCAPE){
-            changing = false;
-        }
+//        if(code == KeyEvent.VK_ESCAPE){
+//            changing = false;
+//        }
 
         if (code == KeyEvent.VK_SPACE) {
             jump = false;
