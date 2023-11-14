@@ -35,43 +35,48 @@ public class NotPlayer extends Entity {
         if (isDead) return;
         switch (movement) {
             case "circle":
-                if (gamePanel.imageCount <= 15 && gamePanel.imageCount > 0) {
-                    this.setDirection("up");
-                    this.setWorldY(this.getWorldY() - this.getSpeed());
-                } else if (gamePanel.imageCount <= 65 && gamePanel.imageCount > 50) {
-                    this.setDirection("right");
-                    this.setWorldX(this.getWorldX() + this.getSpeed());
-                } else if (gamePanel.imageCount <= 115 && gamePanel.imageCount > 100) {
-                    this.setDirection("down");
-                    this.setWorldY(this.getWorldY() + this.getSpeed());
-                } else if (gamePanel.imageCount <= 165 && gamePanel.imageCount > 150) {
-                    this.setDirection("left");
-                    this.setWorldX(this.getWorldX() - this.getSpeed());
-                } else {
-                    this.setDirection("idle");
+                if (gamePanel.imageCount <= 50 && gamePanel.imageCount > 0) {
+                    if (this.getWorldY() > 10 * GamePanel.tileSize) {
+                        this.setDirection("up");
+                    } else {
+                        this.setDirection("idle");
+                    }
+                } else if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 50) {
+                    if (this.getWorldX() < 10 * GamePanel.tileSize) {
+                        this.setDirection("right");
+                    } else {
+                        this.setDirection("idle");
+                    }
+                } else if (gamePanel.imageCount <= 150 && gamePanel.imageCount > 100) {
+                    if (this.getWorldY() < 11 * GamePanel.tileSize) {
+                        this.setDirection("down");
+                    } else {
+                        this.setDirection("idle");
+                    }
+                } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 150) {
+                    if (this.getWorldX() > 9 * GamePanel.tileSize) {
+                        this.setDirection("left");
+                    } else {
+                        this.setDirection("idle");
+                    }
                 }
-                break;
-            case "up-down":
-                if (gamePanel.imageCount <= 15 && gamePanel.imageCount > 0) {
-                    this.setDirection("up");
-                    this.setWorldY(this.getWorldY() - this.getSpeed());
-                } else if (gamePanel.imageCount <= 115 && gamePanel.imageCount > 100) {
-                    this.setDirection("down");
-                    this.setWorldY(this.getWorldY() + this.getSpeed());
-                } else {
-                    this.setDirection("idle");
-                }
+                move(getDirection());
                 break;
             case "left-right":
-                if (gamePanel.imageCount <= 50 && gamePanel.imageCount > 0) {
-                    this.setDirection("left");
-                    this.setWorldX(this.getWorldX() - this.getSpeed());
-                } else if (gamePanel.imageCount <= 150 && gamePanel.imageCount > 100) {
-                    this.setDirection("right");
-                    this.setWorldX(this.getWorldX() + this.getSpeed());
-                } else {
-                    this.setDirection("idle");
+                if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 0) {
+                    if (this.getWorldX() < 36 * GamePanel.tileSize) {
+                        this.setDirection("right");
+                    } else {
+                        this.setDirection("idle");
+                    }
+                } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 100) {
+                    if (this.getWorldX() > 33 * GamePanel.tileSize) {
+                        this.setDirection("left");
+                    } else {
+                        this.setDirection("idle");
+                    }
                 }
+                move(getDirection());
                 break;
             case "scared archer":
                 String directionX4;
