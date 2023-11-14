@@ -20,9 +20,9 @@ public class WorldPanel extends JPanel {
     final TileManager tileManager;
 
     final private Player player;
-    final private NotPlayer npc1;
+    final public NotPlayer npc1;
     final private NotPlayer npc2;
-    final private NotPlayer npc3;
+    final public NotPlayer npc3;
     final private NotPlayer npc4;
     final private NotPlayer npc5;
     final private NotPlayer pursuer;

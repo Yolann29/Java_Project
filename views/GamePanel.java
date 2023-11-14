@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Arena arena;
     final public Player player;
     public NotPlayer encounter;
+    public NotPlayer encounter2;
     public Fighter playerFighter;
     public Fighter encounterFighter;
 
@@ -65,6 +66,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.arena = new Arena(playerFighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);
         this.player = new Player(this, keyHandler, "Magician");
+        this.encounter = new NotPlayer(this, 0,0,"left-right","Vagrant");
+        this.encounter.fighter = encounterFighter;
         this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
         this.worldPanel = new WorldPanel(this,keyHandler, player);
         this.fightLauncher = new FightLauncher(keyHandler);
@@ -152,6 +155,9 @@ public class GamePanel extends JPanel implements Runnable {
             } else {
                 this.remove(merchantShop);
             }
+            this.revalidate();
+            this.repaint();
+            worldPanel.update();
         } else {
             this.remove(merchantShop);
             this.remove(fightLauncher);
@@ -164,11 +170,10 @@ public class GamePanel extends JPanel implements Runnable {
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(actionsPanel, BorderLayout.SOUTH);
             }
+            this.revalidate();
+            this.repaint();
+            arena.update();
         }
-        this.revalidate();
-        this.repaint();
-        worldPanel.update();
-        arena.update();
     }
 
     public void paintComponent(Graphics g){
