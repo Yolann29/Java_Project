@@ -14,7 +14,6 @@ public class NotPlayer extends Entity {
     GamePanel gamePanel;
     private final String movement;
     public final String classe;
-    public boolean isDead = false;
     public Fighter fighter;
 
     public NotPlayer(GamePanel gamePanel, int positionX, int positionY, String movement, String classe) {
@@ -33,6 +32,7 @@ public class NotPlayer extends Entity {
     }
 
     public void update() {
+        if (isDead) return;
         switch(movement) {
             case "circle":
                 if (gamePanel.imageCount <= 15 && gamePanel.imageCount > 0) {
@@ -125,6 +125,8 @@ public class NotPlayer extends Entity {
             case "attack":
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "attack")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
+            case "dead":
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "dead")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
         }
     }
 }

@@ -42,6 +42,7 @@ public class Player extends Entity {
     }
 
     public void update() {
+        if (isDead) return;
         if (keyHandler.top || keyHandler.bottom || keyHandler.left || keyHandler.right) {
             if (keyHandler.top) {
                 this.setDirection("up");
@@ -112,105 +113,6 @@ public class Player extends Entity {
         }
     }
 
-//    public void draw(Graphics2D g2) {
-//
-//        switch(this.getDirection()) {
-//            case "up":
-//            case "down":
-//                switch(classe) {
-//                    case "Vagrant":
-//                        AnimationManager.VAGRANT_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Warrior":
-//                        AnimationManager.WARRIOR_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Archer":
-//                        AnimationManager.ARCHER_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Magician":
-//                        AnimationManager.MAGICIAN_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                }
-//                break;
-//            case "left":
-//                this.setReversed(true);
-//                switch(classe) {
-//                    case "Vagrant":
-//                        AnimationManager.VAGRANT_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Warrior":
-//                        AnimationManager.WARRIOR_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Archer":
-//                        AnimationManager.ARCHER_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Magician":
-//                        AnimationManager.MAGICIAN_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                }
-//                break;
-//            case "right":
-//                this.setReversed(false);
-//                switch(classe) {
-//                    case "Vagrant":
-//                        AnimationManager.VAGRANT_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Warrior":
-//                        AnimationManager.WARRIOR_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Archer":
-//                        AnimationManager.ARCHER_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Magician":
-//                        AnimationManager.MAGICIAN_WALK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                }
-//                break;
-//            case "idle":
-//                switch(classe) {
-//                    case "Vagrant":
-//                        AnimationManager.VAGRANT_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Warrior":
-//                        AnimationManager.WARRIOR_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Archer":
-//                        AnimationManager.ARCHER_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Magician":
-//                        AnimationManager.MAGICIAN_IDLE.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                }
-//                break;
-//            case "jump":
-//                switch(classe) {
-//                    case "Vagrant":
-//                        AnimationManager.VAGRANT_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Warrior":
-//                        AnimationManager.WARRIOR_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Archer":
-//                        AnimationManager.ARCHER_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Magician":
-//                        AnimationManager.MAGICIAN_JUMP.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                }
-//                break;
-//            case "attack":
-//                switch(classe) {
-//                    case "Vagrant":
-//                        AnimationManager.VAGRANT_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Warrior":
-//                        AnimationManager.WARRIOR_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Archer":
-//                        AnimationManager.ARCHER_ATTACK.paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                        break;
-//                    case "Magician":
-//                        AnimationManager.MAGICIAN_ATTACK.paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
-//                }
-//                break;
-//        }
-//    }
-
     public void draw(Graphics2D g2) {
 
         switch (this.getDirection()) {
@@ -235,6 +137,8 @@ public class Player extends Entity {
             case "attack":
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "attack")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
+            case "dead":
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "dead")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
         }
     }
 
