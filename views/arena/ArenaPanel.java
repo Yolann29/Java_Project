@@ -117,18 +117,21 @@ public class ArenaPanel extends JPanel {
 
     }
 
-    public void quitArena() {
+    public void quitArena(Fighter looser) {
         if (initAnimation == 0) {
             initAnimation = System.currentTimeMillis();
         }
         currentTime = System.currentTimeMillis();
-        if (currentTime >= initAnimation + 1500) {
+        if (currentTime >= initAnimation + 2500) {
             endGame = false;
             keyHandler.overWorld = true;
             initAnimation = 0;
             gamePanel.playerFighter.restoreHpMax();
             gamePanel.worldPanel.fighterEncountered.restoreHpMax();
-            gamePanel.worldPanel.fighterEncountered = null;
+            gamePanel.worldPanel.fighterEncountered= null;
+            arena.isYourTurn = true;
+            arena.getFighter1().getWeapon().setDamage(arena.getFighter1().getWeapon().getInitialDamage());
+            arena.getFighter1().regenItems();
         }
     }
 
@@ -181,7 +184,7 @@ public class ArenaPanel extends JPanel {
             if(arena.getFighter1().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classePlayer, "jump")).paint(g2, 100, 270, 96, 96, false);
-                quitArena();
+                quitArena(arena.getFighter2());
             }
         }
         if(!arena.getFighter2().isDead() && arena.getFighter1().isDead()){
@@ -189,7 +192,7 @@ public class ArenaPanel extends JPanel {
             if(arena.getFighter2().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classeEncounter, "jump")).paint(g2, 550, 270, 96, 96, true);
-                quitArena();
+                quitArena(arena.getFighter1());
             }
         }
     }

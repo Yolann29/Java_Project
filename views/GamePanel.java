@@ -59,11 +59,8 @@ public class GamePanel extends JPanel implements Runnable {
         encounterFighter = new Warrior("First Encounter", Type.WATER);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
-        Item healPotion = new HealPotion();
-        Item damageBooster = new DamageBooster();
         playerFighter.pickWeapon(firesword);
         encounterFighter.pickWeapon(icesword);
-        playerFighter.pickItems(Arrays.asList(healPotion, damageBooster));
 
         this.arena = new Arena(playerFighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);
@@ -78,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(new BorderLayout());
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-
+//
         this.add(arenaPanel);
         this.add(actionsPanel);
         this.add(worldPanel, BorderLayout.CENTER);
@@ -160,7 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
             this.remove(fightLauncher);
             this.remove(worldPanel);
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, actionsPanel)) {
-                arena = new Arena(playerFighter, encounterFighter);
+                arena = new Arena(playerFighter, encounter.fighter);
                 actionsPanel = new ActionsPanel(arena);
                 arenaPanel = new ArenaPanel(arena, actionsPanel, this, player.classe, encounter.classe);
 

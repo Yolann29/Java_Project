@@ -1,10 +1,13 @@
 package models.fighters;
+import models.items.DamageBooster;
+import models.items.HealPotion;
 import models.types.Type;
 import models.weapons.Weapon;
 import models.items.Item;
 import models.weapons.attacks.Attack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Fighter {
@@ -20,13 +23,18 @@ public abstract class Fighter {
     protected long walkingTime = 0;
     protected long damageTime = 0;
     protected boolean usingItem = false;
-    public Fighter(String name, Type type) {
+    public Fighter(String name, Type type, int level) {
         this.type = type;
         this.name = name;
         this.maxHp = 100;
         this.hp = maxHp;
         this.defense = 100;
-        this.items = new ArrayList<>();
+        this.items = new ArrayList<>(Arrays.asList(new HealPotion(), new DamageBooster()));
+        this.level = level;
+    }
+
+    public void regenItems(){
+        this.items = new ArrayList<>(Arrays.asList(new HealPotion(), new DamageBooster()));
     }
 
     public void pickWeapon(Weapon weapon) {
@@ -159,4 +167,5 @@ public abstract class Fighter {
     public void restoreHpMax() {
         this.hp = maxHp;
     }
+
 }

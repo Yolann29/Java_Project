@@ -13,6 +13,7 @@ public abstract class Weapon {
     protected String name;
     protected Type type;
     protected int damage;
+    protected int initialDamage;
     protected int level;
     protected Attack[] weaponAttacks;
     protected int numberAttacks;
@@ -21,6 +22,7 @@ public abstract class Weapon {
         this.name = name;
         this.type = type;
         this.damage = damage;
+        this.initialDamage = damage;
         this.level = level;
         this.weaponAttacks = new Attack[4];
         this.numberAttacks = numberAttacks;
@@ -81,6 +83,10 @@ public abstract class Weapon {
         return damage;
     }
 
+    public int getInitialDamage() {
+        return initialDamage;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -106,5 +112,9 @@ public abstract class Weapon {
 
     public int getNumberAttacks() {
         return numberAttacks;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

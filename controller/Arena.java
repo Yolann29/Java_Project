@@ -19,7 +19,7 @@ public class Arena {
     private Fighter target;
     private Attack attack;
 
-    private boolean isYourTurn = true;
+    public boolean isYourTurn = true;
     PTextPane textPane;
 
     Scanner scanner = new Scanner(System.in);

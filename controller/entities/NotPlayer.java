@@ -3,6 +3,7 @@ package controller.entities;
 import controller.handler.KeyHandler;
 import controller.manager.AnimationManager;
 import controller.manager.FighterClasseManager;
+import models.fighters.Fighter;
 import views.GamePanel;
 
 import java.awt.*;
@@ -13,6 +14,8 @@ public class NotPlayer extends Entity {
     GamePanel gamePanel;
     private final String movement;
     public final String classe;
+    public boolean isDead = false;
+    public Fighter fighter;
 
     public NotPlayer(GamePanel gamePanel, int positionX, int positionY, String movement, String classe) {
         this.gamePanel = gamePanel;
