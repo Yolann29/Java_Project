@@ -14,14 +14,13 @@ import models.types.Type;
 import models.weapons.FireSword;
 import models.weapons.IceSword;
 import models.weapons.Weapon;
-import views.customwidgets.PButton;
-import views.dialog.DialogActions;
-import views.dialog.FightLauncher;
-import views.dialog.MerchantShop;
+import views.arena.ActionsPanel;
+import views.arena.ArenaPanel;
+import views.arena.FightLauncher;
+import views.arena.MerchantShop;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -46,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     final private MerchantShop merchantShop;
 
     private ArenaPanel arenaPanel;
-    private DialogActions dialogActions;
+    private ActionsPanel actionsPanel;
     private Arena arena;
     final public Player player;
     public NotPlayer encounter;
@@ -67,9 +66,9 @@ public class GamePanel extends JPanel implements Runnable {
         playerFighter.pickItems(Arrays.asList(healPotion, damageBooster));
 
         this.arena = new Arena(playerFighter, encounterFighter);
-        this.dialogActions = new DialogActions(arena);
+        this.actionsPanel = new ActionsPanel(arena);
         this.player = new Player(this, keyHandler, "Magician");
-        this.arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, "Archer");
+        this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player.classe, "Archer");
         this.worldPanel = new WorldPanel(this,keyHandler, player);
         this.fightLauncher = new FightLauncher(keyHandler);
         this.merchantShop = new MerchantShop(this, worldPanel);
@@ -81,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         this.add(arenaPanel);
-        this.add(dialogActions);
+        this.add(actionsPanel);
         this.add(worldPanel, BorderLayout.CENTER);
     }
 
@@ -129,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
         if (keyHandler.overWorld) {
-            this.remove(dialogActions);
+            this.remove(actionsPanel);
             this.remove(arenaPanel);
             if (isPanelAdded(this, worldPanel)) {
                 this.add(worldPanel, BorderLayout.CENTER);
@@ -160,13 +159,13 @@ public class GamePanel extends JPanel implements Runnable {
             this.remove(merchantShop);
             this.remove(fightLauncher);
             this.remove(worldPanel);
-            if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, dialogActions)) {
+            if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, actionsPanel)) {
                 arena = new Arena(playerFighter, encounterFighter);
-                dialogActions = new DialogActions(arena);
-                arenaPanel = new ArenaPanel(arena, dialogActions, this, player.classe, encounter.classe);
+                actionsPanel = new ActionsPanel(arena);
+                arenaPanel = new ArenaPanel(arena, actionsPanel, this, player.classe, encounter.classe);
 
                 this.add(arenaPanel, BorderLayout.CENTER);
-                this.add(dialogActions, BorderLayout.SOUTH);
+                this.add(actionsPanel, BorderLayout.SOUTH);
             }
         }
         this.revalidate();

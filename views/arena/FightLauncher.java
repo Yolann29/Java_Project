@@ -1,4 +1,4 @@
-package views.dialog;
+package views.arena;
 
 import controller.handler.KeyHandler;
 import views.GamePanel;

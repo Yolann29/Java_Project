@@ -1,4 +1,4 @@
-package views.dialog;
+package views.arena;
 
 import models.weapons.FireSword;
 import models.weapons.IceSword;

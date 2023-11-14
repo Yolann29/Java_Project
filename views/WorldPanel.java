@@ -30,7 +30,7 @@ public class WorldPanel extends JPanel {
 
     public boolean fighterClose = false;
     public boolean merchantClose = false;
-    Fighter fighterEncountered;
+    public Fighter fighterEncountered;
     Fighter fighterEncounteredNPC1;
     Fighter fighterEncounteredNPC2;
     Fighter fighterEncounteredNPC3;
