@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.arena = new Arena(playerFighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);
         this.player = new Player(this, keyHandler, "Magician");
-        this.encounter = new NotPlayer(this, 0,0,"left-right","Vagrant");
+        this.encounter = new NotPlayer(this, 0,0, 0,"left-right","Vagrant");
         this.encounter.fighter = encounterFighter;
         this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
         this.worldPanel = new WorldPanel(this,keyHandler, player);
@@ -140,9 +140,6 @@ public class GamePanel extends JPanel implements Runnable {
                     if (worldPanel.npcEncounter != null) {
                         encounter = worldPanel.npcEncounter;
                     }
-                    if (worldPanel.fighterEncountered != null) {
-                        encounterFighter = worldPanel.fighterEncountered;
-                    }
                 }
             } else {
                 this.remove(fightLauncher);
@@ -159,6 +156,9 @@ public class GamePanel extends JPanel implements Runnable {
             this.repaint();
             worldPanel.update();
         } else {
+            if (worldPanel.npcEncounter != null) {
+                encounter = worldPanel.npcEncounter;
+            }
             this.remove(merchantShop);
             this.remove(fightLauncher);
             this.remove(worldPanel);

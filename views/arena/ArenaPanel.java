@@ -130,11 +130,11 @@ public class ArenaPanel extends JPanel {
             keyHandler.overWorld = true;
             initAnimation = 0;
             gamePanel.playerFighter.restoreHpMax();
-            gamePanel.worldPanel.fighterEncountered.restoreHpMax();
+            gamePanel.encounter.fighter.restoreHpMax();
             arena.isYourTurn = true;
             arena.getFighter1().getWeapon().setDamage(arena.getFighter1().getWeapon().getInitialDamage());
             arena.getFighter1().regenItems();
-            gamePanel.worldPanel.fighterEncountered = null;
+            gamePanel.encounter.fighter = null;
             entity.setDirection("dead");
             entity.isDead = true;
         }
