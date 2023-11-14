@@ -37,24 +37,30 @@ public class WorldPanel extends JPanel {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
         this.player = player;
+
         this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, "left-right", "Archer");
         npc1.fighter = new Warrior("Archer", Type.ELECTRICITY);
         npc1.fighter.pickWeapon(new IceSword());
+
         this.npc2 = new NotPlayer(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, "circle", "Vagrant");
         npc2.fighter = new Warrior("Vagrant", Type.WATER);
         npc2.fighter.pickWeapon(new IceSword());
+
         this.npc3 = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, "up-down", "Archer");
         npc3.fighter = new Warrior("Archer", Type.GROUND);
         npc3.fighter.pickWeapon(new IceSword());
+
         this.npc4 = new NotPlayer(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, null, "Magician");
         npc4.fighter = new Warrior("Magician", Type.WATER);
         npc4.fighter.pickWeapon(new IceSword());
+
         this.npc5 = new NotPlayer(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, "attack", "Warrior");
         npc5.fighter = new Warrior("Warrior", Type.FIRE);
         npc5.fighter.pickWeapon(new FireSword());
+
         this.pursuer = new NotPlayer(gamePanel, 24*GamePanel.tileSize, 11*GamePanel.tileSize, "smart", "Warrior");
 //        this.fighterEncounteredPursuer = new Warrior("Warrior", Type.FIRE);
-        npc5.fighter.pickWeapon(new FireSword());
+
         this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, null, "Vagrant");
         this.tileManager = new TileManager(gamePanel);
         this.addKeyListener(player.getKeyHandler());
@@ -69,49 +75,35 @@ public class WorldPanel extends JPanel {
 //        pursuer.update();
         player.update();
 
-        if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc1.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc1.getWorldY() - GamePanel.tileSize)) {
-            fighterClose = true;
-            npcEncounter = npc1;
-            if (fighterEncountered == null) {
-                fighterEncountered = npc1.fighter;
-            }
+            boolean npcClose = false;
 
-        } else if (player.getWorldX() < (npc2.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc2.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc2.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc2.getWorldY() - GamePanel.tileSize)) {
-            fighterClose = true;
-            npcEncounter = npc2;
-            if (fighterEncountered == null) {
-                fighterEncountered = npc2.fighter;
-            }
+            npcClose |= distanceBetween(npc1);
+            npcClose |= distanceBetween(npc2);
+            npcClose |= distanceBetween(npc3);
+            npcClose |= distanceBetween(npc4);
+            npcClose |= distanceBetween(npc5);
 
-        } else if (player.getWorldX() < (npc3.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc3.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc3.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc3.getWorldY() - GamePanel.tileSize)) {
-            fighterClose = true;
-            npcEncounter = npc3;
-            if (fighterEncountered == null) {
-                fighterEncountered = npc3.fighter;
+            if (!npcClose) {
+                fighterClose = false;
+                merchantClose = false;
+                fighterEncountered = null;
+                npcEncounter = null;
             }
-
-        } else if (player.getWorldX() < (npc4.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc4.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc4.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc4.getWorldY() - GamePanel.tileSize)) {
-            fighterClose = true;
-            npcEncounter = npc4;
-            if (fighterEncountered == null) {
-                fighterEncountered = npc4.fighter;
-            }
-
-        } else if (player.getWorldX() < (npc5.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc5.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc5.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc5.getWorldY() - GamePanel.tileSize)) {
-            fighterClose = true;
-            npcEncounter = npc5;
-            if (fighterEncountered == null) {
-                fighterEncountered = npc5.fighter;
-            }
-
-        } else if (player.getWorldX() < (merchant.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (merchant.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (merchant.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (merchant.getWorldY() - GamePanel.tileSize)) {
-            merchantClose = true;
-        } else {
-            fighterClose = false;
-            merchantClose = false;
-            fighterEncountered = null;
-            npcEncounter = null;
         }
+
+
+    public boolean distanceBetween(NotPlayer notplayer){
+        if (player.getWorldX() < (notplayer.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (notplayer.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (notplayer.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (notplayer.getWorldY() - GamePanel.tileSize) && !notplayer.isDead && !player.isDead) {
+            fighterClose = true;
+            npcEncounter = notplayer;
+            if (fighterEncountered == null) {
+                fighterEncountered = notplayer.fighter;
+
+            }
+            return true;
+
+        }
+        return false;
     }
 
     public void paintComponent(Graphics g) {
