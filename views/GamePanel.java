@@ -44,9 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
 
-        DialogActions da = new DialogActions(arena);
-        this.add(new ArenaPanel(arena, da), BorderLayout.CENTER);
-        this.add(da, BorderLayout.SOUTH);
+//        DialogActions da = new DialogActions(arena);
+//        this.add(new ArenaPanel(arena, da), BorderLayout.CENTER);
+//        this.add(da, BorderLayout.SOUTH);
 
     }
 

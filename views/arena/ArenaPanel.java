@@ -1,9 +1,8 @@
-package views;
+package views.arena;
 
 import controller.Arena;
 import controller.manager.AnimationManager;
 import models.fighters.Fighter;
-import views.dialog.DialogActions;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,13 +15,13 @@ public class ArenaPanel extends JPanel {
     Image background;
     Image profile_background;
     Arena arena;
-    DialogActions da;
+    ActionsPanel da;
     boolean endGame = false;
 
     boolean fighter1DamageTaken = false;
     boolean fighter2DamageTaken = false;
 
-    public ArenaPanel(Arena arena, DialogActions da) {
+    public ArenaPanel(Arena arena, ActionsPanel da) {
         this.da = da;
         this.arena = arena;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

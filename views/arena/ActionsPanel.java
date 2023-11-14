@@ -1,7 +1,6 @@
-package views.dialog;
+package views.arena;
 
 import controller.Arena;
-import controller.handler.KeyHandler;
 import models.items.Item;
 import models.weapons.attacks.Attack;
 import views.GamePanel;
@@ -15,7 +14,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DialogActions extends JPanel {
+public class ActionsPanel extends JPanel {
 
     private Color dialogColor = new Color(40, 79, 104);
     private Image texture;
@@ -24,7 +23,7 @@ public class DialogActions extends JPanel {
     private PButton items;
     PTextPane textPane;
 
-    public DialogActions(Arena arena){
+    public ActionsPanel(Arena arena){
         this.arena = arena;
         this.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 150));
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
