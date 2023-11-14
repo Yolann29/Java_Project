@@ -65,7 +65,7 @@ public class Player extends Entity {
                             break;
                         case "left":
                             changeMap = true;
-                            this.setWorldX(GamePanel.worldWidth - 96 - this.getSpeed());
+                            this.setWorldX(GamePanel.worldWidth - 65 - this.getSpeed());
                             break;
                         case "right":
                             changeMap = true;

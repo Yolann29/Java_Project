@@ -101,7 +101,8 @@ public class TileManager {
             Random random = new Random();
             int column = 0;
             int row = 0;
-            ArrayList<Integer> tilesRandom = new ArrayList<Integer>(Arrays.asList(0,11));
+            ArrayList<Integer> tilesRandom = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 2, 11, 11));
+            ArrayList<Integer> tilesRandom2 = new ArrayList<Integer>(Arrays.asList(0, 2));
             while(column < GamePanel.worldColumns && row < GamePanel.worldRows) {
                 String line = bufferedReader.readLine();
                 while(column < GamePanel.worldColumns) {
@@ -115,16 +116,32 @@ public class TileManager {
                             mapTileNum1[column][row] = num;
                         }
                     } else {
+                        if (row >= 12 && (column == 1 || column == GamePanel.worldColumns - 2)) {
+                            mapTileNum1[column][row] = 0;
+                        }
                         int index = random.nextInt(tilesRandom.size());
+                        int index2 = random.nextInt(tilesRandom2.size());
                         if (mapTileNum1[column][row] == 29) {
                             mapTileNum1[column][row] = tilesRandom.get(index);
-                            if (row ==GamePanel.worldRows - 2 && mapTileNum1[column][row] == 11) {
+                            if (mapTileNum1[column][row] == 2) {
+                                if (mapTileNum1[column][row + 1] == 29) {
+                                    mapTileNum1[column][row + 1] = tilesRandom2.get(index2);
+                                }
+                                if (mapTileNum1[column + 1][row] == 29) {
+                                    index2 = random.nextInt(tilesRandom2.size());
+                                    mapTileNum1[column + 1][row] = tilesRandom2.get(index2);
+                                }
+                                if (mapTileNum1[column + 1][row + 1] == 29) {
+                                    index2 = random.nextInt(tilesRandom2.size());
+                                    mapTileNum1[column + 1][row + 1] = tilesRandom2.get(index2);
+                                }
+                            }
+                            if (row == GamePanel.worldRows - 2 && mapTileNum1[column][row] == 11) {
                                 mapTileNum1[column][row] = 0;
                             }
                         }
                         if (mapTileNum1[column][row] == 11) {
                             mapTileNum1[column][row + 1] = 10;
-                            mapTileNum1[column + 1][row + 1] = 0;
                         }
                     }
                     column++;

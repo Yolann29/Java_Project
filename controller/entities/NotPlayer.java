@@ -135,98 +135,46 @@ public class NotPlayer extends Entity {
                 }
                 break;
             case "pursuer":
-                String directionX;
-                if (gamePanel.player.getWorldX() < (getWorldX() + 5 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 5 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 5 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 5 * GamePanel.tileSize)) {
-                    if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
-                        directionX = "right";
-                    } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
-                        directionX = "left";
-                    } else {
-                        directionX = "attack";
-                    }
-                    if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
-                        this.setDirection("down");
-                    } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
-                        this.setDirection("up");
-                    } else {
-                        this.setDirection("attack");
-                    }
-                    collisionOn = false;
-                    gamePanel.collision.checkTile(this);
-                    if (!collisionOn && !getDirection().equals("attack")) {
-                        move(getDirection());
-                    } else {
-                        this.setDirection(directionX);
-                        collisionOn = false;
-                        gamePanel.collision.checkTile(this);
-                        if (!collisionOn) move(directionX);
-                    }
-                } else {
-                    this.setDirection("idle");
-                }
+                pursuePlayer(5, 5, 5, 5);
                 break;
             case "smart magician":
-                String directionX2;
-                if (gamePanel.player.getWorldX() < (getWorldX() + 10 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 2 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 2 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 2 * GamePanel.tileSize)) {
-                    if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
-                        directionX2 = "right";
-                    } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
-                        directionX2 = "left";
-                    } else {
-                        directionX2 = "attack";
-                    }
-                    if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
-                        this.setDirection("down");
-                    } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
-                        this.setDirection("up");
-                    } else {
-                        this.setDirection("attack");
-                    }
-                    collisionOn = false;
-                    gamePanel.collision.checkTile(this);
-                    if (!collisionOn && !getDirection().equals("attack")) {
-                        move(getDirection());
-                    } else {
-                        this.setDirection(directionX2);
-                        collisionOn = false;
-                        gamePanel.collision.checkTile(this);
-                        if (!collisionOn) move(directionX2);
-                    }
-                } else {
-                    this.setDirection("idle");
-                }
+                pursuePlayer(10, 2, 2, 2);
                 break;
             case "mad warrior":
-                String directionX3;
-                if (gamePanel.player.getWorldX() < (getWorldX() + 2 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 2 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 2.5 * GamePanel.tileSize)) {
-                    if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
-                        directionX3 = "right";
-                    } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
-                        directionX3 = "left";
-                    } else {
-                        directionX3 = "attack";
-                    }
-                    if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
-                        this.setDirection("down");
-                    } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
-                        this.setDirection("up");
-                    } else {
-                        this.setDirection("attack");
-                    }
-                    collisionOn = false;
-                    gamePanel.collision.checkTile(this);
-                    if (!collisionOn && !getDirection().equals("attack")) {
-                        move(getDirection());
-                    } else {
-                        this.setDirection(directionX3);
-                        collisionOn = false;
-                        gamePanel.collision.checkTile(this);
-                        if (!collisionOn) move(directionX3);
-                    }
-                } else {
-                    this.setDirection("attack");
-                }
+                pursuePlayer(2, 2, 1, 2.5f);
                 break;
+        }
+    }
+
+    public void pursuePlayer(int nombreTiles1, int nombreTiles2, int nombreTiles3, float nombreTiles4) {
+        String direction;
+        if (gamePanel.player.getWorldX() < (getWorldX() + nombreTiles1 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - nombreTiles1 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() +nombreTiles3 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - nombreTiles4 * GamePanel.tileSize)) {
+            if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
+                direction = "right";
+            } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
+                direction = "left";
+            } else {
+                direction = "idle";
+            }
+            if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
+                this.setDirection("down");
+            } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
+                this.setDirection("up");
+            } else {
+                this.setDirection("idle");
+            }
+            collisionOn = false;
+            gamePanel.collision.checkTile(this);
+            if (!collisionOn && !getDirection().equals("idle")) {
+                move(getDirection());
+            } else {
+                this.setDirection(direction);
+                collisionOn = false;
+                gamePanel.collision.checkTile(this);
+                if (!collisionOn) move(direction);
+            }
+        } else {
+            this.setDirection("idle");
         }
     }
 
