@@ -155,6 +155,9 @@ public class GamePanel extends JPanel implements Runnable {
             } else {
                 this.remove(merchantShop);
             }
+            this.revalidate();
+            this.repaint();
+            worldPanel.update();
         } else {
             this.remove(merchantShop);
             this.remove(fightLauncher);
@@ -167,11 +170,10 @@ public class GamePanel extends JPanel implements Runnable {
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(actionsPanel, BorderLayout.SOUTH);
             }
+            this.revalidate();
+            this.repaint();
+            arena.update();
         }
-        this.revalidate();
-        this.repaint();
-        worldPanel.update();
-        arena.update();
     }
 
     public void paintComponent(Graphics g){
