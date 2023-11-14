@@ -82,18 +82,23 @@ public class WorldPanel extends JPanel {
             npcClose |= distanceBetween(npc3);
             npcClose |= distanceBetween(npc4);
             npcClose |= distanceBetween(npc5);
+            npcClose |= distanceBetween(merchant);
 
             if (!npcClose) {
                 fighterClose = false;
-                merchantClose = false;
                 fighterEncountered = null;
                 npcEncounter = null;
+                merchantClose = false;
             }
         }
 
 
     public boolean distanceBetween(NotPlayer notplayer){
         if (player.getWorldX() < (notplayer.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (notplayer.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (notplayer.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (notplayer.getWorldY() - GamePanel.tileSize) && !notplayer.isDead && !player.isDead) {
+            if (notplayer == merchant) {
+                merchantClose = true;
+                return true;
+            }
             fighterClose = true;
             npcEncounter = notplayer;
             if (fighterEncountered == null) {
