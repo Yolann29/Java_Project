@@ -1,6 +1,8 @@
 package views.arena;
 
+import models.weapons.ElectricGauntlet;
 import models.weapons.FireSword;
+import models.weapons.GroundSpear;
 import models.weapons.IceSword;
 import views.GamePanel;
 import views.WorldPanel;
@@ -45,11 +47,11 @@ public class MerchantShop extends JPanel {
             worldPanel.merchantClose = false;
         });
         electricGauntletChoice.addActionListener(e -> {
-            gamePanel.playerFighter.pickWeapon(new FireSword());
+            gamePanel.playerFighter.pickWeapon(new ElectricGauntlet());
             worldPanel.merchantClose = false;
         });
         groundSpearChoice.addActionListener(e -> {
-            gamePanel.playerFighter.pickWeapon(new FireSword());
+            gamePanel.playerFighter.pickWeapon(new GroundSpear());
             worldPanel.merchantClose = false;
         });
         weaponChoices.revalidate();

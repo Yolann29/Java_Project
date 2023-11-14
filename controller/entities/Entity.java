@@ -11,7 +11,7 @@ public class Entity {
     private int worldX, worldY, x, y, speed;
     private String direction;
     protected boolean reversed;
-    public boolean collisionOn, doorHere;
+    public boolean collisionOn, doorHere, isDead = false;
     protected Rectangle solidArea;
 
     public int getX() {
@@ -66,7 +66,7 @@ public class Entity {
         this.speed = speed;
     }
 
-    protected void setDirection(String direction) {
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 

@@ -1,6 +1,9 @@
 package views.arena;
 
 import controller.Arena;
+import controller.entities.Entity;
+import controller.entities.NotPlayer;
+import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
@@ -28,16 +31,16 @@ public class ArenaPanel extends JPanel {
     boolean fighter1DamageTaken = false;
     boolean fighter2DamageTaken = false;
 
-    private final String classePlayer;
-    private final String classeEncounter;
+    private final Player player;
+    private final NotPlayer encounter;
 
-    public ArenaPanel(Arena arena, ActionsPanel da, GamePanel gamePanel, String classePlayer, String classeEncounter) {
+    public ArenaPanel(Arena arena, ActionsPanel da, GamePanel gamePanel, Player player, NotPlayer encounter) {
         this.da = da;
         this.arena = arena;
         this.gamePanel = gamePanel;
         this.keyHandler = gamePanel.keyHandler;
-        this.classePlayer = classePlayer;
-        this.classeEncounter = classeEncounter;
+        this.player = player;
+        this.encounter = encounter;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         loadRessources();
 
@@ -117,7 +120,7 @@ public class ArenaPanel extends JPanel {
 
     }
 
-    public void quitArena() {
+    public void quitArena(Entity entity) {
         if (initAnimation == 0) {
             initAnimation = System.currentTimeMillis();
         }
@@ -129,6 +132,8 @@ public class ArenaPanel extends JPanel {
             gamePanel.playerFighter.restoreHpMax();
             gamePanel.worldPanel.fighterEncountered.restoreHpMax();
             gamePanel.worldPanel.fighterEncountered = null;
+            entity.setDirection("dead");
+            entity.isDead = true;
         }
     }
 
@@ -144,30 +149,30 @@ public class ArenaPanel extends JPanel {
         //ANIMATION
         //JOUEUR 1
         if (arena.getFighter1().isDead()) {
-            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classePlayer, "dead")).paint(g2, 100, 270, 96, 96, false);
+            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, "dead")).paint(g2, 100, 270, 96, 96, false);
             drawInfoBar(g2, arena.getFighter1(), 100);
         } else if (arena.getFighter1().getWalkingTime() != 0) {
-            moveToTarget(g2, arena.getFighter1(), classePlayer, 100, false);
+            moveToTarget(g2, arena.getFighter1(), player.classe, 100, false);
         } else {
-            if(!endGame && !this.fighter1DamageTaken) Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classePlayer, "idle")).paint(g2, 100, 270, 96, 96, false);
+            if(!endGame && !this.fighter1DamageTaken) Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, "idle")).paint(g2, 100, 270, 96, 96, false);
             drawInfoBar(g2, arena.getFighter1(), 100);
         }
 
         //JOUEUR 2
         if (arena.getFighter2().isDead()) {
-            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classeEncounter, "dead")).paint(g2, 550, 270, 96, 96, true);
+            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, "dead")).paint(g2, 550, 270, 96, 96, true);
             drawInfoBar(g2, arena.getFighter2(), 550);
         } else if (arena.getFighter2().getWalkingTime() != 0) {
-            moveToTarget(g2, arena.getFighter2(), classeEncounter, 550, true);
+            moveToTarget(g2, arena.getFighter2(), encounter.classe, 550, true);
         } else {
-            if(!endGame && !this.fighter2DamageTaken) Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classeEncounter, "idle")).paint(g2, 550, 270, 96, 96, true);
+            if(!endGame && !this.fighter2DamageTaken) Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, "idle")).paint(g2, 550, 270, 96, 96, true);
             drawInfoBar(g2, arena.getFighter2(), 550);
         }
 
         if(this.fighter1DamageTaken){
-            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classePlayer, "hit")).paint(g2, 100, 270, 96, 96, false);
+            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, "hit")).paint(g2, 100, 270, 96, 96, false);
         } else if (this.fighter2DamageTaken){
-            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classeEncounter, "hit")).paint(g2, 550, 270, 96, 96, true);
+            Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, "hit")).paint(g2, 550, 270, 96, 96, true);
         }
 
         da.setInteraction(arena.getFighter1().getWalkingTime() == 0
@@ -180,16 +185,16 @@ public class ArenaPanel extends JPanel {
             da.setDialogText(arena.getFighter1().getName() + " won !");
             if(arena.getFighter1().getWalkingTime() == 0){
                 endGame = true;
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classePlayer, "jump")).paint(g2, 100, 270, 96, 96, false);
-                quitArena();
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, "jump")).paint(g2, 100, 270, 96, 96, false);
+                quitArena(encounter);
             }
         }
         if(!arena.getFighter2().isDead() && arena.getFighter1().isDead()){
             da.setDialogText(arena.getFighter2().getName() + " won !");
             if(arena.getFighter2().getWalkingTime() == 0){
                 endGame = true;
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classeEncounter, "jump")).paint(g2, 550, 270, 96, 96, true);
-                quitArena();
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, "jump")).paint(g2, 550, 270, 96, 96, true);
+                quitArena(player);
             }
         }
     }

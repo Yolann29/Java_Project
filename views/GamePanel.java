@@ -68,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.arena = new Arena(playerFighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);
         this.player = new Player(this, keyHandler, "Magician");
-        this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player.classe, "Archer");
+        this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
         this.worldPanel = new WorldPanel(this,keyHandler, player);
         this.fightLauncher = new FightLauncher(keyHandler);
         this.merchantShop = new MerchantShop(this, worldPanel);
@@ -162,7 +162,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, actionsPanel)) {
                 arena = new Arena(playerFighter, encounterFighter);
                 actionsPanel = new ActionsPanel(arena);
-                arenaPanel = new ArenaPanel(arena, actionsPanel, this, player.classe, encounter.classe);
+                arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
 
                 this.add(arenaPanel, BorderLayout.CENTER);
                 this.add(actionsPanel, BorderLayout.SOUTH);
