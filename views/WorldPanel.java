@@ -20,9 +20,9 @@ public class WorldPanel extends JPanel {
     final TileManager tileManager;
 
     final private Player player;
-    final private NotPlayer npc1;
+    final public NotPlayer npc1;
     final private NotPlayer npc2;
-    final private NotPlayer npc3;
+    final public NotPlayer npc3;
     final private NotPlayer npc4;
     final private NotPlayer npc5;
     final private NotPlayer pursuer;
@@ -54,7 +54,6 @@ public class WorldPanel extends JPanel {
         npc5.fighter.pickWeapon(new FireSword());
         this.pursuer = new NotPlayer(gamePanel, 24*GamePanel.tileSize, 11*GamePanel.tileSize, "smart", "Warrior");
 //        this.fighterEncounteredPursuer = new Warrior("Warrior", Type.FIRE);
-        npc5.fighter.pickWeapon(new FireSword());
         this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, null, "Vagrant");
         this.tileManager = new TileManager(gamePanel);
         this.addKeyListener(player.getKeyHandler());
