@@ -120,7 +120,7 @@ public class Player extends Entity {
         g2.setFont(new Font("Courier", Font.BOLD, 18));
         g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
 
-        g2.setColor(Color.GREEN.darker());
+        g2.setColor(this.fighter.getWeapon().getType().getColor());
         g2.fillRoundRect(x + (this.fighter.getName().length() * 10) , y - 25, 45, 20, 10, 10);
 
         g2.setColor(Color.WHITE);

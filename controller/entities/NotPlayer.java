@@ -203,7 +203,7 @@ public class NotPlayer extends Entity {
         if (this.fighter != null && !(this.fighter instanceof Merchant)){
             g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
 
-            g2.setColor(Color.ORANGE);
+            g2.setColor(fighter.getWeapon().getType().getColor());
             g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 5, y - 25, 47, 20, 10, 10);
 
             g2.setColor(Color.WHITE);

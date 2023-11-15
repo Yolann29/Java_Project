@@ -14,6 +14,8 @@ import models.weapons.IceSword;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class WorldPanel extends JPanel {
@@ -34,6 +36,10 @@ public class WorldPanel extends JPanel {
     public boolean fighterClose = false;
     public boolean merchantClose = false;
     public NotPlayer npcEncounter;
+    public static ArrayList<NotPlayer> fightersNpc = new ArrayList<>();
+
+    long initAnimation = 0;
+    long currentTime = 0;
 
     public WorldPanel(GamePanel gamePanel, KeyHandler keyHandler, Player player) {
         this.gamePanel = gamePanel;
@@ -67,6 +73,14 @@ public class WorldPanel extends JPanel {
         this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, 0, null, "Vagrant");
         this.merchant.fighter = new Merchant("Marchand");
         this.tileManager = new TileManager(gamePanel);
+
+//        fightersNpc.add(npc1);
+        fightersNpc.add(npc2);
+//        fightersNpc.add(scaredArcher);
+//        fightersNpc.add(smartMagician);
+//        fightersNpc.add(madWarrior);
+//        fightersNpc.add(pursuer);
+
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);
     }
@@ -100,26 +114,44 @@ public class WorldPanel extends JPanel {
     }
 
 
-    public boolean distanceBetween(NotPlayer notplayer){
+    public boolean distanceBetween(NotPlayer notplayer) {
         if (player.getWorldX() < (notplayer.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (notplayer.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (notplayer.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (notplayer.getWorldY() - GamePanel.tileSize) && !notplayer.isDead && !player.isDead) {
             if (notplayer == merchant) {
                 merchantClose = true;
                 return true;
             }
+
+            System.out.println("Fight begin between " + player.fighter.getName() + " and " + notplayer.fighter.getName());
             fighterClose = true;
             npcEncounter = notplayer;
             keyHandler.overWorld = false;
             return true;
 
+//            if (keyHandler.attack) {
+//                if (initAnimation == 0) {
+//                    initAnimation = System.currentTimeMillis();
+//                }
+//                currentTime = System.currentTimeMillis();
+//
+//                if (currentTime >= initAnimation + 300) {
+//                    fighterClose = true;
+//                    npcEncounter = notplayer;
+//                    keyHandler.overWorld = false;
+//                    return true;
+//                }
+//
+//            }
+
         }
+
         return false;
     }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
 
         if (player.changeMap) {
             tileManager.changeMap();
@@ -183,6 +215,14 @@ public class WorldPanel extends JPanel {
             player.draw(g2);
         }
 
+        if(fightersNpc.isEmpty()){
+            g2.setColor(new Color(255, 255, 255, 153));
+            g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+            g2.setColor(Color.GREEN);
+            g2.setFont(new Font("Courier", Font.BOLD, 64));
+            g2.drawString("You won !", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
+
+        }
         tileManager.drawTopPlayer(g2);
         g2.dispose();
     }

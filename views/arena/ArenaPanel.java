@@ -8,6 +8,7 @@ import controller.handler.KeyHandler;
 import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
 import views.GamePanel;
+import views.WorldPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -136,6 +137,7 @@ public class ArenaPanel extends JPanel {
             arena.getFighter1().regenItems();
             arena.getFighter1().giveXp(arena.getFighter2().getLevel() * 200);
             gamePanel.player.fighter.restoreHpMax();
+            WorldPanel.fightersNpc.remove(looser);
 
             gamePanel.encounter.fighter = null;
             looser.setDirection("dead");
@@ -192,6 +194,7 @@ public class ArenaPanel extends JPanel {
         //DETERMINER LE WINNER
         if(!arena.getFighter1().isDead() && arena.getFighter2().isDead()){
             da.setDialogText(arena.getFighter1().getName() + " won " +  arena.getFighter2().getLevel() * 200 + "xp");
+            System.out.println(arena.getFighter1().getName() + " won " +  arena.getFighter2().getLevel() * 200 + "xp");
             if(arena.getFighter1().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, "jump")).paint(g2, 100, 270, 96, 96, false);
@@ -200,6 +203,7 @@ public class ArenaPanel extends JPanel {
         }
         if(!arena.getFighter2().isDead() && arena.getFighter1().isDead()){
             da.setDialogText(arena.getFighter2().getName() + " won " + arena.getFighter2().getLevel() * 200 + "xp");
+            System.out.println(arena.getFighter2().getName() + " won " + arena.getFighter2().getLevel() * 200 + "xp");
             if(arena.getFighter2().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, "jump")).paint(g2, 550, 270, 96, 96, true);

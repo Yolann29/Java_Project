@@ -38,6 +38,7 @@ public class Arena {
         if (attack != null && attacker.getWalkingTime() == 0) {
             this.attacker.setWalkingTime(System.currentTimeMillis());
             this.textPane.setTextWithTypingEffect(String.format("%s use %s on %s!", attacker.getName(), attack.getName(), target.getName()));
+            System.out.println(String.format("%s use %s on %s!", attacker.getName(), attack.getName(), target.getName()));
 
         }
     }
