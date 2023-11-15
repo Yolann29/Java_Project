@@ -3,13 +3,12 @@ package controller.entities;
 import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
 import models.fighters.Merchant;
-import models.fighters.Warrior;
 import views.GamePanel;
 
 import java.awt.*;
 import java.util.Objects;
 
-public class NotPlayer extends Entity {
+public class NotPlayableCharacter extends Entity {
 
     GamePanel gamePanel;
     private final String movement;
@@ -18,7 +17,7 @@ public class NotPlayer extends Entity {
 //    String directionWanted = "";
 //    boolean directionChanged = false;
 
-    public NotPlayer(GamePanel gamePanel, int positionX, int positionY, int speed, String movement, String classe) {
+    public NotPlayableCharacter(GamePanel gamePanel, int positionX, int positionY, int speed, String movement, String classe) {
         this.gamePanel = gamePanel;
         this.movement = movement;
         this.classe = classe;

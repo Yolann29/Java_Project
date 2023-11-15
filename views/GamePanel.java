@@ -1,7 +1,7 @@
 package views;
 
 import controller.Arena;
-import controller.entities.NotPlayer;
+import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.Collision;
@@ -43,8 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     private ActionsPanel actionsPanel;
     private Arena arena;
     final public Player player;
-    public NotPlayer encounter;
-    public NotPlayer encounter2;
+    public NotPlayableCharacter encounter;
+    public NotPlayableCharacter encounter2;
     public Fighter playerFighter;
     public Fighter encounterFighter;
 
@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.player = new Player(this, keyHandler, "Warrior");
         player.fighter = new Warrior("YOU", Type.FIRE, 50);
         player.fighter.pickWeapon(firesword);
-        this.encounter = new NotPlayer(this, 0,0, 0,"left-right","Vagrant");
+        this.encounter = new NotPlayableCharacter(this, 0,0, 0,"left-right","Vagrant");
         this.encounter.fighter = encounterFighter;
         this.arena = new Arena(player.fighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);

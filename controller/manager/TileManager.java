@@ -116,7 +116,7 @@ public class TileManager {
                             mapTileNum1[column][row] = num;
                         }
                     } else {
-                        if (row >= 12 && (column == 1 || column == GamePanel.worldColumns - 2)) {
+                        if (row >= 11 && (column == 1 || column == GamePanel.worldColumns - 2)) {
                             mapTileNum1[column][row] = 0;
                         }
                         int index = random.nextInt(tilesRandom.size());
@@ -137,6 +137,9 @@ public class TileManager {
                                 }
                             }
                             if (row == GamePanel.worldRows - 2 && mapTileNum1[column][row] == 11) {
+                                mapTileNum1[column][row] = 0;
+                            }
+                            if (row == 10 && (column == 1 || column == GamePanel.worldColumns - 2)) {
                                 mapTileNum1[column][row] = 0;
                             }
                         }
