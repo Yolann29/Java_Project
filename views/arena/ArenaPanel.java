@@ -2,7 +2,7 @@ package views.arena;
 
 import controller.Arena;
 import controller.entities.Entity;
-import controller.entities.NotPlayer;
+import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.FighterClasseManager;
@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Random;
 
 public class ArenaPanel extends JPanel {
 
@@ -33,9 +32,9 @@ public class ArenaPanel extends JPanel {
     boolean fighter2DamageTaken = false;
 
     private final Player player;
-    private final NotPlayer encounter;
+    private final NotPlayableCharacter encounter;
 
-    public ArenaPanel(Arena arena, ActionsPanel da, GamePanel gamePanel, Player player, NotPlayer encounter) {
+    public ArenaPanel(Arena arena, ActionsPanel da, GamePanel gamePanel, Player player, NotPlayableCharacter encounter) {
         this.da = da;
         this.arena = arena;
         this.gamePanel = gamePanel;

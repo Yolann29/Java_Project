@@ -39,19 +39,19 @@ public class MerchantShop extends JPanel {
         weaponChoices.add(groundSpearChoice);
 
         iceswordChoice.addActionListener(e -> {
-            gamePanel.playerFighter.pickWeapon(new IceSword());
+            gamePanel.player.fighter.pickWeapon(new IceSword());
             worldPanel.merchantClose = false;
         });
         fireswordChoice.addActionListener(e -> {
-            gamePanel.playerFighter.pickWeapon(new FireSword());
+            gamePanel.player.fighter.pickWeapon(new FireSword());
             worldPanel.merchantClose = false;
         });
         electricGauntletChoice.addActionListener(e -> {
-            gamePanel.playerFighter.pickWeapon(new ElectricGauntlet());
+            gamePanel.player.fighter.pickWeapon(new ElectricGauntlet());
             worldPanel.merchantClose = false;
         });
         groundSpearChoice.addActionListener(e -> {
-            gamePanel.playerFighter.pickWeapon(new GroundSpear());
+            gamePanel.player.fighter.pickWeapon(new GroundSpear());
             worldPanel.merchantClose = false;
         });
         weaponChoices.revalidate();
