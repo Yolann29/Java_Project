@@ -4,10 +4,11 @@ import controller.entities.NotPlayer;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.TileManager;
-import models.fighters.Fighter;
 import models.fighters.Warrior;
 import models.types.Type;
+import models.weapons.ElectricGauntlet;
 import models.weapons.FireSword;
+import models.weapons.GroundSpear;
 import models.weapons.IceSword;
 
 import javax.swing.*;
@@ -23,15 +24,14 @@ public class WorldPanel extends JPanel {
     final private Player player;
     final public NotPlayer npc1;
     final private NotPlayer npc2;
-    final public NotPlayer npc3;
-    final private NotPlayer npc4;
-    final private NotPlayer npc5;
+    final public NotPlayer scaredArcher;
+    final private NotPlayer smartMagician;
+    final private NotPlayer madWarrior;
     final private NotPlayer pursuer;
     final private NotPlayer merchant;
 
     public boolean fighterClose = false;
     public boolean merchantClose = false;
-    public Fighter fighterEncountered;
     public NotPlayer npcEncounter;
 
     public WorldPanel(GamePanel gamePanel, KeyHandler keyHandler, Player player) {
@@ -39,59 +39,63 @@ public class WorldPanel extends JPanel {
         this.keyHandler = keyHandler;
         this.player = player;
 
-        this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, "left-right", "Archer");
+        this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, 4,"left-right", "Archer");
         npc1.fighter = new Warrior("Archer", Type.ELECTRICITY, new Random().nextInt(700) + 100);
         npc1.fighter.pickWeapon(new IceSword());
 
-        this.npc2 = new NotPlayer(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, "circle", "Vagrant");
+        this.npc2 = new NotPlayer(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, 4,"circle", "Vagrant");
         npc2.fighter = new Warrior("Vagrant", Type.WATER, new Random().nextInt(1000) + 700);
-        npc2.fighter.pickWeapon(new IceSword());
+        npc2.fighter.pickWeapon(new ElectricGauntlet());
 
-        this.npc3 = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, "up-down", "Archer");
-        npc3.fighter = new Warrior("Archer", Type.GROUND, new Random().nextInt(700) + 100);
-        npc3.fighter.pickWeapon(new IceSword());
+        this.scaredArcher = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, 6,"scared archer", "Archer");
+        scaredArcher.fighter = new Warrior("Archer", Type.GROUND, new Random().nextInt(700) + 100);
+        scaredArcher.fighter.pickWeapon(new IceSword());
 
-        this.npc4 = new NotPlayer(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, null, "Magician");
-        npc4.fighter = new Warrior("Magician", Type.WATER, new Random().nextInt(1000) + 100);
-        npc4.fighter.pickWeapon(new IceSword());
+        this.smartMagician = new NotPlayer(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, 4, "smart magician", "Magician");
+        smartMagician.fighter = new Warrior("Magician", Type.WATER, new Random().nextInt(1000) + 100);
+        smartMagician.fighter.pickWeapon(new IceSword());
 
-        this.npc5 = new NotPlayer(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, "attack", "Warrior");
-        npc5.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(1000) + 100);
-        npc5.fighter.pickWeapon(new FireSword());
+        this.madWarrior = new NotPlayer(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, 10, "mad warrior", "Warrior");
+        madWarrior.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(1000) + 100);
+        madWarrior.fighter.pickWeapon(new FireSword());
 
-        this.pursuer = new NotPlayer(gamePanel, 24*GamePanel.tileSize, 11*GamePanel.tileSize, "smart", "Warrior");
-//        this.fighterEncounteredPursuer = new Warrior("Warrior", Type.FIRE);
+        this.pursuer = new NotPlayer(gamePanel, 22*GamePanel.tileSize, 14*GamePanel.tileSize, 6,"pursuer", "Warrior");
+        pursuer.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(1000) + 100);
+        pursuer.fighter.pickWeapon(new GroundSpear());
 
-        this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, null, "Vagrant");
+        this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, 0, null, "Vagrant");
         this.tileManager = new TileManager(gamePanel);
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);
     }
 
     public void update() {
-        npc1.update();
-        npc2.update();
-        npc3.update();
-        npc5.update();
-//        pursuer.update();
-        player.update();
+        if (TileManager.mapTileNum == TileManager.mapTileNum2) {
+            npc1.update();
+            npc2.update();
+            scaredArcher.update();
+            smartMagician.update();
+            madWarrior.update();
+            pursuer.update();
 
             boolean npcClose = false;
 
             npcClose |= distanceBetween(npc1);
             npcClose |= distanceBetween(npc2);
-            npcClose |= distanceBetween(npc3);
-            npcClose |= distanceBetween(npc4);
-            npcClose |= distanceBetween(npc5);
+            npcClose |= distanceBetween(scaredArcher);
+            npcClose |= distanceBetween(smartMagician);
+            npcClose |= distanceBetween(madWarrior);
+            npcClose |= distanceBetween(pursuer);
             npcClose |= distanceBetween(merchant);
 
             if (!npcClose) {
                 fighterClose = false;
-                fighterEncountered = null;
                 npcEncounter = null;
                 merchantClose = false;
             }
         }
+        player.update();
+    }
 
 
     public boolean distanceBetween(NotPlayer notplayer){
@@ -102,11 +106,7 @@ public class WorldPanel extends JPanel {
             }
             fighterClose = true;
             npcEncounter = notplayer;
-            if (fighterEncountered == null) {
-                fighterEncountered = notplayer.fighter;
-//                keyHandler.overWorld = false;
-
-            }
+            keyHandler.overWorld = false;
             return true;
 
         }
@@ -121,54 +121,67 @@ public class WorldPanel extends JPanel {
 
         if (player.changeMap) {
             tileManager.changeMap();
-            tileManager.draw(g2);
-            player.draw(g2);
             player.changeMap = false;
-        } else {
+        } else if (TileManager.mapTileNum == TileManager.mapTileNum2) {
             tileManager.draw(g2);
 
-            if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc1.getWorldY()) {
+            if (player.getWorldX() < (pursuer.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (pursuer.getWorldX() - GamePanel.tileSize) && player.getWorldY() < pursuer.getWorldY()) {
+                npc1.draw(g2);
                 npc2.draw(g2);
-                npc3.draw(g2);
-                npc4.draw(g2);
+                scaredArcher.draw(g2);
+                smartMagician.draw(g2);
+                player.draw(g2);
+                pursuer.draw(g2);
+
+            } else if (player.getWorldX() < (npc1.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc1.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc1.getWorldY()) {
+                npc2.draw(g2);
+                scaredArcher.draw(g2);
+                smartMagician.draw(g2);
+                pursuer.draw(g2);
                 player.draw(g2);
                 npc1.draw(g2);
 
             } else if (player.getWorldX() < (npc2.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc2.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc2.getWorldY()) {
                 npc1.draw(g2);
-                npc3.draw(g2);
-                npc4.draw(g2);
+                scaredArcher.draw(g2);
+                smartMagician.draw(g2);
+                pursuer.draw(g2);
                 player.draw(g2);
                 npc2.draw(g2);
 
-            } else if (player.getWorldX() < (npc3.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc3.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc3.getWorldY()) {
+            } else if (player.getWorldX() < (scaredArcher.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (scaredArcher.getWorldX() - GamePanel.tileSize) && player.getWorldY() < scaredArcher.getWorldY()) {
                 npc1.draw(g2);
                 npc2.draw(g2);
-                npc4.draw(g2);
+                smartMagician.draw(g2);
+                pursuer.draw(g2);
                 player.draw(g2);
-                npc3.draw(g2);
+                scaredArcher.draw(g2);
 
-            } else if (player.getWorldX() < (npc4.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc4.getWorldX() - GamePanel.tileSize) && player.getWorldY() < npc4.getWorldY()) {
+            } else if (player.getWorldX() < (smartMagician.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (smartMagician.getWorldX() - GamePanel.tileSize) && player.getWorldY() < smartMagician.getWorldY()) {
                 npc1.draw(g2);
                 npc2.draw(g2);
-                npc3.draw(g2);
+                scaredArcher.draw(g2);
+                pursuer.draw(g2);
                 player.draw(g2);
-                npc4.draw(g2);
+                smartMagician.draw(g2);
 
             } else {
                 npc1.draw(g2);
                 npc2.draw(g2);
-                npc3.draw(g2);
-                npc4.draw(g2);
+                scaredArcher.draw(g2);
+                smartMagician.draw(g2);
+                pursuer.draw(g2);
                 player.draw(g2);
             }
+            madWarrior.draw(g2);
+            merchant.draw(g2);
+
+        } else {
+            tileManager.draw(g2);
+            player.draw(g2);
         }
 
-        npc5.draw(g2);
-        merchant.draw(g2);
-
         tileManager.drawTopPlayer(g2);
-        pursuer.draw(g2);
         g2.dispose();
     }
 }

@@ -26,15 +26,13 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
         this.classe = classe;
 
-        solidArea = new Rectangle(12, 40, 40, 24);
-
         setDefault();
     }
 
     public void setDefault() {
         this.setWorldX(4*GamePanel.tileSize);
         this.setWorldY(4*GamePanel.tileSize);
-        this.setSpeed(10);
+        this.setSpeed(6);
         this.screenX = midScreenX;
         this.screenY = midScreenY;
         this.setDirection("right");
@@ -67,7 +65,7 @@ public class Player extends Entity {
                             break;
                         case "left":
                             changeMap = true;
-                            this.setWorldX(GamePanel.worldWidth - 64 - this.getSpeed());
+                            this.setWorldX(GamePanel.worldWidth - 65 - this.getSpeed());
                             break;
                         case "right":
                             changeMap = true;
