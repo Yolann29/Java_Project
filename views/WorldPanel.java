@@ -76,7 +76,7 @@ public class WorldPanel extends JPanel {
         this.tileManager = new TileManager(gamePanel);
 
 //        fightersNpc.add(npc1);
-        fightersNpc.add(npc2);
+//        fightersNpc.add(npc2);
 //        fightersNpc.add(scaredArcher);
 //        fightersNpc.add(smartMagician);
 //        fightersNpc.add(madWarrior);
@@ -87,6 +87,8 @@ public class WorldPanel extends JPanel {
     }
 
     public void update() {
+        player.update();
+        if (fightersNpc.isEmpty()) return;
         if (TileManager.mapTileNum == TileManager.mapTileNum2) {
             npc1.update();
             npc2.update();
@@ -111,7 +113,6 @@ public class WorldPanel extends JPanel {
                 merchantClose = false;
             }
         }
-        player.update();
     }
 
 
@@ -184,7 +185,7 @@ public class WorldPanel extends JPanel {
             npcs.remove(drawOrder(g2, madWarrior));
             npcs.remove(drawOrder(g2, pursuer));
 
-            if (!player.isDead || !fightersNpc.isEmpty()) {
+            if (!player.isDead && !fightersNpc.isEmpty()) {
                 player.draw(g2);
                 for (NotPlayableCharacter npc : npcs) {
                     npc.draw(g2);
@@ -197,6 +198,14 @@ public class WorldPanel extends JPanel {
                 }
                 merchant.draw(g2);
                 tileManager.drawTopPlayer(g2);
+                if(fightersNpc.isEmpty()){
+                    g2.setColor(new Color(255, 255, 255, 153));
+                    g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+                    g2.setColor(Color.GREEN.darker());
+                    g2.setFont(new Font("Courier", Font.BOLD, 64));
+                    g2.drawString("You won !", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
+
+                }
                 player.draw(g2);
             }
         } else {
@@ -204,16 +213,6 @@ public class WorldPanel extends JPanel {
             player.draw(g2);
             tileManager.drawTopPlayer(g2);
         }
-
-        if(fightersNpc.isEmpty()){
-            g2.setColor(new Color(255, 255, 255, 153));
-            g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
-            g2.setColor(Color.GREEN);
-            g2.setFont(new Font("Courier", Font.BOLD, 64));
-            g2.drawString("You won !", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
-
-        }
-        tileManager.drawTopPlayer(g2);
         g2.dispose();
     }
 }

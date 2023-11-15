@@ -6,6 +6,7 @@ import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
 import models.fighters.Merchant;
 import views.GamePanel;
+import views.WorldPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
