@@ -16,6 +16,7 @@ import models.weapons.IceSword;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class WorldPanel extends JPanel {
@@ -126,6 +127,7 @@ public class WorldPanel extends JPanel {
                 return npc;
             }
         }
+        return null;
     }
 
     public void drawOverOrBehind() {
@@ -144,23 +146,26 @@ public class WorldPanel extends JPanel {
 
         } else if (TileManager.mapTileNum == TileManager.mapTileNum2) {
             tileManager.draw(g2);
-            ArrayList<NotPlayableCharacter> npcs = new ArrayList<>();
+            ArrayList<NotPlayableCharacter> npcs = new ArrayList<>(Arrays.asList(npc1, npc2, scaredArcher, smartMagician, madWarrior, pursuer));
 
-            npcs.add(drawOrder(g2, npc1));
-            npcs.add(drawOrder(g2, npc2));
-            npcs.add(drawOrder(g2, scaredArcher));
-            npcs.add(drawOrder(g2, smartMagician));
-            npcs.add(drawOrder(g2, madWarrior));
-            npcs.add(drawOrder(g2, pursuer));
+            npcs.remove(drawOrder(g2, npc1));
+            npcs.remove(drawOrder(g2, npc2));
+            npcs.remove(drawOrder(g2, scaredArcher));
+            npcs.remove(drawOrder(g2, smartMagician));
+            npcs.remove(drawOrder(g2, madWarrior));
+            npcs.remove(drawOrder(g2, pursuer));
 
             if (!player.isDead) {
                 player.draw(g2);
-//                for (NotPlayableCharacter npc : npcs) {
-//
-//                }
+                for (NotPlayableCharacter npc : npcs) {
+                    npc.draw(g2);
+                }
                 merchant.draw(g2);
                 tileManager.drawTopPlayer(g2);
             } else {
+                for (NotPlayableCharacter npc : npcs) {
+                    npc.draw(g2);
+                }
                 merchant.draw(g2);
                 tileManager.drawTopPlayer(g2);
                 player.draw(g2);
