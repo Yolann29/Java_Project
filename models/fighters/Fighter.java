@@ -90,7 +90,7 @@ public abstract class Fighter {
 
     private void ItemEffection(Item item) {
         if(item.getName().equalsIgnoreCase("Heal Potion")){
-            this.hp = Math.min(100, this.hp + item.getHeal());
+            this.hp = Math.min(this.maxHp, this.hp + item.getHeal());
 
         } else if(item.getName().equalsIgnoreCase("Damage Booster")){
             this.weapon.boostDamage(item.getDamage());
@@ -170,6 +170,8 @@ public abstract class Fighter {
     }
 
     public void restoreHpMax() {
+        System.out.println(this.getLevel() * 10 + 100);
+        System.out.println("maxHp" + this.maxHp + " hp" + this.hp);
         this.maxHp = this.getLevel() * 10 + 100;
         this.hp = maxHp;
     }

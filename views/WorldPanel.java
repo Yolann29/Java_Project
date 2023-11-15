@@ -4,6 +4,7 @@ import controller.entities.NotPlayer;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.TileManager;
+import models.fighters.Merchant;
 import models.fighters.Warrior;
 import models.types.Type;
 import models.weapons.ElectricGauntlet;
@@ -40,30 +41,31 @@ public class WorldPanel extends JPanel {
         this.player = player;
 
         this.npc1 = new NotPlayer(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, 4,"left-right", "Archer");
-        npc1.fighter = new Warrior("Archer", Type.ELECTRICITY, new Random().nextInt(700) + 100);
+        npc1.fighter = new Warrior("Archer", Type.ELECTRICITY, new Random().nextInt(10000) + 6000);
         npc1.fighter.pickWeapon(new IceSword());
 
         this.npc2 = new NotPlayer(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, 4,"circle", "Vagrant");
-        npc2.fighter = new Warrior("Vagrant", Type.WATER, new Random().nextInt(1000) + 700);
+        npc2.fighter = new Warrior("Vagrant", Type.WATER, new Random().nextInt(500) + 100);
         npc2.fighter.pickWeapon(new ElectricGauntlet());
 
         this.scaredArcher = new NotPlayer(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, 6,"scared archer", "Archer");
-        scaredArcher.fighter = new Warrior("Archer", Type.GROUND, new Random().nextInt(700) + 100);
+        scaredArcher.fighter = new Warrior("Archer", Type.GROUND, new Random().nextInt(500) + 1500);
         scaredArcher.fighter.pickWeapon(new IceSword());
 
         this.smartMagician = new NotPlayer(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, 4, "smart magician", "Magician");
-        smartMagician.fighter = new Warrior("Magician", Type.WATER, new Random().nextInt(1000) + 100);
+        smartMagician.fighter = new Warrior("Magician", Type.WATER, new Random().nextInt(3000) + 2000);
         smartMagician.fighter.pickWeapon(new IceSword());
 
         this.madWarrior = new NotPlayer(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, 10, "mad warrior", "Warrior");
-        madWarrior.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(1000) + 100);
+        madWarrior.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(2000) + 2000);
         madWarrior.fighter.pickWeapon(new FireSword());
 
-        this.pursuer = new NotPlayer(gamePanel, 22*GamePanel.tileSize, 14*GamePanel.tileSize, 6,"pursuer", "Warrior");
-        pursuer.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(1000) + 100);
+        this.pursuer = new NotPlayer(gamePanel, 22*GamePanel.tileSize, 14*GamePanel.tileSize, 5,"pursuer", "Warrior");
+        pursuer.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(800) + 1500);
         pursuer.fighter.pickWeapon(new GroundSpear());
 
         this.merchant = new NotPlayer(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, 0, null, "Vagrant");
+        this.merchant.fighter = new Merchant("Marchand");
         this.tileManager = new TileManager(gamePanel);
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);

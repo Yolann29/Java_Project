@@ -8,7 +8,7 @@ public class TestsFighter {
     public void getHp_shouldReturnTheActualHp() {
         // arrange
         int expected = 100;
-        Warrior fighter = new Warrior("Philippe", Type.FIRE);
+        Warrior fighter = new Warrior("Philippe", Type.FIRE, 100);
 
         // act
         int result = fighter.getHp();
@@ -21,7 +21,7 @@ public class TestsFighter {
     public void getDefense_shouldReturnTheFighterDefense() {
         // arrange
         int expected = 100;
-        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT, 100);
 
         // act
         int result = fighter.getDefense();
@@ -34,7 +34,7 @@ public class TestsFighter {
     public void getName_shouldReturnTheFighterName() {
         // arrange
         String expected = "Gwendal";
-        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT, 100);
 
         // act
         String result = fighter.getName();
@@ -47,7 +47,7 @@ public class TestsFighter {
     public void getName_shouldReturnTheFighterNameEmpty() {
         // arrange
         String expected = "";
-        Warrior fighter = new Warrior("", Type.PLANT);
+        Warrior fighter = new Warrior("", Type.PLANT, 100);
 
         // act
         String result = fighter.getName();
@@ -59,7 +59,7 @@ public class TestsFighter {
     @Test
     public void getWeapon_shouldReturnTheFighterWeapon() {
         // arrange
-        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT, 100);
         FireSword sword = new FireSword();
 
         // act
@@ -75,7 +75,7 @@ public class TestsFighter {
     @Test
     public void getWeapon_shouldReturnTheFighterWeaponReplaced() {
         // arrange
-        Warrior fighter = new Warrior("Gwendal", Type.PLANT);
+        Warrior fighter = new Warrior("Gwendal", Type.PLANT, 100);
         FireSword firesword = new FireSword();
         IceSword icesword = new IceSword();
 
@@ -93,8 +93,8 @@ public class TestsFighter {
     @Test
     public void attack_shouldRemoveTheRightHp() {
         // arrange
-        Warrior fighterOffense = new Warrior("Gwendal", Type.WATER);
-        Warrior fighterDefense = new Warrior("Arthur", Type.FIRE);
+        Warrior fighterOffense = new Warrior("Gwendal", Type.WATER, 100);
+        Warrior fighterDefense = new Warrior("Arthur", Type.FIRE, 100);
         FireSword firesword = new FireSword();
         IceSword icesword = new IceSword();
 

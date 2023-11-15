@@ -3,6 +3,8 @@ package controller.entities;
 import controller.handler.KeyHandler;
 import controller.manager.AnimationManager;
 import controller.manager.FighterClasseManager;
+import models.fighters.Fighter;
+import models.fighters.Merchant;
 import views.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -20,6 +22,7 @@ public class Player extends Entity {
     public int screenY;
     public String classe;
     public boolean changeMap = false;
+    public Fighter fighter;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, String classe) {
         this.gamePanel = gamePanel;
@@ -111,8 +114,24 @@ public class Player extends Entity {
         }
     }
 
+    public void drawInfoBar(Graphics2D g2, int x, int y){
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Courier", Font.BOLD, 18));
+        g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
+
+        g2.setColor(Color.GREEN.darker());
+        g2.fillRoundRect(x + (this.fighter.getName().length() * 10) , y - 25, 45, 20, 10, 10);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Courier", Font.BOLD, 16));
+        g2.drawString("Lv." + this.fighter.getLevel(), x + (this.fighter.getName().length() * 10) + 7, y - 10);
+
+    }
+
     public void draw(Graphics2D g2) {
 
+        drawInfoBar(g2, screenX, screenY);
         switch (this.getDirection()) {
             case "up":
             case "down":
@@ -136,7 +155,13 @@ public class Player extends Entity {
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "attack")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
             case "dead":
+                g2.setColor(new Color(0, 0, 0, 0.75f));
+                g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+                g2.setColor(Color.RED.darker());
+                g2.setFont(new Font("Courier", Font.BOLD, 64));
+                g2.drawString("You died", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "dead")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+
         }
     }
 

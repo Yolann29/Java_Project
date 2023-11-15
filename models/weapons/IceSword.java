@@ -5,6 +5,6 @@ import models.types.Type;
 public class IceSword extends Weapon {
 
     public IceSword() {
-        super("Ice Sword", Type.WATER, 10, 1, 4);
+        super("Ice Sword", Type.WATER, 15, 1, 4);
     }
 }

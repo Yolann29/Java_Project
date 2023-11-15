@@ -2,6 +2,7 @@ package controller.entities;
 
 import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
+import models.fighters.Merchant;
 import models.fighters.Warrior;
 import views.GamePanel;
 
@@ -195,24 +196,21 @@ public class NotPlayer extends Entity {
                 break;
         }
     }
-
     public void drawInfoBar(Graphics2D g2, int x, int y){
 
         g2.setColor(Color.WHITE);
-//        g2.drawString(String.valueOf(this.fighter.getLevel()), x, y - 10);
-//        g2.fillRect(x, y - 10, GamePanel.tileSize, 5);
         g2.setFont(new Font("Courier", Font.BOLD, 18));
-        if (this.fighter != null) {
+        if (this.fighter != null && !(this.fighter instanceof Merchant)){
             g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
 
             g2.setColor(Color.ORANGE);
-            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 5, y - 25, 50, 20, 10, 10);
+            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 5, y - 25, 47, 20, 10, 10);
 
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Courier", Font.BOLD, 16));
             g2.drawString("Lv." + this.fighter.getLevel(), x + (this.fighter.getName().length() * 7), y - 10);
-        } else {
-            g2.setColor(Color.GREEN.darker());
+        } else if(fighter != null){
+            g2.setColor(Color.CYAN);
             g2.fillRoundRect(x - 10, y - 26, "Merchant".length() * 12, 22, 10, 10);
             g2.setColor(Color.WHITE);
             g2.drawString("Merchant", x - 5, y - 10);

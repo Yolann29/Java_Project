@@ -53,18 +53,18 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameLoop = null;
     public GamePanel() {
 
-        playerFighter = new Warrior("Nathan", Type.FIRE, 50);
         encounterFighter = new Warrior("First Encounter", Type.WATER, new Random().nextInt(10) + 1);
         Weapon firesword = new FireSword();
         Weapon icesword = new IceSword();
-        playerFighter.pickWeapon(firesword);
         encounterFighter.pickWeapon(icesword);
 
-        this.arena = new Arena(playerFighter, encounterFighter);
-        this.actionsPanel = new ActionsPanel(arena);
-        this.player = new Player(this, keyHandler, "Magician");
+        this.player = new Player(this, keyHandler, "Warrior");
+        player.fighter = new Warrior("YOU", Type.FIRE, 50);
+        player.fighter.pickWeapon(firesword);
         this.encounter = new NotPlayer(this, 0,0, 0,"left-right","Vagrant");
         this.encounter.fighter = encounterFighter;
+        this.arena = new Arena(player.fighter, encounterFighter);
+        this.actionsPanel = new ActionsPanel(arena);
         this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
         this.worldPanel = new WorldPanel(this,keyHandler, player);
         this.fightLauncher = new FightLauncher(keyHandler);
@@ -159,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
             this.remove(fightLauncher);
             this.remove(worldPanel);
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, actionsPanel)) {
-                arena = new Arena(playerFighter, encounter.fighter);
+                arena = new Arena(player.fighter, encounter.fighter);
                 actionsPanel = new ActionsPanel(arena);
                 arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
 

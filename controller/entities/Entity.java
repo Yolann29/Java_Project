@@ -14,6 +14,8 @@ public class Entity {
     public boolean collisionOn, doorHere, isDead = false;
     protected Rectangle solidArea = new Rectangle(12, 40, 40, 24);
 
+
+
     public int getX() {
         return x;
     }
