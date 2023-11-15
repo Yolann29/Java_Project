@@ -13,7 +13,6 @@ import models.weapons.IceSword;
 import models.weapons.Weapon;
 import views.arena.ActionsPanel;
 import views.arena.ArenaPanel;
-import views.arena.FightLauncher;
 import views.arena.MerchantShop;
 
 import javax.swing.*;
@@ -38,7 +37,6 @@ public class GamePanel extends JPanel implements Runnable {
     final public KeyHandler keyHandler = new KeyHandler();
     final public Collision collision = new Collision(this);
     final public WorldPanel worldPanel;
-    final private FightLauncher fightLauncher;
     final private MerchantShop merchantShop;
 
     private ArenaPanel arenaPanel;
@@ -67,7 +65,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.actionsPanel = new ActionsPanel(arena);
         this.arenaPanel = new ArenaPanel(arena, actionsPanel, this, player, encounter);
         this.worldPanel = new WorldPanel(this,keyHandler, player);
-        this.fightLauncher = new FightLauncher(keyHandler);
         this.merchantShop = new MerchantShop(this, worldPanel);
 
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -110,9 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
                     throw new RuntimeException(e);
                 }
             } else {
-
                 try {
-
                     Thread.sleep(1000 / MAX_FPS);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -130,17 +125,6 @@ public class GamePanel extends JPanel implements Runnable {
                 this.add(worldPanel, BorderLayout.CENTER);
             }
 
-            if (worldPanel.fighterClose) {
-                if (isPanelAdded(this, fightLauncher)) {
-                    this.add(fightLauncher, BorderLayout.SOUTH);
-                    if (worldPanel.npcEncounter != null) {
-                        encounter = worldPanel.npcEncounter;
-                    }
-                }
-            } else {
-                this.remove(fightLauncher);
-            }
-
             if (worldPanel.merchantClose) {
                 if (isPanelAdded(this, merchantShop)) {
                     this.add(merchantShop, BorderLayout.SOUTH);
@@ -156,7 +140,6 @@ public class GamePanel extends JPanel implements Runnable {
                 encounter = worldPanel.npcEncounter;
             }
             this.remove(merchantShop);
-            this.remove(fightLauncher);
             this.remove(worldPanel);
             if (isPanelAdded(this, arenaPanel) && isPanelAdded(this, actionsPanel)) {
                 arena = new Arena(player.fighter, encounter.fighter);
