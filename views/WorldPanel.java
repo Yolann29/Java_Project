@@ -75,12 +75,12 @@ public class WorldPanel extends JPanel {
         this.merchant.fighter = new Merchant("Marchand");
         this.tileManager = new TileManager(gamePanel);
 
-//        fightersNpc.add(npc1);
-//        fightersNpc.add(npc2);
-//        fightersNpc.add(scaredArcher);
-//        fightersNpc.add(smartMagician);
-//        fightersNpc.add(madWarrior);
-//        fightersNpc.add(pursuer);
+        fightersNpc.add(npc1);
+        fightersNpc.add(npc2);
+        fightersNpc.add(scaredArcher);
+        fightersNpc.add(smartMagician);
+        fightersNpc.add(madWarrior);
+        fightersNpc.add(pursuer);
 
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);
