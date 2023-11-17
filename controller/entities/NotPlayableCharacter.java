@@ -14,6 +14,8 @@ public class NotPlayableCharacter extends Entity {
     private final String movement;
     public final String classe;
     public Fighter fighter;
+    final private int positionX;
+    final private int positionY;
 //    String directionWanted = "";
 //    boolean directionChanged = false;
 
@@ -21,6 +23,8 @@ public class NotPlayableCharacter extends Entity {
         this.gamePanel = gamePanel;
         this.movement = movement;
         this.classe = classe;
+        this.positionX = positionX;
+        this.positionY = positionY;
         setDefault(positionX, positionY, speed);
     }
 
@@ -65,13 +69,13 @@ public class NotPlayableCharacter extends Entity {
                 break;
             case "left-right":
                 if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 0) {
-                    if (this.getWorldX() < 36 * GamePanel.tileSize) {
+                    if (this.getWorldX() < this.positionX) {
                         this.setDirection("right");
                     } else {
                         this.setDirection("idle");
                     }
                 } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 100) {
-                    if (this.getWorldX() > 33 * GamePanel.tileSize) {
+                    if (this.getWorldX() > this.positionX - 3 * GamePanel.tileSize) {
                         this.setDirection("left");
                     } else {
                         this.setDirection("idle");
@@ -79,7 +83,7 @@ public class NotPlayableCharacter extends Entity {
                 }
                 move(getDirection());
                 break;
-            case "scared archer":
+            case "scared":
                 String directionX4;
                 if (gamePanel.player.getWorldX() < (getWorldX() + 3 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3 * GamePanel.tileSize)) {
                     if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
@@ -109,16 +113,16 @@ public class NotPlayableCharacter extends Entity {
                 } else if (gamePanel.player.getWorldX() < (getWorldX() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3.5 * GamePanel.tileSize)) {
                     this.setDirection("idle");
                 } else {
-                    if (this.getWorldX() < 12 * GamePanel.tileSize - 5) {
+                    if (this.getWorldX() < this.positionX - 5) {
                         directionX4 = "right";
-                    } else if (this.getWorldX() > 12 * GamePanel.tileSize + 5) {
+                    } else if (this.getWorldX() > this.positionX + 5) {
                         directionX4 = "left";
                     } else {
                         directionX4 = "idle";
                     }
-                    if (this.getWorldY() < 14 * GamePanel.tileSize - 5) {
+                    if (this.getWorldY() < this.positionY - 5) {
                         this.setDirection("down");
-                    } else if (this.getWorldY() > 14 * GamePanel.tileSize + 5) {
+                    } else if (this.getWorldY() > this.positionY + 5) {
                         this.setDirection("up");
                     } else {
                         this.setDirection("idle");
@@ -138,10 +142,10 @@ public class NotPlayableCharacter extends Entity {
             case "pursuer":
                 pursuePlayer(5, 5, 5, 5);
                 break;
-            case "smart magician":
+            case "slow-pursuer":
                 pursuePlayer(10, 2, 2, 2);
                 break;
-            case "mad warrior":
+            case "fast-pursuer":
                 pursuePlayer(2, 2, 1, 2.5f);
                 break;
         }
@@ -203,7 +207,7 @@ public class NotPlayableCharacter extends Entity {
             g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
 
             g2.setColor(fighter.getWeapon().getType().getColor());
-            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 5, y - 25, 47, 20, 10, 10);
+            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 3, y - 25, 47, 20, 10, 10);
 
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Courier", Font.BOLD, 16));

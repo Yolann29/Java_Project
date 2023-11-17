@@ -8,6 +8,7 @@ public class PTextPane extends JTextPane {
 
     private String fullText;
     private Arena arena;
+    private TypeTextTask typeTextTask;
 
     public PTextPane(String text, Arena arena) {
         this(text);
@@ -21,6 +22,7 @@ public class PTextPane extends JTextPane {
         this.setBackground(new Color(0, 0, 0, 0));
         this.setForeground(Color.WHITE);
         this.setHighlighter(null);
+        this.typeTextTask = new TypeTextTask();
 
         startTypingEffect();
     }
