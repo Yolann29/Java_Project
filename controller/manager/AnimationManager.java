@@ -37,4 +37,13 @@ public class AnimationManager {
     public static final Animation MAGICIAN_DEAD = new Animation("/sprites/magician/magician-dead-animation.png", 1, 100);
     public static final Animation MAGICIAN_JUMP = new Animation("/sprites/magician/magician-jump-animation.png", 4, 100);
     public static final Animation MAGICIAN_OBJECT = new Animation("/sprites/magician/magician-magic-animation.png", 1, 100);
+
+    //CATs
+    //GRAY
+    public static final Animation CAT_IDLE_GRAY = new Animation("/sprites/cat/gray/cat-idle-animation.png",4,130);
+    public static final Animation CAT_WALK_GRAY = new Animation("/sprites/cat/gray/cat-walk-animation.png",5,100);
+
+    //ORANGE
+    public static final Animation CAT_IDLE_ORANGE = new Animation("/sprites/cat/orange/cat-idle-animation.png",4,130);
+    public static final Animation CAT_WALK_ORANGE = new Animation("/sprites/cat/orange/cat-walk-animation.png",5,100);
 }

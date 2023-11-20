@@ -272,6 +272,9 @@ public class NotPlayableCharacter extends Entity {
         }
     }
     public void drawInfoBar(Graphics2D g2, int x, int y){
+        if(this.classe == Role.CAT_GRAY || this.classe == Role.CAT_ORANGE){
+            return;
+        }
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Courier", Font.BOLD, 18));

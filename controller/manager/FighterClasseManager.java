@@ -18,6 +18,10 @@ public class FighterClasseManager {
                         return AnimationManager.ARCHER_WALK;
                     case MAGICIAN:
                         return AnimationManager.MAGICIAN_WALK;
+                    case CAT_GRAY:
+                        return AnimationManager.CAT_WALK_GRAY;
+                    case CAT_ORANGE:
+                        return AnimationManager.CAT_WALK_ORANGE;
                 }
             case IDLE:
                 switch (classe) {
@@ -29,6 +33,10 @@ public class FighterClasseManager {
                         return AnimationManager.ARCHER_IDLE;
                     case MAGICIAN:
                         return AnimationManager.MAGICIAN_IDLE;
+                    case CAT_GRAY:
+                        return AnimationManager.CAT_IDLE_GRAY;
+                    case CAT_ORANGE:
+                        return AnimationManager.CAT_IDLE_ORANGE;
                 }
             case JUMP:
                 switch (classe) {

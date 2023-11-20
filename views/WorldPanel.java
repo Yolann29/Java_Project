@@ -42,13 +42,18 @@ public class WorldPanel extends JPanel {
         this.gs = gs;
         this.game = game;
 
-        createNPC(9, 11, 4, Pattern.CIRCLE, Role.VAGRANT, Type.WATER, new ElectricGauntlet(), false);
+        createNPC(9, 11, 4, Pattern.LEFT_RIGHT, Role.VAGRANT, Type.WATER, new ElectricGauntlet(), false);
         createNPC(12, 14, 6, Pattern.SCARED, Role.ARCHER, Type.GROUND, new GroundSpear(), false);
         createNPC(14, 4, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, Type.WATER, new IceSword(), false);
         createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN, Type.WATER, new IceSword(), false);
         createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, Type.FIRE, new GroundSpear(), false);
         createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, Type.FIRE, new ElectricGauntlet(), false);
         createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, Type.ELECTRICITY, new IceSword(), false);
+
+        //PETS
+        createNPC(9, 9, 6, Pattern.SCARED, Role.CAT_GRAY, Type.WATER, new GroundSpear(), false);
+        createNPC(23, 10, 6, Pattern.SCARED, Role.CAT_ORANGE, Type.WATER, new GroundSpear(), false);
+        createNPC(20, 2, 6, Pattern.SCARED, Role.CAT_GRAY, Type.WATER, new GroundSpear(), false);
 
         //MERCHANT
         createNPC(18, 9, 7, Pattern.IDLE, Role.VAGRANT, null, new IceSword(), true);
@@ -103,6 +108,11 @@ public class WorldPanel extends JPanel {
 
     public boolean distanceBetween(NotPlayableCharacter npc){
         if (player.getWorldX() < (npc.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc.getWorldY() - GamePanel.tileSize) && !npc.isDead && !player.isDead) {
+
+            if(npc.classe == Role.CAT_ORANGE || npc.classe == Role.CAT_GRAY){
+                return true;
+            }
+
             if (npc.fighter instanceof Merchant) {
                 gamePanel.openMerchantShop();
                 return true;
