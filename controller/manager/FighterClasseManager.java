@@ -1,86 +1,87 @@
 package controller.manager;
 
-import views.GamePanel;
+import models.Action;
+import models.Role;
 
 public class FighterClasseManager {
 
-    public static Animation returnRightAnimation(String classe, String action) {
+    public static Animation returnRightAnimation(Role classe, Action action) {
 
         switch(action) {
-            case "walk":
+            case WALK:
                 switch (classe) {
-                    case "Vagrant":
+                    case VAGRANT:
                         return AnimationManager.VAGRANT_WALK;
-                    case "Warrior":
+                    case WARRIOR:
                         return AnimationManager.WARRIOR_WALK;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_WALK;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_WALK;
                 }
-            case "idle":
+            case IDLE:
                 switch (classe) {
-                    case "Vagrant":
+                    case VAGRANT:
                         return AnimationManager.VAGRANT_IDLE;
-                    case "Warrior":
+                    case WARRIOR:
                         return AnimationManager.WARRIOR_IDLE;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_IDLE;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_IDLE;
                 }
-            case "jump":
+            case JUMP:
                 switch (classe) {
-                    case "Vagrant":
+                    case VAGRANT:
                         return AnimationManager.VAGRANT_JUMP;
-                    case "Warrior":
+                    case WARRIOR:
                         return AnimationManager.WARRIOR_JUMP;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_JUMP;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_JUMP;
                 }
-            case "attack":
+            case ATTACK:
                 switch (classe) {
-                    case "Vagrant":
+                    case VAGRANT:
                         return AnimationManager.VAGRANT_ATTACK;
-                    case "Warrior":
+                    case WARRIOR:
                         return AnimationManager.WARRIOR_ATTACK;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_ATTACK;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_ATTACK;
                 }
-            case "hit":
+            case HIT:
                 switch (classe) {
-                    case "Vagrant":
+                    case VAGRANT:
                         return AnimationManager.VAGRANT_HIT;
-                    case "Warrior":
+                    case WARRIOR:
                         return AnimationManager.WARRIOR_HIT;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_HIT;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_HIT;
                 }
-            case "dead":
+            case DEAD:
                 switch (classe) {
-                    case "Vagrant":
+                    case VAGRANT:
                         return AnimationManager.VAGRANT_DEAD;
-                    case "Warrior":
+                    case WARRIOR:
                         return AnimationManager.WARRIOR_DEAD;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_DEAD;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_DEAD;
                 }
-            case "object":
+            case OBJECT:
                 switch (classe) {
-                    case "Vagrant":
-                    case "Warrior":
+                    case VAGRANT:
+                    case WARRIOR:
                         return null;
-                    case "Archer":
+                    case ARCHER:
                         return AnimationManager.ARCHER_OBJECT;
-                    case "Magician":
+                    case MAGICIAN:
                         return AnimationManager.MAGICIAN_OBJECT;
                 }
 

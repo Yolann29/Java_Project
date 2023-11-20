@@ -1,15 +1,13 @@
 package controller.entities;
 
-import controller.manager.TileManager;
-import views.GamePanel;
+import models.Action;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Entity {
 
     private int worldX, worldY, x, y, speed;
-    private String direction;
+    private Action direction;
     protected boolean reversed;
     public boolean collisionOn, doorHere, isDead = false;
     protected Rectangle solidArea = new Rectangle(12, 40, 40, 24);
@@ -36,7 +34,7 @@ public class Entity {
         return speed;
     }
 
-    public String getDirection() {
+    public Action getDirection() {
         return direction;
     }
 
@@ -68,7 +66,7 @@ public class Entity {
         this.speed = speed;
     }
 
-    public void setDirection(String direction) {
+    public void setDirection(Action direction) {
         this.direction = direction;
     }
 

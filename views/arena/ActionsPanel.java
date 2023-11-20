@@ -50,7 +50,8 @@ public class ActionsPanel extends JPanel {
         attack = new PButton("> Attack");
         items = new PButton("> Items");
         cancel = new PButton("> Return");
-        cancel.setPreferredSize(new Dimension(100, 50));
+        cancel.setPreferredSize(new Dimension(100, 40));
+        cancel.setBackground(Color.RED.darker());
         textPane = new PTextPane("Your turn !", arena);
 
         cancel.addActionListener(e1 -> {

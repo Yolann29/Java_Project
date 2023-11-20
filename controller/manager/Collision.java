@@ -28,7 +28,7 @@ public class Collision {
         int indexTileSudEst;
 
         switch(entity.getDirection()) {
-            case "up":
+            case UP:
                 topY = (solidAreaTop - entity.getSpeed()) / GamePanel.tileSize;
                 indexTileNordOuest = TileManager.mapTileNum[leftX][topY];
                 indexTileNordEst = TileManager.mapTileNum[rightX][topY];
@@ -39,7 +39,7 @@ public class Collision {
                     entity.doorHere = true;
                 }
                 break;
-            case "down":
+            case DOWN:
                 bottomY = (solidAreaBottom + entity.getSpeed()) / GamePanel.tileSize;
                 indexTileSudOuest = TileManager.mapTileNum[leftX][bottomY];
                 indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];
@@ -50,7 +50,7 @@ public class Collision {
                     entity.doorHere = true;
                 }
                 break;
-            case "left":
+            case LEFT:
                 leftX = (solidAreaLeft - entity.getSpeed()) / GamePanel.tileSize;
                 indexTileNordOuest = TileManager.mapTileNum[leftX][topY];
                 indexTileSudOuest = TileManager.mapTileNum[leftX][bottomY];
@@ -61,7 +61,7 @@ public class Collision {
                     entity.doorHere = true;
                 }
                 break;
-            case "right":
+            case RIGHT:
                 rightX = (solidAreaRight + entity.getSpeed()) / GamePanel.tileSize;
                 indexTileNordEst = TileManager.mapTileNum[rightX][topY];
                 indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];

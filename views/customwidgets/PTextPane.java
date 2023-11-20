@@ -9,7 +9,6 @@ public class PTextPane extends JTextPane {
 
     private String fullText;
     private Arena arena;
-    static public boolean initText;
 
     public PTextPane(String text, Arena arena) {
         this(text);
@@ -30,7 +29,6 @@ public class PTextPane extends JTextPane {
 
 
     private void startTypingEffect() {
-
         new TypeTextTask().execute();
     }
 
@@ -38,14 +36,11 @@ public class PTextPane extends JTextPane {
 
         @Override
         protected Void doInBackground() throws Exception {
-            PTextPane.initText = false;
             for (int i = 0; i <= fullText.length(); i++) {
-                System.out.println(PTextPane.initText);
                 final String partialText = fullText.substring(0, i);
                 setText(partialText);
                 Thread.sleep(25);
             }
-            PTextPane.initText = true;
             return null;
         }
 

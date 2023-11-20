@@ -5,6 +5,8 @@ import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
 import controller.manager.Collision;
+import models.Pattern;
+import models.Role;
 import models.fighters.Fighter;
 import models.fighters.Warrior;
 import models.types.Type;
@@ -56,10 +58,10 @@ public class GamePanel extends JPanel implements Runnable {
         Weapon icesword = new IceSword();
         encounterFighter.pickWeapon(icesword);
 
-        this.player = new Player(this, keyHandler, "Warrior");
+        this.player = new Player(this, keyHandler, Role.WARRIOR);
         player.fighter = new Warrior("YOU", Type.FIRE, 50);
         player.fighter.pickWeapon(firesword);
-        this.encounter = new NotPlayableCharacter(this, 0,0, 0,"left-right","Vagrant");
+        this.encounter = new NotPlayableCharacter(this, 0,0, 0, Pattern.LEFT_RIGHT, Role.VAGRANT);
         this.encounter.fighter = encounterFighter;
         this.arena = new Arena(player.fighter, encounterFighter);
         this.actionsPanel = new ActionsPanel(arena);

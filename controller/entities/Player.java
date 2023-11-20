@@ -1,16 +1,13 @@
 package controller.entities;
 
 import controller.handler.KeyHandler;
-import controller.manager.AnimationManager;
 import controller.manager.FighterClasseManager;
+import models.Action;
+import models.Role;
 import models.fighters.Fighter;
-import models.fighters.Merchant;
 import views.GamePanel;
-import views.WorldPanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.IOException;
 import java.util.Objects;
 
 public class Player extends Entity {
@@ -21,11 +18,11 @@ public class Player extends Entity {
     public final int midScreenY = GamePanel.FRAME_HEIGHT/2 - 32;
     public int screenX;
     public int screenY;
-    public String classe;
+    public Role classe;
     public boolean changeMap = false;
     public Fighter fighter;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler, String classe) {
+    public Player(GamePanel gamePanel, KeyHandler keyHandler, Role classe) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
         this.classe = classe;
@@ -39,7 +36,7 @@ public class Player extends Entity {
         this.setSpeed(6);
         this.screenX = midScreenX;
         this.screenY = midScreenY;
-        this.setDirection("right");
+        this.setDirection(Action.RIGHT);
         this.setReversed(false);
     }
 
@@ -47,13 +44,13 @@ public class Player extends Entity {
         if (isDead) return;
         if (keyHandler.top || keyHandler.bottom || keyHandler.left || keyHandler.right) {
             if (keyHandler.top) {
-                this.setDirection("up");
+                this.setDirection(Action.UP);
             } else if (keyHandler.bottom) {
-                this.setDirection("down");
+                this.setDirection(Action.DOWN);
             } else if (keyHandler.left) {
-                this.setDirection("left");
+                this.setDirection(Action.LEFT);
             } else {
-                this.setDirection("right");
+                this.setDirection(Action.RIGHT);
             }
             collisionOn = false;
             doorHere = false;
@@ -61,44 +58,44 @@ public class Player extends Entity {
             if (!collisionOn) {
                 if (doorHere) {
                     switch(this.getDirection()) {
-                        case "up":
+                        case UP:
                             this.setWorldY(this.getWorldY() - this.getSpeed());
                             break;
-                        case "down":
+                        case DOWN:
                             this.setWorldY(this.getWorldY() + this.getSpeed());
                             break;
-                        case "left":
+                        case LEFT:
                             changeMap = true;
                             this.setWorldX(GamePanel.worldWidth - 65 - this.getSpeed());
                             break;
-                        case "right":
+                        case RIGHT:
                             changeMap = true;
                             this.setWorldX(this.getSpeed());
                             break;
                     }
                 } else {
                     switch(this.getDirection()) {
-                        case "up":
+                        case UP:
                             this.setWorldY(this.getWorldY() - this.getSpeed());
                             break;
-                        case "down":
+                        case DOWN:
                             this.setWorldY(this.getWorldY() + this.getSpeed());
                             break;
-                        case "left":
+                        case LEFT:
                             this.setWorldX(this.getWorldX() - this.getSpeed());
                             break;
-                        case "right":
+                        case RIGHT:
                             this.setWorldX(this.getWorldX() + this.getSpeed());
                             break;
                     }
                 }
             }
         } else if (keyHandler.jump) {
-            this.setDirection("jump");
+            this.setDirection(Action.JUMP);
         } else if (keyHandler.attack) {
-            this.setDirection("attack");
+            this.setDirection(Action.ATTACK);
         } else {
-            this.setDirection("idle");
+            this.setDirection(Action.IDLE);
         }
 
         if (GamePanel.worldWidth - this.getWorldX() <= this.midScreenX + 32) {
@@ -134,34 +131,34 @@ public class Player extends Entity {
 
         drawInfoBar(g2, screenX, screenY);
         switch (this.getDirection()) {
-            case "up":
-            case "down":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "walk")).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case UP:
+            case DOWN:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.WALK)).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "left":
+            case LEFT:
                 this.setReversed(true);
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "walk")).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.WALK)).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "right":
+            case RIGHT:
                 this.setReversed(false);
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "walk")).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.WALK)).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "idle":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "idle")).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case IDLE:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.IDLE)).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "jump":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "jump")).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case JUMP:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.JUMP)).paint(g2, this.screenX, this.screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "attack":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "attack")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case ATTACK:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.ATTACK)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "dead":
+            case DEAD:
                 g2.setColor(new Color(0, 0, 0, 0.75f));
                 g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
                 g2.setColor(Color.RED.darker());
                 g2.setFont(new Font("Courier", Font.BOLD, 64));
                 g2.drawString("You died", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "dead")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.DEAD)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
 
         }
     }

@@ -1,6 +1,9 @@
 package controller.entities;
 
 import controller.manager.FighterClasseManager;
+import models.Action;
+import models.Pattern;
+import models.Role;
 import models.fighters.Fighter;
 import models.fighters.Merchant;
 import views.GamePanel;
@@ -11,13 +14,13 @@ import java.util.Objects;
 public class NotPlayableCharacter extends Entity {
 
     GamePanel gamePanel;
-    private final String movement;
-    public final String classe;
+    private final Pattern movement;
+    public final Role classe;
     public Fighter fighter;
-//    String directionWanted = "";
-//    boolean directionChanged = false;
+    private boolean blocked;
+    private int counter;
 
-    public NotPlayableCharacter(GamePanel gamePanel, int positionX, int positionY, int speed, String movement, String classe) {
+    public NotPlayableCharacter(GamePanel gamePanel, int positionX, int positionY, int speed, Pattern movement, Role classe) {
         this.gamePanel = gamePanel;
         this.movement = movement;
         this.classe = classe;
@@ -28,169 +31,236 @@ public class NotPlayableCharacter extends Entity {
         this.setWorldX(positionX);
         this.setWorldY(positionY);
         this.setSpeed(speed);
-        this.setDirection("idle");
+        this.setDirection(Action.IDLE);
         this.setReversed(true);
     }
 
     public void update() {
         if (isDead) return;
         switch (movement) {
-            case "circle":
+            case CIRCLE:
                 if (gamePanel.imageCount <= 50 && gamePanel.imageCount > 0) {
                     if (this.getWorldY() > 10 * GamePanel.tileSize) {
-                        this.setDirection("up");
+                        this.setDirection(Action.UP);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
                     }
                 } else if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 50) {
                     if (this.getWorldX() < 10 * GamePanel.tileSize) {
-                        this.setDirection("right");
+                        this.setDirection(Action.RIGHT);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
                     }
                 } else if (gamePanel.imageCount <= 150 && gamePanel.imageCount > 100) {
                     if (this.getWorldY() < 11 * GamePanel.tileSize) {
-                        this.setDirection("down");
+                        this.setDirection(Action.DOWN);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
                     }
                 } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 150) {
                     if (this.getWorldX() > 9 * GamePanel.tileSize) {
-                        this.setDirection("left");
+                        this.setDirection(Action.LEFT);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
                     }
                 }
                 move(getDirection());
                 break;
-            case "left-right":
+            case LEFT_RIGHT:
                 if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 0) {
                     if (this.getWorldX() < 36 * GamePanel.tileSize) {
-                        this.setDirection("right");
+                        this.setDirection(Action.RIGHT);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
                     }
                 } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 100) {
                     if (this.getWorldX() > 33 * GamePanel.tileSize) {
-                        this.setDirection("left");
+                        this.setDirection(Action.LEFT);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
                     }
                 }
                 move(getDirection());
                 break;
-            case "scared archer":
-                String directionX4;
+            case SCARED:
+                Action patternScared;
+                Action patternScared2;
                 if (gamePanel.player.getWorldX() < (getWorldX() + 3 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3 * GamePanel.tileSize)) {
-                    if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
-                        directionX4 = "left";
-                    } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
-                        directionX4 = "right";
+                    if (this.getWorldX() < gamePanel.player.getWorldX()) {
+                        patternScared = Action.LEFT;
+                    } else if (this.getWorldX() > gamePanel.player.getWorldX()) {
+                        patternScared = Action.RIGHT;
                     } else {
-                        directionX4 = "idle";
+                        patternScared = Action.IDLE;
                     }
-                    if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
-                        this.setDirection("up");
-                    } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
-                        this.setDirection("down");
+                    if (this.getWorldY() < gamePanel.player.getWorldY()) {
+                        this.setDirection(Action.UP);
+                    } else if (this.getWorldY() > gamePanel.player.getWorldY()) {
+                        this.setDirection(Action.DOWN);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
+                    }
+                    if (Math.abs(this.getWorldX() - gamePanel.player.getWorldX()) > Math.abs(this.getWorldY() - gamePanel.player.getWorldY())) {
+                        if (this.getWorldY() < gamePanel.player.getWorldY()) {
+                            patternScared2 = Action.DOWN;
+                        } else {
+                            patternScared2 = Action.UP;
+                        }
+                    } else {
+                        if (this.getWorldX() < gamePanel.player.getWorldX()) {
+                            patternScared2 = Action.RIGHT;
+                        } else {
+                            patternScared2 = Action.LEFT;
+                        }
                     }
                     collisionOn = false;
+                    doorHere = false;
                     gamePanel.collision.checkTile(this);
-                    if (!collisionOn && !getDirection().equals("idle")) {
+                    if (!collisionOn && !doorHere && !getDirection().equals(Action.IDLE) && !blocked) {
                         move(getDirection());
                     } else {
-                        this.setDirection(directionX4);
+                        this.setDirection(patternScared);
                         collisionOn = false;
+                        doorHere = false;
                         gamePanel.collision.checkTile(this);
-                        if (!collisionOn) move(directionX4);
+                        if (!collisionOn && !doorHere && !blocked) {
+                            move(patternScared);
+                        } else {
+                            blocked = true;
+                            counter = counter + this.getSpeed();
+                            if (counter > 64 + this.getSpeed()) {
+                                blocked = false;
+                                counter = 0;
+                                collisionOn = false;
+                                doorHere = false;
+                                gamePanel.collision.checkTile(this);
+                                if (!collisionOn && !doorHere) move(patternScared);
+                            }
+                            this.setDirection(patternScared2);
+                            collisionOn = false;
+                            doorHere = false;
+                            gamePanel.collision.checkTile(this);
+                            if (!collisionOn && !doorHere) move(patternScared2);
+                        }
                     }
                 } else if (gamePanel.player.getWorldX() < (getWorldX() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3.5 * GamePanel.tileSize)) {
-                    this.setDirection("idle");
+                    this.setDirection(Action.IDLE);
                 } else {
                     if (this.getWorldX() < 12 * GamePanel.tileSize - 5) {
-                        directionX4 = "right";
+                        patternScared = Action.RIGHT;
                     } else if (this.getWorldX() > 12 * GamePanel.tileSize + 5) {
-                        directionX4 = "left";
+                        patternScared = Action.LEFT;
                     } else {
-                        directionX4 = "idle";
+                        patternScared = Action.IDLE;
                     }
                     if (this.getWorldY() < 14 * GamePanel.tileSize - 5) {
-                        this.setDirection("down");
+                        this.setDirection(Action.DOWN);
                     } else if (this.getWorldY() > 14 * GamePanel.tileSize + 5) {
-                        this.setDirection("up");
+                        this.setDirection(Action.UP);
                     } else {
-                        this.setDirection("idle");
+                        this.setDirection(Action.IDLE);
+                    }
+                    if (Math.abs(this.getWorldX() - 12 * GamePanel.tileSize) > Math.abs(this.getWorldY() - 14 * GamePanel.tileSize)) {
+                        if (this.getWorldY() < 14 * GamePanel.tileSize) {
+                            patternScared2 = Action.DOWN;
+                        } else {
+                            patternScared2 = Action.UP;
+                        }
+                    } else {
+                        if (this.getWorldX() < 12 * GamePanel.tileSize) {
+                            patternScared2 = Action.RIGHT;
+                        } else {
+                            patternScared2 = Action.LEFT;
+                        }
                     }
                     collisionOn = false;
+                    doorHere = false;
                     gamePanel.collision.checkTile(this);
-                    if (!collisionOn && !getDirection().equals("idle")) {
+                    if (!collisionOn && !doorHere && !getDirection().equals(Action.IDLE) && !blocked) {
                         move(getDirection());
                     } else {
-                        this.setDirection(directionX4);
+                        this.setDirection(patternScared);
                         collisionOn = false;
+                        doorHere = false;
                         gamePanel.collision.checkTile(this);
-                        if (!collisionOn) move(directionX4);
+                        if (!collisionOn && !doorHere && !blocked) {
+                            move(patternScared);
+                        } else {
+                            blocked = true;
+                            counter = counter + this.getSpeed();
+                            if (counter > 64 + this.getSpeed()) {
+                                blocked = false;
+                                counter = 0;
+                                collisionOn = false;
+                                doorHere = false;
+                                gamePanel.collision.checkTile(this);
+                                if (!collisionOn && !doorHere) move(patternScared);
+                            }
+                            this.setDirection(patternScared2);
+                            collisionOn = false;
+                            doorHere = false;
+                            gamePanel.collision.checkTile(this);
+                            if (!collisionOn && !doorHere) move(patternScared2);
+                        }
                     }
                 }
                 break;
-            case "pursuer":
+            case MEDIUM_SMART:
                 pursuePlayer(5, 5, 5, 5);
                 break;
-            case "smart magician":
+            case SLOW_SMART:
                 pursuePlayer(10, 2, 2, 2);
                 break;
-            case "mad warrior":
+            case FAST_SMART:
                 pursuePlayer(2, 2, 1, 2.5f);
                 break;
         }
     }
 
     public void pursuePlayer(int nombreTiles1, int nombreTiles2, int nombreTiles3, float nombreTiles4) {
-        String direction;
+        Action pattern;
         if (gamePanel.player.getWorldX() < (getWorldX() + nombreTiles1 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - nombreTiles1 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() +nombreTiles3 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - nombreTiles4 * GamePanel.tileSize)) {
             if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
-                direction = "right";
+                pattern = Action.RIGHT;
             } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
-                direction = "left";
+                pattern = Action.LEFT;
             } else {
-                direction = "idle";
+                pattern = Action.IDLE;
             }
             if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
-                this.setDirection("down");
+                this.setDirection(Action.DOWN);
             } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
-                this.setDirection("up");
+                this.setDirection(Action.UP);
             } else {
-                this.setDirection("idle");
+                this.setDirection(Action.IDLE);
             }
             collisionOn = false;
             gamePanel.collision.checkTile(this);
-            if (!collisionOn && !getDirection().equals("idle")) {
+            if (!collisionOn && !getDirection().equals(Action.IDLE)) {
                 move(getDirection());
             } else {
-                this.setDirection(direction);
+                this.setDirection(pattern);
                 collisionOn = false;
                 gamePanel.collision.checkTile(this);
-                if (!collisionOn) move(direction);
+                if (!collisionOn) move(pattern);
             }
         } else {
-            this.setDirection("idle");
+            this.setDirection(Action.IDLE);
         }
     }
 
-    public void move(String direction) {
+    public void move(Action direction) {
         switch(direction) {
-            case "up":
+            case UP:
                 this.setWorldY(this.getWorldY() - this.getSpeed());
                 break;
-            case "down":
+            case DOWN:
                 this.setWorldY(this.getWorldY() + this.getSpeed());
                 break;
-            case "left":
+            case LEFT:
                 this.setWorldX(this.getWorldX() - this.getSpeed());
                 break;
-            case "right":
+            case RIGHT:
                 this.setWorldX(this.getWorldX() + this.getSpeed());
                 break;
         }
@@ -223,26 +293,26 @@ public class NotPlayableCharacter extends Entity {
 
         drawInfoBar(g2, screenX, screenY);
         switch(this.getDirection()) {
-            case "up":
-            case "down":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "walk")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case UP:
+            case DOWN:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.WALK)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "left":
+            case LEFT:
                 this.setReversed(true);
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "walk")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.WALK)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, true);
                 break;
-            case "right":
+            case RIGHT:
                 this.setReversed(false);
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "walk")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.WALK)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, false);
                 break;
-            case "idle":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "idle")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case IDLE:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.IDLE)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "attack":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "attack")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case ATTACK:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.ATTACK)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
                 break;
-            case "dead":
-                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, "dead")).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
+            case DEAD:
+                Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.DEAD)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
         }
     }
 }
