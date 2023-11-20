@@ -59,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.player = new Player(this, keyHandler, "Warrior");
         player.fighter = new Warrior("YOU", Type.FIRE, 50);
         player.fighter.pickWeapon(firesword);
+
         this.encounter = new NotPlayableCharacter(this, 0,0, 0,"left-right","Vagrant");
         this.encounter.fighter = encounterFighter;
         this.arena = new Arena(player.fighter, encounterFighter);
