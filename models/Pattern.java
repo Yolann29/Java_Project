@@ -4,7 +4,8 @@ public enum Pattern {
     CIRCLE,
     LEFT_RIGHT,
     SCARED,
-    SLOW_SMART,
-    MEDIUM_SMART,
-    FAST_SMART,
+    SLOW_PURSUER,
+    MEDIUM_PURSUER,
+    FAST_PURSUER,
+    IDLE;
 }

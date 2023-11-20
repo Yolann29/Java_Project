@@ -19,11 +19,15 @@ public class NotPlayableCharacter extends Entity {
     public Fighter fighter;
     private boolean blocked;
     private int counter;
+    final private int positionX;
+    final private int positionY;
 
     public NotPlayableCharacter(GamePanel gamePanel, int positionX, int positionY, int speed, Pattern movement, Role classe) {
         this.gamePanel = gamePanel;
         this.movement = movement;
         this.classe = classe;
+        this.positionX = positionX;
+        this.positionY = positionY;
         setDefault(positionX, positionY, speed);
     }
 
@@ -68,13 +72,13 @@ public class NotPlayableCharacter extends Entity {
                 break;
             case LEFT_RIGHT:
                 if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 0) {
-                    if (this.getWorldX() < 36 * GamePanel.tileSize) {
+                    if (this.getWorldX() < this.positionX) {
                         this.setDirection(Action.RIGHT);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
                 } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 100) {
-                    if (this.getWorldX() > 33 * GamePanel.tileSize) {
+                    if (this.getWorldX() > this.positionX - 3 * GamePanel.tileSize) {
                         this.setDirection(Action.LEFT);
                     } else {
                         this.setDirection(Action.IDLE);
@@ -146,16 +150,16 @@ public class NotPlayableCharacter extends Entity {
                 } else if (gamePanel.player.getWorldX() < (getWorldX() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3.5 * GamePanel.tileSize)) {
                     this.setDirection(Action.IDLE);
                 } else {
-                    if (this.getWorldX() < 12 * GamePanel.tileSize - 5) {
+                    if (this.getWorldX() < this.positionX - 5) {
                         patternScared = Action.RIGHT;
-                    } else if (this.getWorldX() > 12 * GamePanel.tileSize + 5) {
+                    } else if (this.getWorldX() > this.positionX + 5) {
                         patternScared = Action.LEFT;
                     } else {
                         patternScared = Action.IDLE;
                     }
-                    if (this.getWorldY() < 14 * GamePanel.tileSize - 5) {
+                    if (this.getWorldY() < this.positionY - 5) {
                         this.setDirection(Action.DOWN);
-                    } else if (this.getWorldY() > 14 * GamePanel.tileSize + 5) {
+                    } else if (this.getWorldY() > this.positionY + 5) {
                         this.setDirection(Action.UP);
                     } else {
                         this.setDirection(Action.IDLE);
@@ -205,13 +209,13 @@ public class NotPlayableCharacter extends Entity {
                     }
                 }
                 break;
-            case MEDIUM_SMART:
+            case MEDIUM_PURSUER:
                 pursuePlayer(5, 5, 5, 5);
                 break;
-            case SLOW_SMART:
+            case SLOW_PURSUER:
                 pursuePlayer(10, 2, 2, 2);
                 break;
-            case FAST_SMART:
+            case FAST_PURSUER:
                 pursuePlayer(2, 2, 1, 2.5f);
                 break;
         }
@@ -273,7 +277,7 @@ public class NotPlayableCharacter extends Entity {
             g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
 
             g2.setColor(fighter.getWeapon().getType().getColor());
-            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 5, y - 25, 47, 20, 10, 10);
+            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 3, y - 25, 47, 20, 10, 10);
 
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Courier", Font.BOLD, 16));

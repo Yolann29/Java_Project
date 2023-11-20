@@ -10,10 +10,7 @@ import models.Role;
 import models.fighters.Merchant;
 import models.fighters.Warrior;
 import models.types.Type;
-import models.weapons.ElectricGauntlet;
-import models.weapons.FireSword;
-import models.weapons.GroundSpear;
-import models.weapons.IceSword;
+import models.weapons.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,86 +25,69 @@ public class WorldPanel extends JPanel {
     final TileManager tileManager;
 
     final private Player player;
-    final public NotPlayableCharacter npc1;
-    final private NotPlayableCharacter npc2;
-    final public NotPlayableCharacter scaredArcher;
-    final private NotPlayableCharacter smartMagician;
-    final private NotPlayableCharacter madWarrior;
-    final private NotPlayableCharacter pursuer;
-    final private NotPlayableCharacter merchant;
-
     public boolean fighterClose = false;
     public boolean merchantClose = false;
     public NotPlayableCharacter npcEncounter;
-    public static ArrayList<NotPlayableCharacter> fightersNpc = new ArrayList<>();
 
-    long initAnimation = 0;
-    long currentTime = 0;
+    public static ArrayList<NotPlayableCharacter> fightersNpc = new ArrayList<>();
+    public static ArrayList<NotPlayableCharacter> npcs = new ArrayList<>();
+    int npcExperience = 1;
 
     public WorldPanel(GamePanel gamePanel, KeyHandler keyHandler, Player player) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
         this.player = player;
 
-        this.npc1 = new NotPlayableCharacter(gamePanel, 36*GamePanel.tileSize, 7*GamePanel.tileSize, 4, Pattern.LEFT_RIGHT, Role.ARCHER);
-        npc1.fighter = new Warrior("Archer", Type.ELECTRICITY, new Random().nextInt(10000) + 6000);
-        npc1.fighter.pickWeapon(new IceSword());
+        createNPC(9, 11, 4, Pattern.CIRCLE, Role.VAGRANT, Type.WATER, new ElectricGauntlet(), false);
+        createNPC(12, 14, 6, Pattern.SCARED, Role.ARCHER, Type.GROUND, new GroundSpear(), false);
+        createNPC(14, 4, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, Type.WATER, new IceSword(), false);
+        createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN, Type.WATER, new IceSword(), false);
+        createNPC(22, 14, 5, Pattern.MEDIUM_PURSUER, Role.WARRIOR, Type.FIRE, new GroundSpear(), false);
+        createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, Type.FIRE, new ElectricGauntlet(), false);
+        createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, Type.ELECTRICITY, new IceSword(), false);
 
-        this.npc2 = new NotPlayableCharacter(gamePanel, 9*GamePanel.tileSize, 11*GamePanel.tileSize, 4,Pattern.CIRCLE, Role.VAGRANT);
-        npc2.fighter = new Warrior("Vagrant", Type.WATER, new Random().nextInt(500) + 100);
-        npc2.fighter.pickWeapon(new ElectricGauntlet());
+        //MERCHANT
+        createNPC(18, 9, 3, Pattern.IDLE, Role.VAGRANT, null, new IceSword(), true);
 
-        this.scaredArcher = new NotPlayableCharacter(gamePanel, 12*GamePanel.tileSize, 14*GamePanel.tileSize, 6,Pattern.SCARED, Role.ARCHER);
-        scaredArcher.fighter = new Warrior("Archer", Type.GROUND, new Random().nextInt(500) + 1500);
-        scaredArcher.fighter.pickWeapon(new IceSword());
-
-        this.smartMagician = new NotPlayableCharacter(gamePanel, 18*GamePanel.tileSize, GamePanel.tileSize, 4, Pattern.SLOW_SMART, Role.MAGICIAN);
-        smartMagician.fighter = new Warrior("Magician", Type.WATER, new Random().nextInt(3000) + 2000);
-        smartMagician.fighter.pickWeapon(new IceSword());
-
-        this.madWarrior = new NotPlayableCharacter(gamePanel, 27*GamePanel.tileSize, 11*GamePanel.tileSize, 10, Pattern.FAST_SMART, Role.WARRIOR);
-        madWarrior.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(2000) + 2000);
-        madWarrior.fighter.pickWeapon(new FireSword());
-
-        this.pursuer = new NotPlayableCharacter(gamePanel, 22*GamePanel.tileSize, 14*GamePanel.tileSize, 5,Pattern.MEDIUM_SMART, Role.WARRIOR);
-        pursuer.fighter = new Warrior("Warrior", Type.FIRE, new Random().nextInt(800) + 1500);
-        pursuer.fighter.pickWeapon(new GroundSpear());
-
-        this.merchant = new NotPlayableCharacter(gamePanel, 18*GamePanel.tileSize, 9*GamePanel.tileSize, 0, null, Role.VAGRANT);
-        this.merchant.fighter = new Merchant("Marchand");
         this.tileManager = new TileManager(gamePanel);
-
-        fightersNpc.add(npc1);
-        fightersNpc.add(npc2);
-        fightersNpc.add(scaredArcher);
-        fightersNpc.add(smartMagician);
-        fightersNpc.add(madWarrior);
-        fightersNpc.add(pursuer);
-
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);
+    }
+
+    private void createNPC(int x, int y, int speed, Pattern behavior, Role className, Type type, Weapon weapon, boolean isMerchant) {
+        NotPlayableCharacter npc = new NotPlayableCharacter(gamePanel, x * GamePanel.tileSize, y * GamePanel.tileSize, speed, behavior, className);
+        if(isMerchant){
+            npc.fighter = new Merchant("Marchand");
+        } else {
+            npcExperience += 16;
+            npc.fighter = new Warrior(className.getName(), type, Math.max(100,new Random().nextInt((int) Math.pow(npcExperience, 2))));
+
+        }
+        if (weapon != null) {
+            npc.fighter.pickWeapon(weapon);
+        }
+        if(!(npc.fighter instanceof Merchant)){
+            fightersNpc.add(npc);
+        }
+        npcs.add(npc);
+
     }
 
     public void update() {
         player.update();
         if (fightersNpc.isEmpty()) return;
         if (TileManager.mapTileNum == TileManager.mapTileNum2) {
-            npc1.update();
-            npc2.update();
-            scaredArcher.update();
-            smartMagician.update();
-            madWarrior.update();
-            pursuer.update();
+
+            for (NotPlayableCharacter npc : npcs) {
+                npc.update();
+            }
 
             boolean npcClose = false;
-
-            npcClose |= distanceBetween(npc1);
-            npcClose |= distanceBetween(npc2);
-            npcClose |= distanceBetween(scaredArcher);
-            npcClose |= distanceBetween(smartMagician);
-            npcClose |= distanceBetween(madWarrior);
-            npcClose |= distanceBetween(pursuer);
-            npcClose |= distanceBetween(merchant);
+            for (NotPlayableCharacter npc : npcs) {
+                if (distanceBetween(npc)) {
+                    npcClose = true;
+                }
+            }
 
             if (!npcClose) {
                 fighterClose = false;
@@ -120,7 +100,7 @@ public class WorldPanel extends JPanel {
 
     public boolean distanceBetween(NotPlayableCharacter notplayer){
         if (player.getWorldX() < (notplayer.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (notplayer.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (notplayer.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (notplayer.getWorldY() - GamePanel.tileSize) && !notplayer.isDead && !player.isDead) {
-            if (notplayer == merchant) {
+            if (notplayer.fighter instanceof Merchant) {
                 merchantClose = true;
                 return true;
             }
@@ -130,21 +110,6 @@ public class WorldPanel extends JPanel {
             npcEncounter = notplayer;
             keyHandler.overWorld = false;
             return true;
-
-//            if (keyHandler.attack) {
-//                if (initAnimation == 0) {
-//                    initAnimation = System.currentTimeMillis();
-//                }
-//                currentTime = System.currentTimeMillis();
-//
-//                if (currentTime >= initAnimation + 300) {
-//                    fighterClose = true;
-//                    npcEncounter = notplayer;
-//                    keyHandler.overWorld = false;
-//                    return true;
-//                }
-//
-//            }
 
         }
 
@@ -163,10 +128,6 @@ public class WorldPanel extends JPanel {
         return null;
     }
 
-    public void drawOverOrBehind() {
-
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -178,27 +139,25 @@ public class WorldPanel extends JPanel {
 
         } else if (TileManager.mapTileNum == TileManager.mapTileNum2) {
             tileManager.draw(g2);
-            ArrayList<NotPlayableCharacter> npcs = new ArrayList<>(Arrays.asList(npc1, npc2, scaredArcher, smartMagician, madWarrior, pursuer));
+            ArrayList<NotPlayableCharacter> npcToDraw = new ArrayList<>(npcs);
 
-            npcs.remove(drawOrder(g2, npc1));
-            npcs.remove(drawOrder(g2, npc2));
-            npcs.remove(drawOrder(g2, scaredArcher));
-            npcs.remove(drawOrder(g2, smartMagician));
-            npcs.remove(drawOrder(g2, madWarrior));
-            npcs.remove(drawOrder(g2, pursuer));
+            for(int i = 0; i < npcs.size(); i++){
+                npcToDraw.remove(drawOrder(g2, npcs.get(i)));
+            }
+
 
             if (!player.isDead && !fightersNpc.isEmpty()) {
                 player.draw(g2);
-                for (NotPlayableCharacter npc : npcs) {
+                for (NotPlayableCharacter npc : npcToDraw) {
                     npc.draw(g2);
                 }
-                merchant.draw(g2);
+
                 tileManager.drawTopPlayer(g2);
             } else {
-                for (NotPlayableCharacter npc : npcs) {
+                for (NotPlayableCharacter npc : npcToDraw) {
                     npc.draw(g2);
                 }
-                merchant.draw(g2);
+
                 tileManager.drawTopPlayer(g2);
                 if(fightersNpc.isEmpty()){
                     g2.setColor(new Color(255, 255, 255, 153));
