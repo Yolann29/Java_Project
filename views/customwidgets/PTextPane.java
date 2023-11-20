@@ -1,6 +1,7 @@
 package views.customwidgets;
 
 import controller.Arena;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +9,7 @@ public class PTextPane extends JTextPane {
 
     private String fullText;
     private Arena arena;
+    static public boolean initText;
 
     public PTextPane(String text, Arena arena) {
         this(text);
@@ -28,17 +30,22 @@ public class PTextPane extends JTextPane {
 
 
     private void startTypingEffect() {
+
         new TypeTextTask().execute();
     }
 
     private class TypeTextTask extends SwingWorker<Void, Void> {
+
         @Override
         protected Void doInBackground() throws Exception {
+            PTextPane.initText = false;
             for (int i = 0; i <= fullText.length(); i++) {
+                System.out.println(PTextPane.initText);
                 final String partialText = fullText.substring(0, i);
                 setText(partialText);
                 Thread.sleep(25);
             }
+            PTextPane.initText = true;
             return null;
         }
 
@@ -47,7 +54,6 @@ public class PTextPane extends JTextPane {
             if(arena.getFighter1() != null && arena.getFighter1().isUsingItem()){
                 arena.getFighter1().setUsingItem(false);
                 arena.switchTurn();
-
             }
         }
     }

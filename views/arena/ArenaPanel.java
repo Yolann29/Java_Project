@@ -9,6 +9,7 @@ import controller.manager.FighterClasseManager;
 import models.fighters.Fighter;
 import views.GamePanel;
 import views.WorldPanel;
+import views.customwidgets.PTextPane;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -188,7 +189,8 @@ public class ArenaPanel extends JPanel {
                 && arena.getFighter2().getWalkingTime() == 0
                 && !arena.getFighter1().isDead()
                 && !arena.getFighter2().isDead()
-                && arena.isYourTurn());
+                && arena.isYourTurn()
+                && PTextPane.initText);
 
         //DETERMINER LE WINNER
         if(!arena.getFighter1().isDead() && arena.getFighter2().isDead()){

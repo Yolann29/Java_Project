@@ -21,6 +21,7 @@ public class ActionsPanel extends JPanel {
     private Arena arena;
     private PButton attack;
     private PButton items;
+    private PButton cancel;
     PTextPane textPane;
 
     public ActionsPanel(Arena arena){
@@ -37,12 +38,36 @@ public class ActionsPanel extends JPanel {
         buttonsPannel.setPreferredSize(new Dimension(320, 100));
         buttonsPannel.setBackground(new Color(0,0,0,0));
 
+        JPanel leftPannel = new JPanel();
+        leftPannel.setLayout(new GridLayout(2, 1, 10, 10));
+        leftPannel.setPreferredSize(new Dimension(320, 100));
+        leftPannel.setBackground(new Color(0,0,0,0));
+
+        JPanel returnPannel = new JPanel();
+        returnPannel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        returnPannel.setBackground(new Color(0,0,0,0));
+
         attack = new PButton("> Attack");
         items = new PButton("> Items");
+        cancel = new PButton("> Return");
+        cancel.setPreferredSize(new Dimension(100, 50));
         textPane = new PTextPane("Your turn !", arena);
+
+        cancel.addActionListener(e1 -> {
+            textPane.setTextWithTypingEffect("Your turn !");
+            returnPannel.remove(cancel);
+            buttonsPannel.removeAll();
+            buttonsPannel.add(attack);
+            buttonsPannel.add(items);
+            buttonsPannel.revalidate();
+            leftPannel.revalidate();
+        });
+        returnPannel.revalidate();
 
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
+        leftPannel.add(textPane);
+        leftPannel.add(returnPannel);
 
         arena.setTextPane(textPane);
         //ATTACK BUTTON
@@ -51,6 +76,7 @@ public class ActionsPanel extends JPanel {
             textPane.setTextWithTypingEffect("Choose your attack !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
+            returnPannel.add(cancel);
 
             for (Attack weaponAttack : arena.getFighter1().getWeapon().getWeaponAttacks()) {
                 if (weaponAttack != null) {
@@ -59,6 +85,7 @@ public class ActionsPanel extends JPanel {
 
                     attackButton.addActionListener(e1 -> {
                         arena.startAttack(arena.getFighter1(), arena.getFighter2(), weaponAttack);
+                        returnPannel.remove(cancel);
                         buttonsPannel.removeAll();
                         buttonsPannel.add(attack);
                         buttonsPannel.add(items);
@@ -75,6 +102,7 @@ public class ActionsPanel extends JPanel {
             textPane.setTextWithTypingEffect("Choose your item !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
+            returnPannel.add(cancel);
 
             for (Item item : arena.getFighter1().getItems()) {
                 PButton itemButton = new PButton("> " + item.getName());
@@ -84,6 +112,7 @@ public class ActionsPanel extends JPanel {
                     arena.getFighter1().useItem(item);
                     this.setInteraction(false);
                     textPane.setTextWithTypingEffect(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
+                    returnPannel.remove(cancel);
                     buttonsPannel.removeAll();
                     buttonsPannel.add(attack);
                     buttonsPannel.add(items);
@@ -94,8 +123,8 @@ public class ActionsPanel extends JPanel {
             buttonsPannel.revalidate();
         });
 
-        this.add(textPane, BorderLayout.CENTER);
-        this.add(buttonsPannel, BorderLayout.EAST);
+        this.add(leftPannel);
+        this.add(buttonsPannel);
 
 
     }
