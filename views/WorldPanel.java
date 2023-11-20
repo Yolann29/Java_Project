@@ -61,7 +61,6 @@ public class WorldPanel extends JPanel {
         } else {
             npcExperience += 16;
             npc.fighter = new Warrior(className.getName(), type, Math.max(100,new Random().nextInt((int) Math.pow(npcExperience, 2))));
-
         }
         if (weapon != null) {
             npc.fighter.pickWeapon(weapon);
