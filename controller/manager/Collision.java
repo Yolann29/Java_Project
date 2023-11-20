@@ -5,12 +5,6 @@ import views.GamePanel;
 
 public class Collision {
 
-    protected GamePanel gamePanel;
-
-    public Collision(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
     public void checkTile(Entity entity) {
         int solidAreaLeft = entity.getWorldX() + entity.getSolidArea().x;
         int solidAreaRight = entity.getWorldX() + entity.getSolidArea().x + entity.getSolidArea().width;

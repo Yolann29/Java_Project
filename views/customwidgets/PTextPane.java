@@ -23,7 +23,6 @@ public class PTextPane extends JTextPane {
         this.setBackground(new Color(0, 0, 0, 0));
         this.setForeground(Color.WHITE);
         this.setHighlighter(null);
-        this.typeTextTask = new TypeTextTask();
 
         startTypingEffect();
     }
@@ -31,7 +30,11 @@ public class PTextPane extends JTextPane {
 
 
     private void startTypingEffect() {
-        new TypeTextTask().execute();
+        if(this.typeTextTask != null && !this.typeTextTask.isDone()){
+            this.typeTextTask.cancel(true);
+        }
+        this.typeTextTask = new TypeTextTask();
+        this.typeTextTask.execute();
     }
 
     private class TypeTextTask extends SwingWorker<Void, Void> {

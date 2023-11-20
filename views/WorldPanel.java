@@ -1,5 +1,7 @@
 package views;
 
+import controller.Game;
+import controller.GameState;
 import controller.entities.Entity;
 import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
@@ -15,47 +17,49 @@ import models.weapons.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class WorldPanel extends JPanel {
 
+    private Game game;
+    final GameState gs;
     final GamePanel gamePanel;
     final KeyHandler keyHandler;
     final TileManager tileManager;
 
     final private Player player;
     public boolean fighterClose = false;
-    public boolean merchantClose = false;
     public NotPlayableCharacter npcEncounter;
 
     public static ArrayList<NotPlayableCharacter> fightersNpc = new ArrayList<>();
     public static ArrayList<NotPlayableCharacter> npcs = new ArrayList<>();
     int npcExperience = 1;
 
-    public WorldPanel(GamePanel gamePanel, KeyHandler keyHandler, Player player) {
+    public WorldPanel(GameState gs, GamePanel gamePanel, KeyHandler keyHandler, Player player, Game game) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
         this.player = player;
+        this.gs = gs;
+        this.game = game;
 
         createNPC(9, 11, 4, Pattern.CIRCLE, Role.VAGRANT, Type.WATER, new ElectricGauntlet(), false);
         createNPC(12, 14, 6, Pattern.SCARED, Role.ARCHER, Type.GROUND, new GroundSpear(), false);
         createNPC(14, 4, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, Type.WATER, new IceSword(), false);
         createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN, Type.WATER, new IceSword(), false);
-        createNPC(22, 14, 5, Pattern.MEDIUM_PURSUER, Role.WARRIOR, Type.FIRE, new GroundSpear(), false);
+        createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, Type.FIRE, new GroundSpear(), false);
         createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, Type.FIRE, new ElectricGauntlet(), false);
         createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, Type.ELECTRICITY, new IceSword(), false);
 
         //MERCHANT
-        createNPC(18, 9, 3, Pattern.IDLE, Role.VAGRANT, null, new IceSword(), true);
+        createNPC(18, 9, 7, Pattern.IDLE, Role.VAGRANT, null, new IceSword(), true);
 
-        this.tileManager = new TileManager(gamePanel);
+        this.tileManager = new TileManager(game);
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);
     }
 
     private void createNPC(int x, int y, int speed, Pattern behavior, Role className, Type type, Weapon weapon, boolean isMerchant) {
-        NotPlayableCharacter npc = new NotPlayableCharacter(gamePanel, x * GamePanel.tileSize, y * GamePanel.tileSize, speed, behavior, className);
+        NotPlayableCharacter npc = new NotPlayableCharacter(game, x * GamePanel.tileSize, y * GamePanel.tileSize, speed, behavior, className);
         if(isMerchant){
             npc.fighter = new Merchant("Marchand");
         } else {
@@ -91,23 +95,23 @@ public class WorldPanel extends JPanel {
             if (!npcClose) {
                 fighterClose = false;
                 npcEncounter = null;
-                merchantClose = false;
+                gamePanel.closeMerchantShop();
             }
         }
     }
 
 
-    public boolean distanceBetween(NotPlayableCharacter notplayer){
-        if (player.getWorldX() < (notplayer.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (notplayer.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (notplayer.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (notplayer.getWorldY() - GamePanel.tileSize) && !notplayer.isDead && !player.isDead) {
-            if (notplayer.fighter instanceof Merchant) {
-                merchantClose = true;
+    public boolean distanceBetween(NotPlayableCharacter npc){
+        if (player.getWorldX() < (npc.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc.getWorldY() - GamePanel.tileSize) && !npc.isDead && !player.isDead) {
+            if (npc.fighter instanceof Merchant) {
+                gamePanel.openMerchantShop();
                 return true;
             }
 
-            System.out.println("Fight begin between " + player.fighter.getName() + " and " + notplayer.fighter.getName());
+            System.out.println("Fight begin between " + player.fighter.getName() + " and " + npc.fighter.getName());
             fighterClose = true;
-            npcEncounter = notplayer;
-            keyHandler.overWorld = false;
+            npcEncounter = npc;
+            game.getGp().switchToArena();
             return true;
 
         }

@@ -1,5 +1,7 @@
 package controller.entities;
 
+import controller.Game;
+import controller.Main;
 import controller.manager.FighterClasseManager;
 import models.Action;
 import models.Pattern;
@@ -13,7 +15,7 @@ import java.util.Objects;
 
 public class NotPlayableCharacter extends Entity {
 
-    GamePanel gamePanel;
+    Game game;
     private final Pattern movement;
     public final Role classe;
     public Fighter fighter;
@@ -22,8 +24,8 @@ public class NotPlayableCharacter extends Entity {
     final private int positionX;
     final private int positionY;
 
-    public NotPlayableCharacter(GamePanel gamePanel, int positionX, int positionY, int speed, Pattern movement, Role classe) {
-        this.gamePanel = gamePanel;
+    public NotPlayableCharacter(Game game, int positionX, int positionY, int speed, Pattern movement, Role classe) {
+        this.game = game;
         this.movement = movement;
         this.classe = classe;
         this.positionX = positionX;
@@ -43,25 +45,25 @@ public class NotPlayableCharacter extends Entity {
         if (isDead) return;
         switch (movement) {
             case CIRCLE:
-                if (gamePanel.imageCount <= 50 && gamePanel.imageCount > 0) {
+                if (Main.imageCount <= 50 && Main.imageCount > 0) {
                     if (this.getWorldY() > 10 * GamePanel.tileSize) {
                         this.setDirection(Action.UP);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
-                } else if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 50) {
+                } else if (Main.imageCount <= 100 && Main.imageCount > 50) {
                     if (this.getWorldX() < 10 * GamePanel.tileSize) {
                         this.setDirection(Action.RIGHT);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
-                } else if (gamePanel.imageCount <= 150 && gamePanel.imageCount > 100) {
+                } else if (Main.imageCount <= 150 && Main.imageCount > 100) {
                     if (this.getWorldY() < 11 * GamePanel.tileSize) {
                         this.setDirection(Action.DOWN);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
-                } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 150) {
+                } else if (Main.imageCount <= 200 && Main.imageCount > 150) {
                     if (this.getWorldX() > 9 * GamePanel.tileSize) {
                         this.setDirection(Action.LEFT);
                     } else {
@@ -71,13 +73,13 @@ public class NotPlayableCharacter extends Entity {
                 move(getDirection());
                 break;
             case LEFT_RIGHT:
-                if (gamePanel.imageCount <= 100 && gamePanel.imageCount > 0) {
+                if (Main.imageCount <= 100 && Main.imageCount > 0) {
                     if (this.getWorldX() < this.positionX) {
                         this.setDirection(Action.RIGHT);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
-                } else if (gamePanel.imageCount <= 200 && gamePanel.imageCount > 100) {
+                } else if (Main.imageCount <= 200 && Main.imageCount > 100) {
                     if (this.getWorldX() > this.positionX - 3 * GamePanel.tileSize) {
                         this.setDirection(Action.LEFT);
                     } else {
@@ -89,29 +91,29 @@ public class NotPlayableCharacter extends Entity {
             case SCARED:
                 Action patternScared;
                 Action patternScared2;
-                if (gamePanel.player.getWorldX() < (getWorldX() + 3 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3 * GamePanel.tileSize)) {
-                    if (this.getWorldX() < gamePanel.player.getWorldX()) {
+                if (game.getPlayer().getWorldX() < (getWorldX() + 3 * GamePanel.tileSize) && game.getPlayer().getWorldX() > (getWorldX() - 3 * GamePanel.tileSize) && game.getPlayer().getWorldY() < (getWorldY() + 3 * GamePanel.tileSize) && game.getPlayer().getWorldY() > (getWorldY() - 3 * GamePanel.tileSize)) {
+                    if (this.getWorldX() < game.getPlayer().getWorldX()) {
                         patternScared = Action.LEFT;
-                    } else if (this.getWorldX() > gamePanel.player.getWorldX()) {
+                    } else if (this.getWorldX() > game.getPlayer().getWorldX()) {
                         patternScared = Action.RIGHT;
                     } else {
                         patternScared = Action.IDLE;
                     }
-                    if (this.getWorldY() < gamePanel.player.getWorldY()) {
+                    if (this.getWorldY() < game.getPlayer().getWorldY()) {
                         this.setDirection(Action.UP);
-                    } else if (this.getWorldY() > gamePanel.player.getWorldY()) {
+                    } else if (this.getWorldY() > game.getPlayer().getWorldY()) {
                         this.setDirection(Action.DOWN);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
-                    if (Math.abs(this.getWorldX() - gamePanel.player.getWorldX()) > Math.abs(this.getWorldY() - gamePanel.player.getWorldY())) {
-                        if (this.getWorldY() < gamePanel.player.getWorldY()) {
+                    if (Math.abs(this.getWorldX() - game.getPlayer().getWorldX()) > Math.abs(this.getWorldY() - game.getPlayer().getWorldY())) {
+                        if (this.getWorldY() < game.getPlayer().getWorldY()) {
                             patternScared2 = Action.DOWN;
                         } else {
                             patternScared2 = Action.UP;
                         }
                     } else {
-                        if (this.getWorldX() < gamePanel.player.getWorldX()) {
+                        if (this.getWorldX() < game.getPlayer().getWorldX()) {
                             patternScared2 = Action.RIGHT;
                         } else {
                             patternScared2 = Action.LEFT;
@@ -119,14 +121,14 @@ public class NotPlayableCharacter extends Entity {
                     }
                     collisionOn = false;
                     doorHere = false;
-                    gamePanel.collision.checkTile(this);
+                    game.getCollision().checkTile(this);
                     if (!collisionOn && !doorHere && !getDirection().equals(Action.IDLE) && !blocked) {
                         move(getDirection());
                     } else {
                         this.setDirection(patternScared);
                         collisionOn = false;
                         doorHere = false;
-                        gamePanel.collision.checkTile(this);
+                        game.getCollision().checkTile(this);
                         if (!collisionOn && !doorHere && !blocked) {
                             move(patternScared);
                         } else {
@@ -137,17 +139,17 @@ public class NotPlayableCharacter extends Entity {
                                 counter = 0;
                                 collisionOn = false;
                                 doorHere = false;
-                                gamePanel.collision.checkTile(this);
+                                game.getCollision().checkTile(this);
                                 if (!collisionOn && !doorHere) move(patternScared);
                             }
                             this.setDirection(patternScared2);
                             collisionOn = false;
                             doorHere = false;
-                            gamePanel.collision.checkTile(this);
+                            game.getCollision().checkTile(this);
                             if (!collisionOn && !doorHere) move(patternScared2);
                         }
                     }
-                } else if (gamePanel.player.getWorldX() < (getWorldX() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() + 3.5 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - 3.5 * GamePanel.tileSize)) {
+                } else if (game.getPlayer().getWorldX() < (getWorldX() + 3.5 * GamePanel.tileSize) && game.getPlayer().getWorldX() > (getWorldX() - 3.5 * GamePanel.tileSize) && game.getPlayer().getWorldY() < (getWorldY() + 3.5 * GamePanel.tileSize) && game.getPlayer().getWorldY() > (getWorldY() - 3.5 * GamePanel.tileSize)) {
                     this.setDirection(Action.IDLE);
                 } else {
                     if (this.getWorldX() < this.positionX - 5) {
@@ -179,14 +181,14 @@ public class NotPlayableCharacter extends Entity {
                     }
                     collisionOn = false;
                     doorHere = false;
-                    gamePanel.collision.checkTile(this);
+                    game.getCollision().checkTile(this);
                     if (!collisionOn && !doorHere && !getDirection().equals(Action.IDLE) && !blocked) {
                         move(getDirection());
                     } else {
                         this.setDirection(patternScared);
                         collisionOn = false;
                         doorHere = false;
-                        gamePanel.collision.checkTile(this);
+                        game.getCollision().checkTile(this);
                         if (!collisionOn && !doorHere && !blocked) {
                             move(patternScared);
                         } else {
@@ -197,13 +199,13 @@ public class NotPlayableCharacter extends Entity {
                                 counter = 0;
                                 collisionOn = false;
                                 doorHere = false;
-                                gamePanel.collision.checkTile(this);
+                                game.getCollision().checkTile(this);
                                 if (!collisionOn && !doorHere) move(patternScared);
                             }
                             this.setDirection(patternScared2);
                             collisionOn = false;
                             doorHere = false;
-                            gamePanel.collision.checkTile(this);
+                            game.getCollision().checkTile(this);
                             if (!collisionOn && !doorHere) move(patternScared2);
                         }
                     }
@@ -223,29 +225,29 @@ public class NotPlayableCharacter extends Entity {
 
     public void pursuePlayer(int nombreTiles1, int nombreTiles2, int nombreTiles3, float nombreTiles4) {
         Action pattern;
-        if (gamePanel.player.getWorldX() < (getWorldX() + nombreTiles1 * GamePanel.tileSize) && gamePanel.player.getWorldX() > (getWorldX() - nombreTiles1 * GamePanel.tileSize) && gamePanel.player.getWorldY() < (getWorldY() +nombreTiles3 * GamePanel.tileSize) && gamePanel.player.getWorldY() > (getWorldY() - nombreTiles4 * GamePanel.tileSize)) {
-            if (this.getWorldX() < gamePanel.player.getWorldX() - 5) {
+        if (game.getPlayer().getWorldX() < (getWorldX() + nombreTiles1 * GamePanel.tileSize) && game.getPlayer().getWorldX() > (getWorldX() - nombreTiles1 * GamePanel.tileSize) && game.getPlayer().getWorldY() < (getWorldY() +nombreTiles3 * GamePanel.tileSize) && game.getPlayer().getWorldY() > (getWorldY() - nombreTiles4 * GamePanel.tileSize)) {
+            if (this.getWorldX() < game.getPlayer().getWorldX() - 5) {
                 pattern = Action.RIGHT;
-            } else if (this.getWorldX() > gamePanel.player.getWorldX() + 5) {
+            } else if (this.getWorldX() > game.getPlayer().getWorldX() + 5) {
                 pattern = Action.LEFT;
             } else {
                 pattern = Action.IDLE;
             }
-            if (this.getWorldY() < gamePanel.player.getWorldY() - 5) {
+            if (this.getWorldY() < game.getPlayer().getWorldY() - 5) {
                 this.setDirection(Action.DOWN);
-            } else if (this.getWorldY() > gamePanel.player.getWorldY() + 5) {
+            } else if (this.getWorldY() > game.getPlayer().getWorldY() + 5) {
                 this.setDirection(Action.UP);
             } else {
                 this.setDirection(Action.IDLE);
             }
             collisionOn = false;
-            gamePanel.collision.checkTile(this);
+            game.getCollision().checkTile(this);
             if (!collisionOn && !getDirection().equals(Action.IDLE)) {
                 move(getDirection());
             } else {
                 this.setDirection(pattern);
                 collisionOn = false;
-                gamePanel.collision.checkTile(this);
+                game.getCollision().checkTile(this);
                 if (!collisionOn) move(pattern);
             }
         } else {
@@ -294,8 +296,8 @@ public class NotPlayableCharacter extends Entity {
 
     public void draw(Graphics2D g2) {
 
-        int screenX = gamePanel.player.screenX + (this.getWorldX() - gamePanel.player.getWorldX());
-        int screenY = gamePanel.player.screenY + (this.getWorldY() - gamePanel.player.getWorldY());
+        int screenX = game.getPlayer().screenX + (this.getWorldX() - game.getPlayer().getWorldX());
+        int screenY = game.getPlayer().screenY + (this.getWorldY() - game.getPlayer().getWorldY());
 
         drawInfoBar(g2, screenX, screenY);
         switch(this.getDirection()) {

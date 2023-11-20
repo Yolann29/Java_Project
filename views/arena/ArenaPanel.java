@@ -1,6 +1,8 @@
 package views.arena;
 
 import controller.Arena;
+import controller.Game;
+import controller.GameState;
 import controller.entities.Entity;
 import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
@@ -21,11 +23,12 @@ import java.util.Objects;
 
 public class ArenaPanel extends JPanel {
 
+    GameState gs;
     Image background;
     Image profile_background;
     Arena arena;
     ActionsPanel da;
-    GamePanel gamePanel;
+    Game game;
     KeyHandler keyHandler;
 
     boolean endGame = false;
@@ -38,13 +41,14 @@ public class ArenaPanel extends JPanel {
     private final Player player;
     private final NotPlayableCharacter encounter;
 
-    public ArenaPanel(Arena arena, ActionsPanel da, GamePanel gamePanel, Player player, NotPlayableCharacter encounter) {
+    public ArenaPanel(Game game, GameState gs, Arena arena, ActionsPanel da, Player player, NotPlayableCharacter encounter) {
         this.da = da;
         this.arena = arena;
-        this.gamePanel = gamePanel;
-        this.keyHandler = gamePanel.keyHandler;
+        this.keyHandler = game.getKeyH();
         this.player = player;
         this.encounter = encounter;
+        this.gs = gs;
+        this.game = game;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         loadRessources();
 
@@ -131,17 +135,17 @@ public class ArenaPanel extends JPanel {
         currentTime = System.currentTimeMillis();
         if (currentTime >= initAnimation + 2500) {
             endGame = false;
-            keyHandler.overWorld = true;
+            game.getGp().switchToOverworld();
             initAnimation = 0;
 
             arena.isYourTurn = true;
             arena.getFighter1().getWeapon().setDamage(arena.getFighter1().getWeapon().getInitialDamage());
             arena.getFighter1().regenItems();
             arena.getFighter1().giveXp(arena.getFighter2().getLevel() * 200);
-            gamePanel.player.fighter.restoreHpMax();
+            game.getPlayer().fighter.restoreHpMax();
             WorldPanel.fightersNpc.remove(looser);
 
-            gamePanel.encounter.fighter = null;
+            game.getEncounter().fighter = null;
             looser.setDirection(Action.DEAD);
             looser.isDead = true;
         }

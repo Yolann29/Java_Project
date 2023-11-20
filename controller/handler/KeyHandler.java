@@ -1,12 +1,20 @@
 package controller.handler;
 
+import controller.GameState;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
     public boolean top, bottom, right, left, jump, attack, pause;
-    public boolean changing = false, overWorld = true;
+    public boolean overWorld = true;
+
+    GameState gs;
+
+    public KeyHandler(GameState gs){
+        this.gs = gs;
+    }
 
     public void keyTyped(KeyEvent e) {
 
@@ -31,11 +39,6 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_Q){
             left = true;
         }
-
-//        if (code == KeyEvent.VK_ESCAPE) {
-//            overWorld = !overWorld;
-//            changing = true;
-//        }
 
         if (code == KeyEvent.VK_SPACE) {
             jump = true;
@@ -71,9 +74,6 @@ public class KeyHandler implements KeyListener {
             left = false;
         }
 
-//        if(code == KeyEvent.VK_ESCAPE){
-//            changing = false;
-//        }
 
         if (code == KeyEvent.VK_SPACE) {
             jump = false;

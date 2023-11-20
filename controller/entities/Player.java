@@ -1,5 +1,6 @@
 package controller.entities;
 
+import controller.Game;
 import controller.handler.KeyHandler;
 import controller.manager.FighterClasseManager;
 import models.Action;
@@ -12,7 +13,7 @@ import java.util.Objects;
 
 public class Player extends Entity {
 
-    GamePanel gamePanel;
+    Game game;
     KeyHandler keyHandler;
     public final int midScreenX = GamePanel.FRAME_WIDTH/2 - 32;
     public final int midScreenY = GamePanel.FRAME_HEIGHT/2 - 32;
@@ -22,8 +23,8 @@ public class Player extends Entity {
     public boolean changeMap = false;
     public Fighter fighter;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler, Role classe) {
-        this.gamePanel = gamePanel;
+    public Player(Game game, KeyHandler keyHandler, Role classe) {
+        this.game = game;
         this.keyHandler = keyHandler;
         this.classe = classe;
 
@@ -54,7 +55,7 @@ public class Player extends Entity {
             }
             collisionOn = false;
             doorHere = false;
-            gamePanel.collision.checkTile(this);
+            game.getCollision().checkTile(this);
             if (!collisionOn) {
                 if (doorHere) {
                     switch(this.getDirection()) {

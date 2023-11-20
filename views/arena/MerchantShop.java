@@ -1,5 +1,6 @@
 package views.arena;
 
+import controller.Game;
 import models.weapons.ElectricGauntlet;
 import models.weapons.FireSword;
 import models.weapons.GroundSpear;
@@ -18,7 +19,7 @@ public class MerchantShop extends JPanel {
 
     private Image texture;
 
-    public MerchantShop(GamePanel gamePanel, WorldPanel worldPanel) {
+    public MerchantShop(GamePanel gamePanel, Game game) {
         this.setBackground(new Color(141, 141, 141,255));
 
         loadRessources();
@@ -39,20 +40,20 @@ public class MerchantShop extends JPanel {
         weaponChoices.add(groundSpearChoice);
 
         iceswordChoice.addActionListener(e -> {
-            gamePanel.player.fighter.pickWeapon(new IceSword());
-            worldPanel.merchantClose = false;
+            game.getPlayer().fighter.pickWeapon(new IceSword());
+            gamePanel.closeMerchantShop();
         });
         fireswordChoice.addActionListener(e -> {
-            gamePanel.player.fighter.pickWeapon(new FireSword());
-            worldPanel.merchantClose = false;
+            game.getPlayer().fighter.pickWeapon(new FireSword());
+            gamePanel.closeMerchantShop();
         });
         electricGauntletChoice.addActionListener(e -> {
-            gamePanel.player.fighter.pickWeapon(new ElectricGauntlet());
-            worldPanel.merchantClose = false;
+            game.getPlayer().fighter.pickWeapon(new ElectricGauntlet());
+            gamePanel.closeMerchantShop();
         });
         groundSpearChoice.addActionListener(e -> {
-            gamePanel.player.fighter.pickWeapon(new GroundSpear());
-            worldPanel.merchantClose = false;
+            game.getPlayer().fighter.pickWeapon(new GroundSpear());
+            gamePanel.closeMerchantShop();
         });
         weaponChoices.revalidate();
 

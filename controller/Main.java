@@ -1,27 +1,57 @@
 package controller;
 
+import controller.handler.KeyHandler;
 import views.GamePanel;
 import javax.swing.*;
 
-public class Main {
+public class Main implements Runnable{
 
-        public static void main(String[] args) {
+    static Thread gameLoop = null;
+    public static int imageCount;
+    static Game game;
 
-            JFrame window = new JFrame("T-JAV-501");
-            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            window.setResizable(false);
-            window.setIgnoreRepaint(true);
+    final public static int MAX_FPS = 60;
 
-            GamePanel gamePanel = new GamePanel();
-            window.add(gamePanel);
-            window.pack();
-            gamePanel.startGameLoop();
+    public static void main(String[] args) {
 
-            window.setLocationRelativeTo(null);
-            window.setVisible(true);
+        game = new Game();
+        Main.startGameLoop();
 
+    }
 
+    public static void startGameLoop(){
+
+        if (gameLoop == null) {
+            gameLoop = new Thread(new Main());
+            gameLoop.start();
         }
+    }
 
 
+    @Override
+    public void run() {
+
+        imageCount = 0;
+
+        System.out.println("start run");
+        while(gameLoop != null){
+
+            if (!game.getKeyH().pause) {
+                game.update();
+                game.getGp().repaint();
+            }
+
+            try {
+
+                Thread.sleep(1000 / MAX_FPS);
+                imageCount++;
+                if (imageCount == 200) {
+                    imageCount = 0;
+                }
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

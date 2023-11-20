@@ -1,5 +1,6 @@
 package controller.manager;
 
+import controller.Game;
 import views.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -15,14 +16,14 @@ import java.util.Random;
 
 public class TileManager {
 
-    GamePanel gamePanel;
+    Game game;
     public static Tile[] tiles;
     public static int[][] mapTileNum;
     public static int[][] mapTileNum1;
     public static int[][] mapTileNum2;
 
-    public TileManager(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public TileManager(Game game) {
+        this.game = game;
         tiles = new Tile[13];
         getTilesImages();
         mapTileNum = new int[GamePanel.worldColumns][GamePanel.worldRows];
@@ -171,8 +172,8 @@ public class TileManager {
             int tilesIndex = mapTileNum[worldColumn][worldRow];
             int worldX = worldColumn * GamePanel.tileSize;
             int worldY = worldRow * GamePanel.tileSize;
-            int screenX = gamePanel.player.screenX + (worldX - gamePanel.player.getWorldX());
-            int screenY = gamePanel.player.screenY + (worldY - gamePanel.player.getWorldY());
+            int screenX = game.getPlayer().screenX + (worldX - game.getPlayer().getWorldX());
+            int screenY = game.getPlayer().screenY + (worldY - game.getPlayer().getWorldY());
 
             g2.drawImage(tiles[0].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
             if (tilesIndex != 11) {
@@ -205,8 +206,8 @@ public class TileManager {
             int tilesIndex = mapTileNum[worldColumn][worldRow];
             int worldX = worldColumn * GamePanel.tileSize;
             int worldY = worldRow * GamePanel.tileSize;
-            int screenX = gamePanel.player.screenX + (worldX - gamePanel.player.getWorldX());
-            int screenY = gamePanel.player.screenY + (worldY - gamePanel.player.getWorldY());
+            int screenX = game.getPlayer().screenX + (worldX - game.getPlayer().getWorldX());
+            int screenY = game.getPlayer().screenY + (worldY - game.getPlayer().getWorldY());
 
             if (tilesIndex == 11) {
                 g2.drawImage(tiles[tilesIndex].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
