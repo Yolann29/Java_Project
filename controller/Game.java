@@ -21,6 +21,8 @@ public class Game {
 
     private JFrame window;
 
+    private boolean fightTransition = false;
+
     private GameState gs;
     private GamePanel gp;
     private KeyHandler keyH;
@@ -61,7 +63,7 @@ public class Game {
     }
 
     public void update(){
-        if (gs.getOverWorld()) {
+        if (gs.getOverWorld() && !fightTransition) {
             gp.getWorldPanel().update();
         } else {
             arena.update();
@@ -99,6 +101,14 @@ public class Game {
 
     public GamePanel getGp() {
         return gp;
+    }
+
+    public boolean isFightTransition() {
+        return fightTransition;
+    }
+
+    public void setFightTransition(boolean fightTransition) {
+        this.fightTransition = fightTransition;
     }
 }
 
