@@ -39,7 +39,7 @@ public class ActionsPanel extends JPanel {
         buttonsPannel.setBackground(new Color(0,0,0,0));
 
         JPanel leftPannel = new JPanel();
-        leftPannel.setLayout(new GridLayout(1, 1, 0, 0));
+        leftPannel.setLayout(new GridLayout(2, 1, 0, 0));
         leftPannel.setPreferredSize(new Dimension(320, 120));
         leftPannel.setBackground(new Color(0,0,0,0));
 
@@ -50,7 +50,7 @@ public class ActionsPanel extends JPanel {
         attack = new PButton("> Attack");
         items = new PButton("> Items");
         cancel = new PButton("> Return");
-        cancel.setPreferredSize(new Dimension(100, 40));
+        cancel.setPreferredSize(new Dimension(120, 35));
         cancel.setBackground(Color.RED.darker());
         textPane = new PTextPane("Your turn !", arena);
 
@@ -68,7 +68,7 @@ public class ActionsPanel extends JPanel {
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
         leftPannel.add(textPane);
-//        leftPannel.add(returnPannel);
+        leftPannel.add(returnPannel);
 
         arena.setTextPane(textPane);
         //ATTACK BUTTON
