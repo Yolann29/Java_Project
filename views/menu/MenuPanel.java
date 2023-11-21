@@ -16,7 +16,6 @@ import views.menu.submenus.WarriorPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -37,6 +36,7 @@ public class MenuPanel extends HoverPanel {
     public static boolean magicianPicked;
     public static boolean warriorPicked;
     public static boolean archerPicked;
+    private boolean changeMenu;
 
     public MenuPanel(GamePanel gp) {
         this.gp = gp;
@@ -89,7 +89,7 @@ public class MenuPanel extends HoverPanel {
         namePanel.setPreferredSize(new Dimension(100, 50));
         namePanel.setBorder(new EmptyBorder(0,0,30,0));
 
-        nameInput = new JTextField(" ");
+        nameInput = new JTextField();
         nameInput.setBackground(new Color(10,100,100));
         nameInput.setFont(new Font("Courier", Font.BOLD, 20));
         nameInput.setForeground(Color.WHITE);
@@ -107,14 +107,41 @@ public class MenuPanel extends HoverPanel {
 
         JPanel menuInit = new JPanel();
         menuInit.setLayout(new BorderLayout());
+        menuInit.setOpaque(false);
 
-        JLabel titre = new JLabel("Tales of the \nConqueror");
-        titre.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 300));
-        titre.setFont(new Font("Courier", Font.BOLD, 20));
-        titre.setOpaque(false);
-        titre.setForeground(Color.WHITE);
+        JPanel title = new JPanel();
+        title.setLayout(new GridLayout(3,1,10,10));
+        title.setOpaque(false);
+
+        JLabel upTitle = new JLabel("Tales");
+        upTitle.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 50));
+        upTitle.setFont(new Font("Courier", Font.BOLD, 80));
+        upTitle.setBorder(new EmptyBorder(0,270,0,0));
+        upTitle.setOpaque(false);
+
+        JLabel middleTitle = new JLabel("Of The");
+        middleTitle.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 50));
+        middleTitle.setFont(new Font("Courier", Font.BOLD, 50));
+        middleTitle.setBorder(new EmptyBorder(0,300,0,0));
+        middleTitle.setOpaque(false);
+
+        JLabel bottomTitle = new JLabel("Conqueror");
+        bottomTitle.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 80));
+        bottomTitle.setFont(new Font("Courier", Font.BOLD, 80));
+        bottomTitle.setBorder(new EmptyBorder(0,180,20,0));
+        bottomTitle.setOpaque(false);
+
+        title.add(upTitle);
+        title.add(middleTitle);
+        title.add(bottomTitle);
+
+        JPanel playPanel = new JPanel();
+        playPanel.setLayout(new FlowLayout());
+        playPanel.setBorder(new EmptyBorder(80,0,0,0));
+        playPanel.setOpaque(false);
 
         PButton playButton = new PButton("Play");
+        playButton.setPreferredSize(new Dimension(200,50));
 
         playButton.addActionListener(e1 -> {
             this.removeAll();
@@ -122,18 +149,29 @@ public class MenuPanel extends HoverPanel {
             this.add(warriorPanel, BorderLayout.CENTER);
             this.add(magePanel, BorderLayout.EAST);
             this.add(actionPanel, BorderLayout.SOUTH);
+            changeMenu = true;
         });
 
+        playPanel.add(playButton);
+
+        JPanel quitPanel = new JPanel();
+        quitPanel.setLayout(new FlowLayout());
+        quitPanel.setBorder(new EmptyBorder(0,0,100,0));
+        quitPanel.setOpaque(false);
+
         PButton quitButton = new PButton("Quit");
+        quitButton.setPreferredSize(new Dimension(200,50));
 
         quitButton.addActionListener(e1 -> {
             gp.getGame().getWindow().dispose();
             System.exit(0);
         });
 
-        menuInit.add(titre, BorderLayout.NORTH);
-        menuInit.add(playButton, BorderLayout.CENTER);
-        menuInit.add(quitButton, BorderLayout.SOUTH);
+        quitPanel.add(quitButton);
+
+        menuInit.add(title, BorderLayout.NORTH);
+        menuInit.add(playPanel, BorderLayout.CENTER);
+        menuInit.add(quitPanel, BorderLayout.SOUTH);
 
         this.add(menuInit);
     }
@@ -143,7 +181,7 @@ public class MenuPanel extends HoverPanel {
             magicianBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/magician_background.png")));
             warriorBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/warrior_background.png")));
             archerBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/Archer_Background.png")));
-            background = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/background-fight.png")));
+            background = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/title_background.png")));
             texture = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/background-menu.png")));
         } catch (IOException e){
             e.printStackTrace();
@@ -165,10 +203,13 @@ public class MenuPanel extends HoverPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         g.drawImage(background, 0, 0, null);
-        g.drawImage(magicianBackground, 500, 0, null);
-        g.drawImage(warriorBackground, 250, 0, null);
-        g.drawImage(archerBackground, 0, 0, null);
-        g.drawImage(texture, 0, GamePanel.FRAME_HEIGHT - 150, null);
+        if (changeMenu) {
+            g.drawImage(magicianBackground, 500, 0, null);
+            g.drawImage(warriorBackground, 250, 0, null);
+            g.drawImage(archerBackground, 0, 0, null);
+            g.drawImage(texture, 0, GamePanel.FRAME_HEIGHT - 150, null);
+        }
     }
 }
