@@ -1,6 +1,7 @@
 package controller.manager;
 
 import controller.entities.Entity;
+import models.Action;
 import views.GamePanel;
 
 public class Collision {
@@ -63,6 +64,69 @@ public class Collision {
                 break;
             case RIGHT:
                 rightX = (solidAreaRight + entity.getSpeed()) / GamePanel.tileSize;
+                indexTileNordEst = TileManager.mapTileNum[rightX][topY];
+                indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];
+                if (TileManager.tiles[indexTileNordEst].isCollision() || TileManager.tiles[indexTileSudEst].isCollision()) {
+                    entity.collisionOn = true;
+                }
+                if (TileManager.tiles[indexTileNordEst].isDoor() || TileManager.tiles[indexTileSudEst].isDoor()) {
+                    entity.doorHere = true;
+                }
+        }
+    }
+
+    public void checkTile(Entity entity, int positionX, int positionY, Action direction) {
+        int solidAreaLeft = positionX + entity.getSolidArea().x;
+        int solidAreaRight = positionX + entity.getSolidArea().x + entity.getSolidArea().width;
+        int solidAreaTop = positionY + entity.getSolidArea().y;
+        int solidAreaBottom = positionY + entity.getSolidArea().y + entity.getSolidArea().height;
+
+        int leftX = solidAreaLeft / GamePanel.tileSize;
+        int topY = solidAreaTop / GamePanel.tileSize;
+        int rightX = solidAreaRight / GamePanel.tileSize;
+        int bottomY = solidAreaBottom / GamePanel.tileSize;
+
+        int indexTileNordOuest;
+        int indexTileSudOuest;
+        int indexTileNordEst;
+        int indexTileSudEst;
+
+        switch(direction) {
+            case UP:
+                topY = (solidAreaTop - entity.getSpeed()*10) / GamePanel.tileSize;
+                indexTileNordOuest = TileManager.mapTileNum[leftX][topY];
+                indexTileNordEst = TileManager.mapTileNum[rightX][topY];
+                if (TileManager.tiles[indexTileNordOuest].isCollision() || TileManager.tiles[indexTileNordEst].isCollision()) {
+                    entity.collisionOn = true;
+                }
+                if (TileManager.tiles[indexTileNordOuest].isDoor() || TileManager.tiles[indexTileNordEst].isDoor()) {
+                    entity.doorHere = true;
+                }
+                break;
+            case DOWN:
+                bottomY = (solidAreaBottom + entity.getSpeed()*10) / GamePanel.tileSize;
+                indexTileSudOuest = TileManager.mapTileNum[leftX][bottomY];
+                indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];
+                if (TileManager.tiles[indexTileSudOuest].isCollision() || TileManager.tiles[indexTileSudEst].isCollision()) {
+                    entity.collisionOn = true;
+                }
+                if (TileManager.tiles[indexTileSudOuest].isDoor() || TileManager.tiles[indexTileSudEst].isDoor()) {
+                    entity.doorHere = true;
+                }
+                break;
+            case LEFT:
+                leftX = (solidAreaLeft - entity.getSpeed()*10) / GamePanel.tileSize;
+                indexTileNordOuest = TileManager.mapTileNum[leftX][topY];
+                indexTileSudOuest = TileManager.mapTileNum[leftX][bottomY];
+                if (TileManager.tiles[indexTileNordOuest].isCollision() || TileManager.tiles[indexTileSudOuest].isCollision()) {
+                    entity.collisionOn = true;
+                }
+                if (TileManager.tiles[indexTileNordOuest].isDoor() || TileManager.tiles[indexTileSudOuest].isDoor()) {
+                    entity.doorHere = true;
+                }
+                break;
+            case RIGHT:
+                rightX = (solidAreaRight + entity.getSpeed()*10) / GamePanel.tileSize;
                 indexTileNordEst = TileManager.mapTileNum[rightX][topY];
                 indexTileSudEst = TileManager.mapTileNum[rightX][bottomY];
                 if (TileManager.tiles[indexTileNordEst].isCollision() || TileManager.tiles[indexTileSudEst].isCollision()) {
