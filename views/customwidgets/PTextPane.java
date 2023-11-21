@@ -1,9 +1,11 @@
 package views.customwidgets;
 
 import controller.Arena;
+import views.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 
 public class PTextPane extends JTextPane {
 
@@ -19,10 +21,10 @@ public class PTextPane extends JTextPane {
         super();
         this.setEditable(false);
         this.fullText = text;
-        this.setFont(new Font("Courier", Font.BOLD, 20));
         this.setBackground(new Color(0, 0, 0, 0));
         this.setForeground(Color.WHITE);
         this.setHighlighter(null);
+        this.setFont(GamePanel.gloucester.deriveFont(12f));
 
         startTypingEffect();
     }

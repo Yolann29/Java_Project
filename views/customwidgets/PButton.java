@@ -1,21 +1,23 @@
 package views.customwidgets;
 
+import views.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 
 public class PButton extends JButton {
-
 
     Color dialogColor = new Color(13, 81, 96);
     Color color;
 
     public PButton(String text){
         super(text);
-        this.setPreferredSize(new Dimension(100, 50));
+        this.setPreferredSize(new Dimension(120, 60));
         this.setBackground(new Color(0,0,0,0));
         this.setForeground(Color.WHITE);
         this.setFocusPainted(false);
-        this.setFont(new Font("Courier", Font.BOLD, 16));
+        this.setFont(GamePanel.gloucester.deriveFont(10F));
 
     }
 

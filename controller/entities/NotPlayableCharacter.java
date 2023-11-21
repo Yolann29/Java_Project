@@ -277,18 +277,18 @@ public class NotPlayableCharacter extends Entity {
         }
 
         g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Courier", Font.BOLD, 18));
+        g2.setFont(GamePanel.gloucester.deriveFont(11f));
         if (this.fighter != null && !(this.fighter instanceof Merchant)){
-            g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 10);
+            g2.drawString(this.fighter.getName(), x - (this.fighter.getName().length() * 4), y - 8);
 
             //BACKGROUND TYPE
             g2.setColor(fighter.getWeapon().getType().getColor());
-            g2.fillRoundRect(x + (this.fighter.getName().length() * 7) - 3, y - 25, (("Lv." + this.fighter.getLevel()).length() * 11), 20, 10, 10);
+            g2.fillRoundRect(x + (this.fighter.getName().length() * 6) + 3, y - 25, (("Lv." + this.fighter.getLevel()).length() * 12), 21, 10, 10);
 
             //LVL
             g2.setColor(Color.WHITE);
-            g2.setFont(new Font("Courier", Font.BOLD, 16));
-            g2.drawString("Lv." + this.fighter.getLevel(), x + (this.fighter.getName().length() * 7) + 3, y - 10);
+            g2.setFont(GamePanel.gloucester.deriveFont(10f));
+            g2.drawString("Lv." + this.fighter.getLevel(), x + (this.fighter.getName().length() * 7) + 1, y - 8);
         } else if(fighter != null){
             g2.setColor(Color.CYAN);
             g2.fillRoundRect(x - 10, y - 26, "Merchant".length() * 12, 22, 10, 10);

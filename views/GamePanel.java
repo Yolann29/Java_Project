@@ -12,6 +12,7 @@ import views.arena.MerchantShop;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 
 public class GamePanel extends JPanel{
 
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel{
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
 
+    public static Font gloucester;
     public WorldPanel worldPanel;
     private MerchantShop merchantShop;
     private ArenaPanel arenaPanel;
@@ -34,6 +36,13 @@ public class GamePanel extends JPanel{
     private GameState gs;
 
     public GamePanel(GameState gs, KeyHandler keyH, Arena arena, Player player, NotPlayableCharacter encounter, Game game) {
+
+        try{
+            InputStream is = getClass().getResourceAsStream("/font/gloucester.ttf");
+            gloucester = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         this.actionsPanel = new ActionsPanel(arena);
         this.arenaPanel = new ArenaPanel(game, gs, arena, actionsPanel,player, encounter);
@@ -90,6 +99,8 @@ public class GamePanel extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        g.setColor(Color.red);
+        g.setFont(gloucester);
     }
 
     private static boolean isNotPanelAdded(Container container, Component panel) {

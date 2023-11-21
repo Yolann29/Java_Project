@@ -45,7 +45,7 @@ public class WorldPanel extends JPanel {
         //FIGHTERS
         createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, Type.WATER, new ElectricGauntlet(), false);
         createNPC(7, 14, 6, Pattern.SCARED, Role.ARCHER, Type.GROUND, new GroundSpear(), false);
-        createNPC(16, 5, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, Type.WATER, new IceSword(), false);
+        createNPC(10, 5, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, Type.WATER, new IceSword(), false);
         createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN, Type.WATER, new IceSword(), false);
         createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, Type.FIRE, new GroundSpear(), false);
         createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, Type.FIRE, new ElectricGauntlet(), false);

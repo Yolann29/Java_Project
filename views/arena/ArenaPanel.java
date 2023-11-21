@@ -70,7 +70,7 @@ public class ArenaPanel extends JPanel {
 
         //NAME
         g2.setColor(Color.white);
-        g2.setFont(new Font("Courier", Font.BOLD, 20));
+        g2.setFont(GamePanel.gloucester.deriveFont(12f));
         g2.drawString(fighter.getName(), x - 20, 210);
         //LEVEL
         g2.setColor(Color.YELLOW);
@@ -78,18 +78,18 @@ public class ArenaPanel extends JPanel {
         //TYPE
         g2.setColor(fighter.getWeapon().getType().getColor());
         g2.fillRoundRect(x - 20, 235, fighter.getWeapon().getType().getName().length() * 10 + 3, 15, 5, 5);
-        g2.setFont(new Font("Courier", Font.BOLD, 12));
+        g2.setFont(GamePanel.gloucester.deriveFont(7f));
         g2.setColor(Color.WHITE);
         g2.drawString(fighter.getWeapon().getType().getName(), x - 10, 247);
         //HP
-        if(fighter.getHp() < 50) g2.setColor(Color.YELLOW);
-        if(fighter.getHp() < 20) g2.setColor(Color.RED);
+        if(fighter.getHp() < fighter.getMaxHp() / 2) g2.setColor(Color.YELLOW);
+        if(fighter.getHp() < fighter.getMaxHp() / 4) g2.setColor(Color.RED);
         g2.drawString("Hp." + fighter.getHp() + "/" + fighter.getMaxHp(), x + 70, 245);
         //HP BAR
         g2.setColor(Color.RED);
-        g2.fillRoundRect(x - 20, 220, 150, 8, 20, 30);
+        g2.fillRoundRect(x - 20, 220, 150, 8, 20, 20);
         g2.setColor(Color.GREEN);
-        g2.fillRoundRect(x - 20, 220, (int) (150 * ((float) fighter.getHp() / fighter.getMaxHp())), 8, 20, 30);
+        g2.fillRoundRect(x - 20, 220, (int) (150 * ((float) fighter.getHp() / fighter.getMaxHp())), 8, 20, 20);
     }
 
     public void moveToTarget(Graphics2D g2, Fighter fighter, Role classe, int startX, boolean reversed){
@@ -155,8 +155,6 @@ public class ArenaPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        //BACKGROUND
-//        g.drawImage(background, 0, 0, null);
         g.drawImage(background, 0,0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT, null);
 
         g.setColor(Color.ORANGE);

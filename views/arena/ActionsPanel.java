@@ -39,8 +39,8 @@ public class ActionsPanel extends JPanel {
         buttonsPannel.setBackground(new Color(0,0,0,0));
 
         JPanel leftPannel = new JPanel();
-        leftPannel.setLayout(new GridLayout(2, 1, 10, 10));
-        leftPannel.setPreferredSize(new Dimension(320, 100));
+        leftPannel.setLayout(new GridLayout(1, 1, 0, 0));
+        leftPannel.setPreferredSize(new Dimension(320, 120));
         leftPannel.setBackground(new Color(0,0,0,0));
 
         JPanel returnPannel = new JPanel();
@@ -68,7 +68,7 @@ public class ActionsPanel extends JPanel {
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
         leftPannel.add(textPane);
-        leftPannel.add(returnPannel);
+//        leftPannel.add(returnPannel);
 
         arena.setTextPane(textPane);
         //ATTACK BUTTON
