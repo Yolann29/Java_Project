@@ -26,19 +26,20 @@ public class MagePanel extends HoverPanel {
                 MenuPanel.magicianPicked = true;
                 MenuPanel.warriorPicked = false;
                 MenuPanel.archerPicked = false;
+                MenuPanel.classePlayer = Role.MAGICIAN;
             } else {
                 MenuPanel.magicianPicked = false;
             }
             mouseH.clicked = false;
         }
         if (MenuPanel.magicianPicked) {
-            this.setOpaque(false);
+            this.setBackground(new Color(200,0,150, 40).brighter());
         } else {
             this.setOpaque(true);
             if (mouseH.isHovered) {
-                this.setBackground(Color.MAGENTA.brighter());
+                this.setBackground(new Color(200,0,150, 140).brighter());
             } else {
-                this.setBackground(Color.MAGENTA.darker());
+                this.setBackground(new Color(200,0,150, 140).darker());
             }
         }
 

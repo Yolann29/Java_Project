@@ -25,19 +25,20 @@ public class WarriorPanel extends HoverPanel {
                 MenuPanel.magicianPicked = false;
                 MenuPanel.warriorPicked = true;
                 MenuPanel.archerPicked = false;
+                MenuPanel.classePlayer = Role.WARRIOR;
             } else {
                 MenuPanel.warriorPicked = false;
             }
             mouseH.clicked = false;
         }
         if (MenuPanel.warriorPicked) {
-            this.setOpaque(false);
+            this.setBackground(new Color(0,0,255,40).brighter());
         } else {
             this.setOpaque(true);
             if (mouseH.isHovered) {
-                this.setBackground(Color.BLUE.brighter());
+                this.setBackground(new Color(0,0,255,140).brighter());
             } else {
-                this.setBackground(Color.BLUE.darker());
+                this.setBackground(new Color(0,0,255,140).darker());
             }
         }
 

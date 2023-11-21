@@ -25,19 +25,20 @@ public class ArcherPanel extends HoverPanel {
                 MenuPanel.magicianPicked = false;
                 MenuPanel.warriorPicked = false;
                 MenuPanel.archerPicked = true;
+                MenuPanel.classePlayer = Role.ARCHER;
             } else {
                 MenuPanel.archerPicked = false;
             }
             mouseH.clicked = false;
         }
         if (MenuPanel.archerPicked) {
-            this.setOpaque(false);
+            this.setBackground(new Color(0,255,0,40).brighter());
         } else {
             this.setOpaque(true);
             if (mouseH.isHovered) {
-                this.setBackground(Color.GREEN.brighter());
+                this.setBackground(new Color(0,255,0,140).brighter());
             } else {
-                this.setBackground(Color.GREEN.darker());
+                this.setBackground(new Color(0,255,0,140).darker());
             }
         }
 

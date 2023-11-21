@@ -28,19 +28,16 @@ public class GamePanel extends JPanel{
     final public static int FRAME_HEIGHT = 600;
 
     public MenuPanel menuPanel;
-    public WorldPanel worldPanel;
+    private WorldPanel worldPanel;
     private MerchantShop merchantShop;
     private ArenaPanel arenaPanel;
     private ActionsPanel actionsPanel;
     private Game game;
     private GameState gs;
 
-    public GamePanel(GameState gs, KeyHandler keyH, Arena arena, Player player, NotPlayableCharacter encounter, Game game) {
+    public GamePanel(GameState gs, KeyHandler keyH, Game game) {
 
-        this.menuPanel = new MenuPanel();
-        this.actionsPanel = new ActionsPanel(arena);
-        this.arenaPanel = new ArenaPanel(game, gs, arena, actionsPanel,player, encounter);
-        this.worldPanel = new WorldPanel(gs, this,keyH, player, game);
+        this.menuPanel = new MenuPanel(this);
         this.merchantShop = new MerchantShop(this, game);
         this.game = game;
         this.gs = gs;
@@ -50,9 +47,6 @@ public class GamePanel extends JPanel{
         this.setLayout(new BorderLayout());
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.add(arenaPanel);
-        this.add(actionsPanel);
-        this.add(worldPanel, BorderLayout.CENTER);
         this.add(menuPanel, BorderLayout.CENTER);
     }
 
@@ -73,8 +67,12 @@ public class GamePanel extends JPanel{
 
     public void switchToOverworld(){
         gs.setOverWorld(true);
-        this.remove(actionsPanel);
-        this.remove(arenaPanel);
+        if (!isNotPanelAdded(this, actionsPanel)) {
+            this.remove(actionsPanel);
+        }
+        if (!isNotPanelAdded(this, arenaPanel)) {
+            this.remove(arenaPanel);
+        }
         this.add(worldPanel, BorderLayout.CENTER);
         this.revalidate();
     }
@@ -96,7 +94,7 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
     }
 
-    private static boolean isNotPanelAdded(Container container, Component panel) {
+    public static boolean isNotPanelAdded(Container container, Component panel) {
         for (int i = 0; i < container.getComponentCount(); i++) {
             Component component = container.getComponent(i);
             if (component == panel) {
@@ -110,5 +108,11 @@ public class GamePanel extends JPanel{
         return worldPanel;
     }
 
+    public void setWorldPanel(WorldPanel worldPanel) {
+        this.worldPanel = worldPanel;
+    }
+
     public MenuPanel getMenuPanel() { return menuPanel; }
+
+    public Game getGame() { return game; }
 }
