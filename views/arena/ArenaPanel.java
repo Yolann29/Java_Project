@@ -219,7 +219,7 @@ public class ArenaPanel extends JPanel {
         if(launchFightAnimationDuration != 0){
             g2.setColor(Color.black);
             g2.fillRect((int) launchFightAnimationDuration, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
-            launchFightAnimationDuration = launchFightAnimationDuration + 25;
+            launchFightAnimationDuration = launchFightAnimationDuration + 40;
             if(launchFightAnimationDuration > GamePanel.FRAME_WIDTH){
                 launchFightAnimationDuration = 0;
             }

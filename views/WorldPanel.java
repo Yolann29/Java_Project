@@ -203,7 +203,7 @@ public class WorldPanel extends JPanel {
         if(launchFightAnimationDuration != 0){
             g2.setColor(Color.BLACK);
             g2.fillRect((int) launchFightAnimationDuration - GamePanel.FRAME_WIDTH, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
-            launchFightAnimationDuration = launchFightAnimationDuration + 25;
+            launchFightAnimationDuration = launchFightAnimationDuration + 40;
             if(launchFightAnimationDuration > GamePanel.FRAME_WIDTH){
                 launchFightAnimationDuration = 0;
                 game.getGp().switchToArena();
