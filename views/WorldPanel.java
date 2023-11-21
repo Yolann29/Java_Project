@@ -21,12 +21,12 @@ import java.util.Random;
 
 public class WorldPanel extends JPanel {
 
+    private double launchFightAnimationDuration = 0;
     private Game game;
     final GameState gs;
     final GamePanel gamePanel;
     final KeyHandler keyHandler;
     final TileManager tileManager;
-
     final private Player player;
     public boolean fighterClose = false;
     public NotPlayableCharacter npcEncounter;
@@ -129,7 +129,11 @@ public class WorldPanel extends JPanel {
             System.out.println("Fight begin between " + player.fighter.getName() + " and " + npc.fighter.getName());
             fighterClose = true;
             npcEncounter = npc;
-            game.getGp().switchToArena();
+            if(launchFightAnimationDuration == 0){
+                launchFightAnimationDuration = 1;
+                game.setFightTransition(true);
+            }
+
             return true;
 
         }
@@ -139,7 +143,7 @@ public class WorldPanel extends JPanel {
 
     public NotPlayableCharacter drawOrder(Graphics2D g2, Entity entity) {
         if (player.getWorldX() < (entity.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (entity.getWorldX() - GamePanel.tileSize) && player.getWorldY() > entity.getWorldY()) {
-            NotPlayableCharacter npc = null;
+            NotPlayableCharacter npc;
             if (entity instanceof NotPlayableCharacter) {
                 npc = (NotPlayableCharacter) entity;
                 npc.draw(g2);
@@ -151,7 +155,6 @@ public class WorldPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g;
 
         if (player.changeMap) {
@@ -194,6 +197,17 @@ public class WorldPanel extends JPanel {
             tileManager.draw(g2);
             player.draw(g2);
             tileManager.drawTopPlayer(g2);
+        }
+
+
+        if(launchFightAnimationDuration != 0){
+            g2.setColor(Color.BLACK);
+            g2.fillRect((int) launchFightAnimationDuration - GamePanel.FRAME_WIDTH, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+            launchFightAnimationDuration = launchFightAnimationDuration + 25;
+            if(launchFightAnimationDuration > GamePanel.FRAME_WIDTH){
+                launchFightAnimationDuration = 0;
+                game.getGp().switchToArena();
+            }
         }
         g2.dispose();
     }

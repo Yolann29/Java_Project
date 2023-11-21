@@ -30,11 +30,10 @@ public class ArenaPanel extends JPanel {
     ActionsPanel da;
     Game game;
     KeyHandler keyHandler;
-
     boolean endGame = false;
     long initAnimation = 0;
+    private double launchFightAnimationDuration = 0;
     long currentTime = 0;
-
     boolean fighter1DamageTaken = false;
     boolean fighter2DamageTaken = false;
 
@@ -49,6 +48,7 @@ public class ArenaPanel extends JPanel {
         this.encounter = encounter;
         this.gs = gs;
         this.game = game;
+        this.launchFightAnimationDuration = 1;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         loadRessources();
 
@@ -148,6 +148,7 @@ public class ArenaPanel extends JPanel {
             game.getEncounter().fighter = null;
             looser.setDirection(Action.DEAD);
             looser.isDead = true;
+            game.setFightTransition(false);
         }
     }
 
@@ -211,6 +212,16 @@ public class ArenaPanel extends JPanel {
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, Action.JUMP)).paint(g2, 550, 270, 96, 96, true);
                 quitArena(player);
+            }
+        }
+
+        //ANIMATION DE LANCEMENT DE COMBAT
+        if(launchFightAnimationDuration != 0){
+            g2.setColor(Color.black);
+            g2.fillRect((int) launchFightAnimationDuration, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+            launchFightAnimationDuration = launchFightAnimationDuration + 25;
+            if(launchFightAnimationDuration > GamePanel.FRAME_WIDTH){
+                launchFightAnimationDuration = 0;
             }
         }
     }

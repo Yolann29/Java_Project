@@ -17,29 +17,34 @@ import java.util.Objects;
 public class ActionsPanel extends JPanel {
 
     private Color dialogColor = new Color(40, 79, 104);
+
+    private double launchFightAnimationDuration = 0;
     private Image texture;
     private Arena arena;
     private PButton attack;
     private PButton items;
     private PButton cancel;
+
+    private JPanel buttonsPannel;
     PTextPane textPane;
 
     public ActionsPanel(Arena arena){
+        loadRessources();
         this.arena = arena;
         this.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 150));
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.setBackground(new Color(141, 141, 141,255));
         this.setBorder(new EmptyBorder(20,20,20,20));
 
-        loadRessources();
+        launchFightAnimationDuration = 1;
 
-        JPanel buttonsPannel = new JPanel();
+        buttonsPannel = new JPanel();
         buttonsPannel.setLayout(new GridLayout(2, 2, 10, 10));
         buttonsPannel.setPreferredSize(new Dimension(320, 100));
         buttonsPannel.setBackground(new Color(0,0,0,0));
 
         JPanel leftPannel = new JPanel();
-        leftPannel.setLayout(new GridLayout(1, 1, 0, 0));
+        leftPannel.setLayout(new GridLayout(2, 1, 0, 0));
         leftPannel.setPreferredSize(new Dimension(320, 120));
         leftPannel.setBackground(new Color(0,0,0,0));
 
@@ -50,7 +55,7 @@ public class ActionsPanel extends JPanel {
         attack = new PButton("> Attack");
         items = new PButton("> Items");
         cancel = new PButton("> Return");
-        cancel.setPreferredSize(new Dimension(100, 40));
+        cancel.setPreferredSize(new Dimension(120, 30));
         cancel.setBackground(Color.RED.darker());
         textPane = new PTextPane("Your turn !", arena);
 
@@ -68,7 +73,8 @@ public class ActionsPanel extends JPanel {
         buttonsPannel.add(attack);
         buttonsPannel.add(items);
         leftPannel.add(textPane);
-//        leftPannel.add(returnPannel);
+        leftPannel.add(returnPannel);
+        buttonsPannel.setVisible(false);
 
         arena.setTextPane(textPane);
         //ATTACK BUTTON
@@ -144,11 +150,22 @@ public class ActionsPanel extends JPanel {
         }
     }
 
+    @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
         g.drawImage(texture, 0, 0, null);
+
+        if(launchFightAnimationDuration != 0){
+            g2.setColor(Color.black);
+            g2.fillRect((int) launchFightAnimationDuration, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+            launchFightAnimationDuration = launchFightAnimationDuration + 25;
+            if(launchFightAnimationDuration > GamePanel.FRAME_WIDTH){
+                launchFightAnimationDuration = 0;
+                buttonsPannel.setVisible(true);
+            }
+        }
 
     }
 
