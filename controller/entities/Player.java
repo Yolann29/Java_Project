@@ -159,8 +159,8 @@ public class Player extends Entity {
                 g2.setColor(new Color(0, 0, 0, 0.75f));
                 g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
                 g2.setColor(Color.RED.darker());
-                g2.setFont(new Font("Courier", Font.BOLD, 64));
-                g2.drawString("You died", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
+                g2.setFont(GamePanel.gloucester.deriveFont(48f));
+                g2.drawString("You died", GamePanel.FRAME_WIDTH/2 - 145, GamePanel.FRAME_HEIGHT/2 - 32);
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(classe, Action.DEAD)).paint(g2, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, this.isReversed());
 
         }

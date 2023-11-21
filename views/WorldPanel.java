@@ -67,6 +67,7 @@ public class WorldPanel extends JPanel {
 
     private void createNPC(int x, int y, int speed, Pattern behavior, Role className, Type type, Weapon weapon, boolean isMerchant) {
         NotPlayableCharacter npc = new NotPlayableCharacter(game, x * GamePanel.tileSize, y * GamePanel.tileSize, speed, behavior, className);
+
         if(isMerchant){
             npc.fighter = new Merchant("Marchand");
         } else {
@@ -76,10 +77,15 @@ public class WorldPanel extends JPanel {
         if (weapon != null) {
             npc.fighter.pickWeapon(weapon);
         }
-        if(!(npc.fighter instanceof Merchant)){
-            fightersNpc.add(npc);
-        }
         npcs.add(npc);
+
+        if(npc.fighter instanceof Merchant
+                || className == Role.CAT_BLACK
+                || className == Role.CAT_GRAY
+                || className == Role.CAT_ORANGE) return;
+
+        fightersNpc.add(npc);
+
 
     }
 
@@ -178,8 +184,8 @@ public class WorldPanel extends JPanel {
                     g2.setColor(new Color(255, 255, 255, 153));
                     g2.fillRect(0, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
                     g2.setColor(Color.GREEN.darker());
-                    g2.setFont(new Font("Courier", Font.BOLD, 64));
-                    g2.drawString("You won !", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
+                    g2.setFont(GamePanel.gloucester.deriveFont(48f));
+                    g2.drawString("You won !", GamePanel.FRAME_WIDTH/2 - 145, GamePanel.FRAME_HEIGHT/2 - 32);
 
                 }
                 player.draw(g2);

@@ -46,7 +46,7 @@ public class Game {
         encounterFighter.pickWeapon(icesword);
 
         this.player = new Player(this, keyH, Role.WARRIOR);
-        player.fighter = new Warrior("YOU", Type.FIRE, 50000);
+        player.fighter = new Warrior("YOU", Type.FIRE, 50);
         player.fighter.pickWeapon(firesword);
 
         this.encounter = new NotPlayableCharacter(this, 0,0, 0, Pattern.LEFT_RIGHT, Role.VAGRANT);
