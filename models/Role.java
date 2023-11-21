@@ -7,6 +7,7 @@ public enum Role {
     MAGICIAN("Magician"),
     CAT_GRAY("Cat gray"),
     CAT_ORANGE("Cat orange"),
+    CAT_BLACK("Cat black"),
     DOG("Dog");
 
     private final String name;

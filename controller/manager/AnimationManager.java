@@ -46,4 +46,9 @@ public class AnimationManager {
     //ORANGE
     public static final Animation CAT_IDLE_ORANGE = new Animation("/sprites/cat/orange/cat-idle-animation.png",4,130);
     public static final Animation CAT_WALK_ORANGE = new Animation("/sprites/cat/orange/cat-walk-animation.png",5,100);
+
+    //BLACK
+    public static final Animation CAT_IDLE_BLACK = new Animation("/sprites/cat/black/cat-idle-animation.png", 4, 130);
+    public static final Animation CAT_WALK_BLACK = new Animation("/sprites/cat/black/cat-walk-animation.png", 5, 100);
+
 }

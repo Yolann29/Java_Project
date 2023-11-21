@@ -22,6 +22,8 @@ public class FighterClasseManager {
                         return AnimationManager.CAT_WALK_GRAY;
                     case CAT_ORANGE:
                         return AnimationManager.CAT_WALK_ORANGE;
+                    case CAT_BLACK:
+                        return AnimationManager.CAT_WALK_BLACK;
                 }
             case IDLE:
                 switch (classe) {
@@ -37,6 +39,8 @@ public class FighterClasseManager {
                         return AnimationManager.CAT_IDLE_GRAY;
                     case CAT_ORANGE:
                         return AnimationManager.CAT_IDLE_ORANGE;
+                    case CAT_BLACK:
+                        return AnimationManager.CAT_IDLE_BLACK;
                 }
             case JUMP:
                 switch (classe) {

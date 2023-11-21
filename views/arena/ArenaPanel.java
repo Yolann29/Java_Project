@@ -156,7 +156,8 @@ public class ArenaPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         //BACKGROUND
-        g.drawImage(background, 0, 0, null);
+//        g.drawImage(background, 0, 0, null);
+        g.drawImage(background, 0,0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT, null);
 
         g.setColor(Color.ORANGE);
 

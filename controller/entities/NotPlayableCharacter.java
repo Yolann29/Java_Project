@@ -46,25 +46,25 @@ public class NotPlayableCharacter extends Entity {
         switch (movement) {
             case CIRCLE:
                 if (Main.imageCount <= 50 && Main.imageCount > 0) {
-                    if (this.getWorldY() > 10 * GamePanel.tileSize) {
+                    if (this.getWorldY() > this.positionY - GamePanel.tileSize) {
                         this.setDirection(Action.UP);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
                 } else if (Main.imageCount <= 100 && Main.imageCount > 50) {
-                    if (this.getWorldX() < 10 * GamePanel.tileSize) {
+                    if (this.getWorldX() < this.positionX + GamePanel.tileSize) {
                         this.setDirection(Action.RIGHT);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
                 } else if (Main.imageCount <= 150 && Main.imageCount > 100) {
-                    if (this.getWorldY() < 11 * GamePanel.tileSize) {
+                    if (this.getWorldY() < this.positionY) {
                         this.setDirection(Action.DOWN);
                     } else {
                         this.setDirection(Action.IDLE);
                     }
                 } else if (Main.imageCount <= 200 && Main.imageCount > 150) {
-                    if (this.getWorldX() > 9 * GamePanel.tileSize) {
+                    if (this.getWorldX() > this.positionX) {
                         this.setDirection(Action.LEFT);
                     } else {
                         this.setDirection(Action.IDLE);
@@ -272,7 +272,7 @@ public class NotPlayableCharacter extends Entity {
         }
     }
     public void drawInfoBar(Graphics2D g2, int x, int y){
-        if(this.classe == Role.CAT_GRAY || this.classe == Role.CAT_ORANGE){
+        if(this.classe == Role.CAT_GRAY || this.classe == Role.CAT_ORANGE || this.classe == Role.CAT_BLACK){
             return;
         }
 
