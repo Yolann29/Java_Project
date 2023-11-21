@@ -61,12 +61,15 @@ public class Game {
     }
 
     public void update(){
-        if (gs.getOverWorld()) {
-            gp.getWorldPanel().update();
+        if (gs.getMenu()) {
+            gp.getMenuPanel().update();
         } else {
-            arena.update();
+            if (gs.getOverWorld()) {
+                gp.getWorldPanel().update();
+            } else {
+                arena.update();
+            }
         }
-
     }
 
     public Player getPlayer(){

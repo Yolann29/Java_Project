@@ -9,6 +9,7 @@ import controller.handler.KeyHandler;
 import views.arena.ActionsPanel;
 import views.arena.ArenaPanel;
 import views.arena.MerchantShop;
+import views.menu.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel{
     final public static int FRAME_WIDTH = 750;
     final public static int FRAME_HEIGHT = 600;
 
+    public MenuPanel menuPanel;
     public WorldPanel worldPanel;
     private MerchantShop merchantShop;
     private ArenaPanel arenaPanel;
@@ -35,6 +37,7 @@ public class GamePanel extends JPanel{
 
     public GamePanel(GameState gs, KeyHandler keyH, Arena arena, Player player, NotPlayableCharacter encounter, Game game) {
 
+        this.menuPanel = new MenuPanel();
         this.actionsPanel = new ActionsPanel(arena);
         this.arenaPanel = new ArenaPanel(game, gs, arena, actionsPanel,player, encounter);
         this.worldPanel = new WorldPanel(gs, this,keyH, player, game);
@@ -50,6 +53,7 @@ public class GamePanel extends JPanel{
         this.add(arenaPanel);
         this.add(actionsPanel);
         this.add(worldPanel, BorderLayout.CENTER);
+        this.add(menuPanel, BorderLayout.CENTER);
     }
 
     public void switchToArena() {
@@ -105,4 +109,6 @@ public class GamePanel extends JPanel{
     public WorldPanel getWorldPanel() {
         return worldPanel;
     }
+
+    public MenuPanel getMenuPanel() { return menuPanel; }
 }
