@@ -19,8 +19,8 @@ public class TestsItem {
         String damageBooster_result = damageBooster.getName();
 
         // assert
-        Assert.assertEqual("An error occurred for method getName Test1 (ElectricGauntlet) !", healPotion_expected, healPotion_result);
-        Assert.assertEqual("An error occurred for method getName Test1 (FireSword) !", damageBooster_expected, damageBooster_result);
+        Assert.assertEqual("An error occurred for method getName Test1 (HealPotion) !", healPotion_expected, healPotion_result);
+        Assert.assertEqual("An error occurred for method getName Test1 (DamageBooster) !", damageBooster_expected, damageBooster_result);
     }
 
     @Test
@@ -37,8 +37,8 @@ public class TestsItem {
         int damageBooster_result = damageBooster.getHeal();
 
         // assert
-        Assert.assertEqual("An error occurred for method getHeal Test2 (ElectricGauntlet) !", healPotion_expected, healPotion_result);
-        Assert.assertEqual("An error occurred for method getheal Test2 (FireSword) !", damageBooster_expected, damageBooster_result);
+        Assert.assertEqual("An error occurred for method getHeal Test2 (HealPotion) !", healPotion_expected, healPotion_result);
+        Assert.assertEqual("An error occurred for method getheal Test2 (DamageBooster) !", damageBooster_expected, damageBooster_result);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TestsItem {
         int damageBooster_result = damageBooster.getDamage();
 
         // assert
-        Assert.assertEqual("An error occurred for method getDamage Test3 (ElectricGauntlet) !", healPotion_expected, healPotion_result);
-        Assert.assertEqual("An error occurred for method getDamage Test3 (FireSword) !", damageBooster_expected, damageBooster_result);
+        Assert.assertEqual("An error occurred for method getDamage Test3 (HealPotion) !", healPotion_expected, healPotion_result);
+        Assert.assertEqual("An error occurred for method getDamage Test3 (DamageBooster) !", damageBooster_expected, damageBooster_result);
     }
 }
