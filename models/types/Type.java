@@ -21,9 +21,12 @@ public enum Type {
     }
 
     public static boolean hasWeakness(Type initialType, Type targetType){
-        if(initialType.weakness.equalsIgnoreCase(targetType.name)){
+        System.out.println(String.format("Type -> %s vs %s", initialType.name, targetType.name));
+        if(targetType.weakness.equalsIgnoreCase(initialType.name)){
+            System.out.println(String.format("Type -> %s has weakness against %s", targetType.name, initialType.name));
             return true;
         } else {
+            System.out.println(String.format("Type -> %s has no weakness against %s", targetType.name, initialType.name));
             return false;
         }
     }

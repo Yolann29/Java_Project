@@ -96,7 +96,7 @@ public abstract class Fighter {
     }
 
     public boolean attack(Fighter target, Attack attack){
-        int damage = (int) ((this.weapon.getDamage() + attack.getDamage() + this.getLevel()) * (Type.hasWeakness(this.weapon.getType(), target.weapon.getType()) ? 1 : 1.25));
+        int damage = (int) ((this.weapon.getDamage() + attack.getDamage() + this.getLevel()) * (Type.hasWeakness(this.weapon.getType(), target.weapon.getType()) ? 1.25 : 1));
         target.takeDamage(damage);
         return true;
 

@@ -38,7 +38,7 @@ public class Arena {
 
         if (attack != null && attacker.getWalkingTime() == 0) {
             this.attacker.setWalkingTime(System.currentTimeMillis());
-            int damage = (int) ((attacker.getWeapon().getDamage() + attack.getDamage() + attacker.getLevel()) * (Type.hasWeakness(attacker.getWeapon().getType(), target.getWeapon().getType()) ? 1 : 1.25));
+            int damage = (int) ((attacker.getWeapon().getDamage() + attack.getDamage() + attacker.getLevel()) * (Type.hasWeakness(attacker.getWeapon().getType(), target.getWeapon().getType()) ? 1.25 : 1));
             this.textPane.setTextWithTypingEffect(String.format("%s use %s on %s! \nTotal damage : %s", attacker.getName(), attack.getName(), target.getName(), damage));
             System.out.println(String.format("Arena -> %s use %s on %s! Total damage : %s", attacker.getName(), attack.getName(), target.getName(), damage));
 

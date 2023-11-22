@@ -39,7 +39,7 @@ public class Game {
         this.gs = new GameState();
         this.keyH = new KeyHandler(gs);
 
-        this.window = new JFrame("T-JAV-501");
+        this.window = new JFrame("Tales of Conqueror");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setIgnoreRepaint(true);

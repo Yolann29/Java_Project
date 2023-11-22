@@ -12,12 +12,9 @@ import models.Pattern;
 import models.Role;
 import models.fighters.Merchant;
 import models.fighters.Warrior;
-import models.types.Type;
 import models.weapons.*;
-import views.customwidgets.PButton;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -62,7 +59,7 @@ public class WorldPanel extends JPanel {
         //PETS
         createNPC(9, 9, 6, Pattern.SCARED, Role.CAT_BLACK, new GroundSpear(), false);
         createNPC(13, 15, 6, Pattern.SCARED, Role.CAT_ORANGE, new GroundSpear(), false);
-        createNPC(20, 7, 6, Pattern.SCARED, Role.CAT_ORANGE, new GroundSpear(), false);
+        createNPC(30, 7, 6, Pattern.SCARED, Role.CAT_ORANGE, new GroundSpear(), false);
         createNPC(15, 9, 6, Pattern.SCARED, Role.CAT_GRAY, new GroundSpear(), false);
 
         //MERCHANT

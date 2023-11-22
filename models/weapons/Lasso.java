@@ -5,6 +5,6 @@ import models.types.Type;
 public class Lasso extends Weapon {
 
     public Lasso() {
-        super("Lasso", Type.PLANT, 15, 1, 4);
+        super("Lasso", Type.PLANT, 17, 1, 3);
     }
 }

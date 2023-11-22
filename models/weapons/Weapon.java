@@ -87,27 +87,8 @@ public abstract class Weapon {
         return initialDamage;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     public Attack[] getWeaponAttacks() {
         return weaponAttacks;
-    }
-
-
-    public Attack[] getAttack(Attack attack) {
-        return weaponAttacks;
-    }
-
-    public String[] getNameAttacks() {
-        String[] attackNames = new String[weaponAttacks.length];
-        for (int i = 0; i < weaponAttacks.length; i++) {
-            if (weaponAttacks[i] != null) {
-                attackNames[i] = weaponAttacks[i].getName();
-            }
-        }
-        return attackNames;
     }
 
     public int getNumberAttacks() {
