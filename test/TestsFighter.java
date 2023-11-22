@@ -1,6 +1,10 @@
+package test;
+
 import models.fighters.*;
 import models.types.Type;
 import models.weapons.*;
+import test.Assert;
+import test.Test;
 
 public class TestsFighter {
 
@@ -104,7 +108,7 @@ public class TestsFighter {
         //fighterOffense.attack(fighterDefense);
 
         // assert
-        //Assert.assertEqual("An error occurred for method getWeapon (Test7)!", icesword, result1);
-        //Assert.assertEqual("An error occurred for method getWeapon (Test8)!", firesword, result2);
+        //test.Assert.assertEqual("An error occurred for method getWeapon (Test7)!", icesword, result1);
+        //test.Assert.assertEqual("An error occurred for method getWeapon (Test8)!", firesword, result2);
     }
 }
