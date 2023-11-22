@@ -4,6 +4,6 @@ import models.types.Type;
 
 public class GroundSpear extends Weapon {
     public GroundSpear() {
-        super("Ground Spear", Type.GROUND, 20, 1, 2);
+        super("Ground Spear", Type.GROUND, 15, 1, 2);
     }
 }
