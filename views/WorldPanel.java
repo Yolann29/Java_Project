@@ -202,12 +202,16 @@ public class WorldPanel extends JPanel {
 
         if(launchFightAnimationDuration != 0){
             g2.setColor(Color.BLACK);
-            g2.fillRect((int) launchFightAnimationDuration - GamePanel.FRAME_WIDTH, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
             launchFightAnimationDuration = launchFightAnimationDuration + 40;
-            if(launchFightAnimationDuration > GamePanel.FRAME_WIDTH){
-                launchFightAnimationDuration = 0;
-                game.getGp().switchToArena();
+
+            if(launchFightAnimationDuration > 800){
+                g2.fillRect((int) (launchFightAnimationDuration - 800) - GamePanel.FRAME_WIDTH, 0, GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+                if((launchFightAnimationDuration - 800) > GamePanel.FRAME_WIDTH){
+                    launchFightAnimationDuration = 0;
+                    game.getGp().switchToArena();
+                }
             }
+
         }
         g2.dispose();
     }
