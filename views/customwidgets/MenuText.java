@@ -1,5 +1,7 @@
 package views.customwidgets;
 
+import views.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,6 +17,7 @@ public class MenuText extends JTextPane {
         this.setOpaque(false);
         this.setForeground(Color.WHITE);
         this.setHighlighter(null);
+        this.setFont(GamePanel.gloucester.deriveFont(12f));
 
         startTypingEffect();
     }
@@ -39,12 +42,6 @@ public class MenuText extends JTextPane {
             return null;
         }
     }
-
-    public void setTextWithTypingEffect(String text) {
-        this.fullText = text;
-        startTypingEffect();
-    }
-
     @Override
     public void repaint(long tm, int x, int y, int width, int height) {
     }

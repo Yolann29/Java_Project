@@ -63,6 +63,7 @@ public class MenuPanel extends HoverPanel {
         play.setPreferredSize(new Dimension(120,50));
 
         play.addActionListener(e1 -> {
+            System.out.println("Menu -> Play button clicked");
             gp.removeAll();
             Player player = new Player(gp.getGame(), gp.getGame().getKeyH(), classePlayer);
             String name = nameInput.getText();
@@ -117,10 +118,11 @@ public class MenuPanel extends HoverPanel {
         playPanel.setBorder(new EmptyBorder(80,0,0,0));
         playPanel.setOpaque(false);
 
-        PButton playButton = new PButton("Play");
-        playButton.setPreferredSize(new Dimension(200,50));
+        PButton chooseCharacter = new PButton("Choose Character");
+        chooseCharacter.setPreferredSize(new Dimension(200,50));
 
-        playButton.addActionListener(e1 -> {
+        chooseCharacter.addActionListener(e1 -> {
+            System.out.println("Menu -> Choose character button");
             this.removeAll();
             this.add(archerPanel, BorderLayout.WEST);
             this.add(warriorPanel, BorderLayout.CENTER);
@@ -129,7 +131,7 @@ public class MenuPanel extends HoverPanel {
             changeMenu = true;
         });
 
-        playPanel.add(playButton);
+        playPanel.add(chooseCharacter);
 
         JPanel quitPanel = new JPanel();
         quitPanel.setLayout(new FlowLayout());
@@ -140,6 +142,7 @@ public class MenuPanel extends HoverPanel {
         quitButton.setPreferredSize(new Dimension(200,50));
 
         quitButton.addActionListener(e1 -> {
+            System.out.println("Menu -> Quit button");
             gp.getGame().getWindow().dispose();
             System.exit(0);
         });
