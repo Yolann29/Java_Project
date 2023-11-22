@@ -12,7 +12,6 @@ import java.util.List;
 
 public abstract class Fighter {
     protected String name;
-    protected Type type;
     protected int hp;
     protected int maxHp;
     protected int defense;
@@ -23,9 +22,8 @@ public abstract class Fighter {
     protected long walkingTime = 0;
     protected long damageTime = 0;
     protected boolean usingItem = false;
-    public Fighter(String name, Type type, int experience) {
+    public Fighter(String name, int experience) {
         this.experience = experience;
-        this.type = type;
         this.name = name;
         this.maxHp = 100 + (this.getLevel() * 10);
         this.hp = maxHp;
@@ -98,7 +96,8 @@ public abstract class Fighter {
     }
 
     public boolean attack(Fighter target, Attack attack){
-        target.takeDamage(this.weapon.getDamage() + attack.getDamage() + this.getLevel());
+        int damage = (int) ((this.weapon.getDamage() + attack.getDamage() + this.getLevel()) * (Type.hasWeakness(this.weapon.getType(), target.weapon.getType()) ? 1 : 1.25));
+        target.takeDamage(damage);
         return true;
 
     }
@@ -119,11 +118,6 @@ public abstract class Fighter {
     public int getDefense() {
         return defense;
     }
-
-    public Type getType() {
-        return type;
-    }
-
     public Weapon getWeapon() {
         return weapon;
     }

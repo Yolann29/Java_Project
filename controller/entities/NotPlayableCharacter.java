@@ -290,10 +290,10 @@ public class NotPlayableCharacter extends Entity {
             g2.setFont(GamePanel.gloucester.deriveFont(10f));
             g2.drawString("Lv." + this.fighter.getLevel(), x + (this.fighter.getName().length() * 7) + 1, y - 8);
         } else if(fighter != null){
-            g2.setColor(Color.CYAN);
-            g2.fillRoundRect(x - 10, y - 26, "Merchant".length() * 12, 22, 10, 10);
+            g2.setColor(Color.CYAN.darker());
+            g2.fillRoundRect(x - 10, y - 26, "Merchant".length() * 12, 25, 10, 10);
             g2.setColor(Color.WHITE);
-            g2.drawString("Merchant", x - 5, y - 10);
+            g2.drawString("Merchant", x - 5, y - 4);
         }
     }
 

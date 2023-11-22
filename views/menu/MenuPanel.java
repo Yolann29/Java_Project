@@ -69,7 +69,7 @@ public class MenuPanel extends HoverPanel {
             String name = nameInput.getText();
             if (nameInput.getText().length() > 10) name = nameInput.getText().substring(0,10);
             if (nameInput.getText().isEmpty()) name = "YOU";
-            player.fighter = new Warrior(name, Type.FIRE, 50);
+            player.fighter = new Warrior(name, 50);
             player.fighter.pickWeapon(new FireSword());
             gp.getGame().setPlayer(player);
             gp.setWorldPanel(new WorldPanel(gp.getGame().getGs(), gp, gp.getGame().getKeyH(), player, gp.getGame()));

@@ -2,6 +2,7 @@ package controller;
 
 import controller.manager.AnimationManager;
 import models.fighters.Fighter;
+import models.types.Type;
 import models.weapons.attacks.Attack;
 import models.weapons.attacks.Strike;
 import views.customwidgets.PTextPane;
@@ -37,8 +38,9 @@ public class Arena {
 
         if (attack != null && attacker.getWalkingTime() == 0) {
             this.attacker.setWalkingTime(System.currentTimeMillis());
-            this.textPane.setTextWithTypingEffect(String.format("%s use %s on %s! \nTotal damage : " + (attacker.getLevel() + attacker.getWeapon().getDamage() + attack.getDamage()), attacker.getName(), attack.getName(), target.getName()));
-            System.out.println(String.format("Arena -> %s use %s on %s! Total damage : " + (attacker.getLevel() + attacker.getWeapon().getDamage() + attack.getDamage()), attacker.getName(), attack.getName(), target.getName()));
+            int damage = (int) ((attacker.getWeapon().getDamage() + attack.getDamage() + attacker.getLevel()) * (Type.hasWeakness(attacker.getWeapon().getType(), target.getWeapon().getType()) ? 1 : 1.25));
+            this.textPane.setTextWithTypingEffect(String.format("%s use %s on %s! \nTotal damage : %s", attacker.getName(), attack.getName(), target.getName(), damage));
+            System.out.println(String.format("Arena -> %s use %s on %s! Total damage : ", attacker.getName(), attack.getName(), target.getName(), damage));
 
         }
     }

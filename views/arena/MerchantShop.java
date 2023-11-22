@@ -1,10 +1,7 @@
 package views.arena;
 
 import controller.Game;
-import models.weapons.ElectricGauntlet;
-import models.weapons.FireSword;
-import models.weapons.GroundSpear;
-import models.weapons.IceSword;
+import models.weapons.*;
 import views.GamePanel;
 import views.WorldPanel;
 import views.customwidgets.PButton;
@@ -25,7 +22,7 @@ public class MerchantShop extends JPanel {
         loadRessources();
 
         JPanel weaponChoices = new JPanel();
-        weaponChoices.setLayout(new GridLayout(2, 2, 10, 10));
+        weaponChoices.setLayout(new GridLayout(2, 3, 10, 10));
         weaponChoices.setPreferredSize(new Dimension(500, 100));
         weaponChoices.setBackground(new Color(0,0,0,0));
 
@@ -33,11 +30,13 @@ public class MerchantShop extends JPanel {
         PButton fireswordChoice = new PButton("Fire Sword");
         PButton electricGauntletChoice = new PButton("Electric Gauntlet");
         PButton groundSpearChoice = new PButton("Ground Spear");
+        PButton lassoChoice = new PButton("Lasso");
 
         weaponChoices.add(iceswordChoice);
         weaponChoices.add(fireswordChoice);
         weaponChoices.add(electricGauntletChoice);
         weaponChoices.add(groundSpearChoice);
+        weaponChoices.add(lassoChoice);
 
         iceswordChoice.addActionListener(e -> {
             game.getPlayer().fighter.pickWeapon(new IceSword());
@@ -55,6 +54,11 @@ public class MerchantShop extends JPanel {
             game.getPlayer().fighter.pickWeapon(new GroundSpear());
             gamePanel.closeMerchantShop();
         });
+        lassoChoice.addActionListener(e -> {
+            game.getPlayer().fighter.pickWeapon(new Lasso());
+            gamePanel.closeMerchantShop();
+        });
+
         weaponChoices.revalidate();
 
         this.add(weaponChoices);

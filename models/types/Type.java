@@ -20,6 +20,14 @@ public enum Type {
         this.color = color;
     }
 
+    public static boolean hasWeakness(Type initialType, Type targetType){
+        if(initialType.weakness.equalsIgnoreCase(targetType.name)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public String getName() {
         return name;
     }

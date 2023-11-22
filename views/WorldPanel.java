@@ -45,36 +45,36 @@ public class WorldPanel extends JPanel {
         this.game = game;
 
         //FIGHTERS
-        createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, Type.WATER, new ElectricGauntlet(), false);
-        createNPC(7, 14, 6, Pattern.SCARED, Role.ARCHER, Type.GROUND, new GroundSpear(), false);
-        createNPC(10, 5, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, Type.WATER, new IceSword(), false);
-        createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN, Type.WATER, new IceSword(), false);
-        createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, Type.FIRE, new GroundSpear(), false);
-        createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, Type.FIRE, new ElectricGauntlet(), false);
-        createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, Type.ELECTRICITY, new IceSword(), false);
+        createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, new ElectricGauntlet(), false);
+        createNPC(7, 14, 6, Pattern.SCARED, Role.ARCHER, new Lasso(), false);
+        createNPC(10, 5, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, new IceSword(), false);
+        createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN,new IceSword(), false);
+        createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, new GroundSpear(), false);
+        createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, new ElectricGauntlet(), false);
+        createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, new IceSword(), false);
 
         //PETS
-        createNPC(9, 9, 6, Pattern.SCARED, Role.CAT_BLACK, Type.WATER, new GroundSpear(), false);
-        createNPC(13, 15, 6, Pattern.SCARED, Role.CAT_ORANGE, Type.WATER, new GroundSpear(), false);
-        createNPC(20, 7, 6, Pattern.SCARED, Role.CAT_ORANGE, Type.WATER, new GroundSpear(), false);
-        createNPC(15, 9, 6, Pattern.SCARED, Role.CAT_GRAY, Type.WATER, new GroundSpear(), false);
+        createNPC(9, 9, 6, Pattern.SCARED, Role.CAT_BLACK, new GroundSpear(), false);
+        createNPC(13, 15, 6, Pattern.SCARED, Role.CAT_ORANGE, new GroundSpear(), false);
+        createNPC(20, 7, 6, Pattern.SCARED, Role.CAT_ORANGE, new GroundSpear(), false);
+        createNPC(15, 9, 6, Pattern.SCARED, Role.CAT_GRAY, new GroundSpear(), false);
 
         //MERCHANT
-        createNPC(18, 9, 7, Pattern.IDLE, Role.VAGRANT, null, new IceSword(), true);
+        createNPC(18, 9, 7, Pattern.IDLE, Role.VAGRANT, null, true);
 
         this.tileManager = new TileManager(game);
         this.addKeyListener(player.getKeyHandler());
         this.setFocusable(true);
     }
 
-    private void createNPC(int x, int y, int speed, Pattern behavior, Role className, Type type, Weapon weapon, boolean isMerchant) {
+    private void createNPC(int x, int y, int speed, Pattern behavior, Role className, Weapon weapon, boolean isMerchant) {
         NotPlayableCharacter npc = new NotPlayableCharacter(game, x * GamePanel.tileSize, y * GamePanel.tileSize, speed, behavior, className);
 
         if(isMerchant){
             npc.fighter = new Merchant("Marchand");
         } else {
             npcExperience += 17;
-            npc.fighter = new Warrior(className.getName(), type, Math.max(100,new Random().nextInt((int) Math.pow(npcExperience, 2))));
+            npc.fighter = new Warrior(className.getName(), Math.max(100,new Random().nextInt((int) Math.pow(npcExperience, 2))));
         }
         if (weapon != null) {
             npc.fighter.pickWeapon(weapon);
