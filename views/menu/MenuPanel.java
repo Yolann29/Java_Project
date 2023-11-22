@@ -2,7 +2,7 @@ package views.menu;
 
 import controller.Game;
 import controller.entities.Player;
-import controller.manager.AudioManager;
+import controller.manager.AudioManagerMP3;
 import models.Role;
 import models.fighters.Warrior;
 import models.weapons.FireSword;
@@ -50,9 +50,8 @@ public class MenuPanel extends HoverPanel {
         this.archerPanel = new ArcherPanel();
         this.magePanel = new MagePanel();
 
-        AudioManager music = new AudioManager("menu","mainMenu.wav");
-        music.playSound();
-        music.setVolume(-5);
+        AudioManagerMP3 music = new AudioManagerMP3("menu","mainMenu.mp3");
+        music.playSound(0.5f);
 
         JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new GridLayout(1, 2, 10, 10));
@@ -70,7 +69,7 @@ public class MenuPanel extends HoverPanel {
 
         play.addActionListener(e1 -> {
             System.out.println("Menu -> Play button clicked");
-            music.stopSoundFadeOut();
+            music.stopSoundFadeOut(0.5);
             gp.removeAll();
             Player player = new Player(gp.getGame(), gp.getGame().getKeyH(), classePlayer);
             String name = nameInput.getText();

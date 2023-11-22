@@ -6,7 +6,7 @@ import controller.entities.Entity;
 import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
-import controller.manager.AudioManager;
+import controller.manager.AudioManagerMP3;
 import controller.manager.TileManager;
 import models.Pattern;
 import models.Role;
@@ -34,9 +34,8 @@ public class WorldPanel extends JPanel {
     public static ArrayList<NotPlayableCharacter> fightersNpc = new ArrayList<>();
     public static ArrayList<NotPlayableCharacter> npcs = new ArrayList<>();
     int npcExperience = 1;
-    private AudioManager worldMusic = new AudioManager("world/music", "worldmusic1.wav");
-
-    private AudioManager deathMusic = new AudioManager("world/music", "gameover.wav");
+    private AudioManagerMP3 worldMusic = new AudioManagerMP3("world/music", "worldmusic1.mp3");
+    private AudioManagerMP3 deathMusic = new AudioManagerMP3("world/music", "gameover.mp3");
 
     public WorldPanel(GameState gs, GamePanel gamePanel, KeyHandler keyHandler, Player player, Game game) {
         this.gamePanel = gamePanel;
@@ -44,7 +43,7 @@ public class WorldPanel extends JPanel {
         this.player = player;
         this.gs = gs;
         this.game = game;
-        worldMusic.playSound(-10);
+        worldMusic.playSound(0.5f);
 
         //FIGHTERS
         createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, new ElectricGauntlet(), false);
@@ -133,7 +132,7 @@ public class WorldPanel extends JPanel {
             if(launchFightAnimationDuration == 0){
                 launchFightAnimationDuration = 1;
                 game.setFightTransition(true);
-                worldMusic.stopSound();
+                worldMusic.stopSoundFadeOut(1);
             }
 
             return true;
@@ -216,11 +215,11 @@ public class WorldPanel extends JPanel {
         g2.dispose();
     }
 
-    public AudioManager getWorldMusic() {
+    public AudioManagerMP3 getWorldMusic() {
         return worldMusic;
     }
 
-    public AudioManager getDeathMusic() {
+    public AudioManagerMP3 getDeathMusic() {
         return deathMusic;
     }
 }

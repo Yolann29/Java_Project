@@ -1,13 +1,12 @@
 package views.customwidgets;
 
-import controller.manager.AudioManager;
+import controller.manager.AudioManagerWAV;
 import views.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.InputStream;
 
 public class PButton extends JButton {
 
@@ -23,8 +22,8 @@ public class PButton extends JButton {
         this.setForeground(Color.WHITE);
         this.setFocusPainted(false);
         this.setFont(GamePanel.gloucester.deriveFont(10F));
-        AudioManager hoverBtnSound = new AudioManager("widgets","hoverButton.wav");
-        AudioManager clickBtnSound = new AudioManager("widgets","clickButton.wav");
+        AudioManagerWAV hoverBtnSound = new AudioManagerWAV("widgets","hoverButton.wav");
+        AudioManagerWAV clickBtnSound = new AudioManagerWAV("widgets","clickButton.wav");
         hoverBtnSound.setVolume(5);
         clickBtnSound.setVolume(5);
 

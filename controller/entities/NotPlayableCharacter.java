@@ -2,7 +2,7 @@ package controller.entities;
 
 import controller.Game;
 import controller.Main;
-import controller.manager.AudioManager;
+import controller.manager.AudioManagerWAV;
 import controller.manager.FighterClasseManager;
 import models.Action;
 import models.Pattern;
@@ -27,7 +27,7 @@ public class NotPlayableCharacter extends Entity {
     final private int positionY;
 
     //CAT ATTRIBUTES
-    final private AudioManager[] meows = new AudioManager[2];
+    final private AudioManagerWAV[] meows = new AudioManagerWAV[2];
     final private Random r = new Random();
     private boolean hasMeow = false;
 
@@ -40,9 +40,9 @@ public class NotPlayableCharacter extends Entity {
         this.positionX = positionX;
         this.positionY = positionY;
         setDefault(positionX, positionY, speed);
-        meows[0] = new AudioManager("cats","meow1.wav");
+        meows[0] = new AudioManagerWAV("cats","meow1.wav");
         meows[0].setVolume(5);
-        meows[1] = new AudioManager("cats","meow2.wav");
+        meows[1] = new AudioManagerWAV("cats","meow2.wav");
         meows[1].setVolume(5);
 
     }

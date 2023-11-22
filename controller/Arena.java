@@ -1,16 +1,13 @@
 package controller;
 
-import controller.manager.AnimationManager;
-import controller.manager.AudioManager;
+import controller.manager.AudioManagerWAV;
 import models.fighters.Fighter;
 import models.types.Type;
 import models.weapons.attacks.Attack;
-import models.weapons.attacks.Strike;
 import views.customwidgets.PTextPane;
 
 import java.awt.*;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Arena {
 
@@ -22,9 +19,9 @@ public class Arena {
     private Attack attack;
     public boolean isYourTurn = true;
     PTextPane textPane;
-    private AudioManager[] hits = {new AudioManager("fight/effects", "hit.wav"), new AudioManager("fight/effects", "hit2.wav")};
+    private AudioManagerWAV[] hits = {new AudioManagerWAV("fight/effects", "hit.wav"), new AudioManagerWAV("fight/effects", "hit2.wav")};
 
-    private AudioManager death = new AudioManager("fight/effects", "death.wav");
+    private AudioManagerWAV death = new AudioManagerWAV("fight/effects", "death.wav");
 
     public Arena(Fighter fighter1, Fighter fighter2){
         this.fighter1 = fighter1;

@@ -7,7 +7,7 @@ import controller.entities.Entity;
 import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
-import controller.manager.AudioManager;
+import controller.manager.AudioManagerMP3;
 import controller.manager.FighterClasseManager;
 import models.Action;
 import models.Role;
@@ -40,15 +40,15 @@ public class ArenaPanel extends JPanel {
     private final Player player;
     private final NotPlayableCharacter encounter;
 
-    AudioManager[] fightMusics = {
-        new AudioManager("fight/music", "fight1.wav"),
-        new AudioManager("fight/music", "fight2.wav"),
-        new AudioManager("fight/music", "fight3.wav"),
-        new AudioManager("fight/music", "fight4.wav"),
-        new AudioManager("fight/music", "fight5.wav"),
+    AudioManagerMP3[] fightMusics = {
+        new AudioManagerMP3("fight/music", "fight1.mp3"),
+        new AudioManagerMP3("fight/music", "fight2.mp3"),
+        new AudioManagerMP3("fight/music", "fight3.mp3"),
+        new AudioManagerMP3("fight/music", "fight4.mp3"),
+        new AudioManagerMP3("fight/music", "fight5.mp3"),
     };
 
-    AudioManager fightMusic;
+    AudioManagerMP3 fightMusic;
 
     public ArenaPanel(Game game, GameState gs, Arena arena, ActionsPanel da, Player player, NotPlayableCharacter encounter) {
         loadRessources();
@@ -62,7 +62,7 @@ public class ArenaPanel extends JPanel {
         this.launchFightAnimationDuration = 1;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.fightMusic = fightMusics[new Random().nextInt(fightMusics.length)];
-        this.fightMusic.playSound(-2);
+        this.fightMusic.playSound(0.5f);
 
 
     }
@@ -144,7 +144,7 @@ public class ArenaPanel extends JPanel {
     public void quitArena(Entity looser, boolean isPlayer){
         if (initAnimation == 0) {
             initAnimation = System.currentTimeMillis();
-            fightMusic.stopSoundFadeOut();
+            fightMusic.stopSoundFadeOut(3);
 
         }
         currentTime = System.currentTimeMillis();
@@ -156,7 +156,7 @@ public class ArenaPanel extends JPanel {
             if (isPlayer) {
                 game.getGp().getWorldPanel().getDeathMusic().playSound();
             } else {
-                game.getGp().getWorldPanel().getWorldMusic().playSound(-10);
+                game.getGp().getWorldPanel().getWorldMusic().playSound(0.5f);
             }
 
             arena.isYourTurn = true;
