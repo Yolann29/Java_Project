@@ -59,6 +59,7 @@ public class ArenaPanel extends JPanel {
         fightMusics[1] = new AudioManager("fight/music", "fight2.wav");
         fightMusic = fightMusics[new Random().nextInt(2)];
         fightMusic.playSound();
+        fightMusic.setVolume(-5);
 
     }
 

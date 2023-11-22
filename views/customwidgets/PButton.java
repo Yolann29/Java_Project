@@ -25,8 +25,8 @@ public class PButton extends JButton {
         this.setFont(GamePanel.gloucester.deriveFont(10F));
         AudioManager hoverBtnSound = new AudioManager("widgets","hoverButton.wav");
         AudioManager clickBtnSound = new AudioManager("widgets","clickButton.wav");
-//        hoverBtnSound.setVolume(-10);
-//        clickBtnSound.setVolume(-10);
+        hoverBtnSound.setVolume(5);
+        clickBtnSound.setVolume(5);
 
 
         this.addMouseListener(new MouseListener() {
