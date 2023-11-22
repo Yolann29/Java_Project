@@ -40,7 +40,13 @@ public class ArenaPanel extends JPanel {
     private final Player player;
     private final NotPlayableCharacter encounter;
 
-    AudioManager[] fightMusics = new AudioManager[2];
+    AudioManager[] fightMusics = {
+        new AudioManager("fight/music", "fight1.wav"),
+        new AudioManager("fight/music", "fight2.wav"),
+        new AudioManager("fight/music", "fight3.wav"),
+        new AudioManager("fight/music", "fight4.wav"),
+        new AudioManager("fight/music", "fight5.wav"),
+    };
 
     AudioManager fightMusic;
 
@@ -55,11 +61,9 @@ public class ArenaPanel extends JPanel {
         this.game = game;
         this.launchFightAnimationDuration = 1;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        fightMusics[0] = new AudioManager("fight/music", "fight1.wav");
-        fightMusics[1] = new AudioManager("fight/music", "fight2.wav");
-        fightMusic = fightMusics[new Random().nextInt(2)];
-        fightMusic.playSound();
-        fightMusic.setVolume(-5);
+        this.fightMusic = fightMusics[new Random().nextInt(fightMusics.length)];
+        this.fightMusic.playSound(-2);
+
 
     }
 
@@ -137,17 +141,23 @@ public class ArenaPanel extends JPanel {
 
     }
 
-    public void quitArena(Entity looser) {
+    public void quitArena(Entity looser, boolean isPlayer){
         if (initAnimation == 0) {
             initAnimation = System.currentTimeMillis();
             fightMusic.stopSoundFadeOut();
-            game.getGp().getWorldPanel().getWorldMusic().playSound();
+
         }
         currentTime = System.currentTimeMillis();
         if (currentTime >= initAnimation + 2500) {
+
+            initAnimation = 0;
             endGame = false;
             game.getGp().switchToOverworld();
-            initAnimation = 0;
+            if (isPlayer) {
+                game.getGp().getWorldPanel().getDeathMusic().playSound();
+            } else {
+                game.getGp().getWorldPanel().getWorldMusic().playSound(-10);
+            }
 
             arena.isYourTurn = true;
             arena.getFighter1().getWeapon().setDamage(arena.getFighter1().getWeapon().getInitialDamage());
@@ -157,9 +167,9 @@ public class ArenaPanel extends JPanel {
             WorldPanel.fightersNpc.remove(looser);
 
             game.getEncounter().fighter = null;
+            game.setFightTransition(false);
             looser.setDirection(Action.DEAD);
             looser.isDead = true;
-            game.setFightTransition(false);
         }
     }
 
@@ -209,20 +219,22 @@ public class ArenaPanel extends JPanel {
                 && arena.isYourTurn());
 
         //DETERMINER LE WINNER
+        //SI JOUEUR VIVANT
         if(!arena.getFighter1().isDead() && arena.getFighter2().isDead()){
             da.setDialogText(arena.getFighter1().getName() + " won " +  arena.getFighter2().getLevel() * 200 + "xp");
             if(arena.getFighter1().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(player.classe, Action.JUMP)).paint(g2, 100, 270, 96, 96, false);
-                quitArena(encounter);
+                quitArena(encounter, false);
             }
         }
+        //SI JOUEUR MORT
         if(!arena.getFighter2().isDead() && arena.getFighter1().isDead()){
             da.setDialogText(arena.getFighter2().getName() + " won " + arena.getFighter2().getLevel() * 200 + "xp");
             if(arena.getFighter2().getWalkingTime() == 0){
                 endGame = true;
                 Objects.requireNonNull(FighterClasseManager.returnRightAnimation(encounter.classe, Action.JUMP)).paint(g2, 550, 270, 96, 96, true);
-                quitArena(player);
+                quitArena(player, true);
             }
         }
 

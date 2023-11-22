@@ -1,6 +1,7 @@
 package controller;
 
 import controller.manager.AnimationManager;
+import controller.manager.AudioManager;
 import models.fighters.Fighter;
 import models.types.Type;
 import models.weapons.attacks.Attack;
@@ -13,17 +14,17 @@ import java.util.Scanner;
 
 public class Arena {
 
+    private Random r = new Random();
     private Fighter fighter1;
     private Fighter fighter2;
-
     private Fighter attacker;
     private Fighter target;
     private Attack attack;
-
     public boolean isYourTurn = true;
     PTextPane textPane;
+    private AudioManager[] hits = {new AudioManager("fight/effects", "hit.wav"), new AudioManager("fight/effects", "hit2.wav")};
 
-    Scanner scanner = new Scanner(System.in);
+    private AudioManager death = new AudioManager("fight/effects", "death.wav");
 
     public Arena(Fighter fighter1, Fighter fighter2){
         this.fighter1 = fighter1;
@@ -49,7 +50,10 @@ public class Arena {
         if(attack != null){
             if(attacker.attack(target, attack)){
                 System.out.println(String.format("Arena -> %s HP %s/%s", target.getName(), target.getHp(), target.getMaxHp()));
+                hits[r.nextInt(hits.length)].playSound(5);
                 if(target.getHp() < 1){
+                    death.setVolume(-5);
+                    death.playSound();
                     System.out.println(String.format("Arena -> %s is dead!", target.getName()));
                     System.out.println(String.format("Arena -> %s won!", attacker.getName()));
                 }

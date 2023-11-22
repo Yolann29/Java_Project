@@ -32,6 +32,13 @@ public class MerchantShop extends JPanel {
         PButton groundSpearChoice = new PButton("Ground Spear");
         PButton lassoChoice = new PButton("Lasso");
 
+        iceswordChoice.setForeground( new Color(0, 162, 255));
+        fireswordChoice.setForeground( new Color(255, 81, 31));
+        electricGauntletChoice.setForeground( new Color(220, 207, 0));
+        lassoChoice.setForeground( new Color(0, 194, 0));
+        groundSpearChoice.setForeground( new Color(141, 63, 34));
+
+
         weaponChoices.add(iceswordChoice);
         weaponChoices.add(fireswordChoice);
         weaponChoices.add(electricGauntletChoice);

@@ -29,6 +29,11 @@ public class AudioManager {
         gainControl.setValue(volume);
     }
 
+    public void playSound(float volume){
+        setVolume(volume);
+        playSound();
+    }
+
     public void playSound(){
         clip.setFramePosition(0);
         clip.start();

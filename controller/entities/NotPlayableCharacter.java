@@ -41,8 +41,9 @@ public class NotPlayableCharacter extends Entity {
         this.positionY = positionY;
         setDefault(positionX, positionY, speed);
         meows[0] = new AudioManager("cats","meow1.wav");
+        meows[0].setVolume(5);
         meows[1] = new AudioManager("cats","meow2.wav");
-//        meows[2] = new AudioManager("cats","meow3.wav");
+        meows[1].setVolume(5);
 
     }
 
@@ -59,7 +60,7 @@ public class NotPlayableCharacter extends Entity {
 
         //MIAULEMENT DU CHAT
         if(this.classe == Role.CAT_BLACK || this.classe == Role.CAT_GRAY || this.classe == Role.CAT_ORANGE){
-            int random = r.nextInt(600);
+            int random = r.nextInt(1000);
             if(!meows[meowChoice].getClip().isActive()){
                 hasMeow = false;
             }

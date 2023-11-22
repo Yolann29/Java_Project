@@ -34,8 +34,9 @@ public class WorldPanel extends JPanel {
     public static ArrayList<NotPlayableCharacter> fightersNpc = new ArrayList<>();
     public static ArrayList<NotPlayableCharacter> npcs = new ArrayList<>();
     int npcExperience = 1;
+    private AudioManager worldMusic = new AudioManager("world/music", "worldmusic1.wav");
 
-    private AudioManager worldMusic;
+    private AudioManager deathMusic = new AudioManager("world/music", "gameover.wav");
 
     public WorldPanel(GameState gs, GamePanel gamePanel, KeyHandler keyHandler, Player player, Game game) {
         this.gamePanel = gamePanel;
@@ -43,9 +44,7 @@ public class WorldPanel extends JPanel {
         this.player = player;
         this.gs = gs;
         this.game = game;
-        worldMusic = new AudioManager("world/music", "worldmusic1.wav");
-        worldMusic.playSound();
-        worldMusic.setVolume(-8);
+        worldMusic.playSound(-10);
 
         //FIGHTERS
         createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, new ElectricGauntlet(), false);
@@ -219,5 +218,9 @@ public class WorldPanel extends JPanel {
 
     public AudioManager getWorldMusic() {
         return worldMusic;
+    }
+
+    public AudioManager getDeathMusic() {
+        return deathMusic;
     }
 }
