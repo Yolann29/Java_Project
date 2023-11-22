@@ -37,7 +37,7 @@ public class TestsWeapon {
     @Test
     public void getName_shouldReturnTheRightName() {
         // arrange
-        String electricGauntlet_expected = "Electric gauntlet";
+        String electricGauntlet_expected = "Electric Gauntlet";
         String fireSword_expected = "Fire Sword";
         String groundSpear_expected = "Ground Spear";
         String iceSword_expected = "Ice Sword";
@@ -119,9 +119,9 @@ public class TestsWeapon {
         fireSword.setDamage(fireSword_boost);
         int fireSword_result = fireSword.getDamage();
         groundSpear.setDamage(groundSpear_boost);
-        int groundSpear_result = groundSpear.getInitialDamage();
+        int groundSpear_result = groundSpear.getDamage();
         iceSword.setDamage(iceSword_boost);
-        int iceSword_result = iceSword.getInitialDamage();
+        int iceSword_result = iceSword.getDamage();
 
         // assert
         Assert.assertEqual("An error occurred for method setDamage Test4 (ElectricGauntlet) !", electricGauntlet_expected, electricGauntlet_result);

@@ -20,7 +20,7 @@ public class TestsMain {
             Method[] methodsWeapon = testsWeapon.getClass().getDeclaredMethods();
             Method[] methodsAttack = testsAttack.getClass().getDeclaredMethods();
             Method[] methodsType = testsType.getClass().getDeclaredMethods();
-            Method[] methodsItem = testsType.getClass().getDeclaredMethods();
+            Method[] methodsItem = testsItem.getClass().getDeclaredMethods();
 
             System.setOut(Assert.actualOut);
             System.out.println("Tests on Fighter classes");
@@ -188,12 +188,12 @@ public class TestsMain {
             ComparisonFailure.error = false;
 
             Assert.setActualOut(Assert.newOut);
-            for (Method method : methodsType) {
+            for (Method method : methodsItem) {
                 Test test = method.getAnnotation(Test.class);
 
                 if (test.enabled()) {
                     try {
-                        method.invoke(testsType.getClass().getDeclaredConstructor().newInstance());
+                        method.invoke(testsItem.getClass().getDeclaredConstructor().newInstance());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -206,12 +206,12 @@ public class TestsMain {
                 System.out.println(Assert.green + "All Tests passed on Item classes" + Assert.reset);
                 System.setOut(Assert.newOut);
             } else {
-                for (Method method : methodsType) {
+                for (Method method : methodsItem) {
                     Test test = method.getAnnotation(Test.class);
 
                     if (test.enabled()) {
                         try {
-                            method.invoke(testsType.getClass().getDeclaredConstructor().newInstance());
+                            method.invoke(testsItem.getClass().getDeclaredConstructor().newInstance());
                         } catch (Exception e) {
                             System.setOut(Assert.actualOut);
                             System.out.println(e.getMessage());

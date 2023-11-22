@@ -17,6 +17,7 @@ public class ComparisonFailure extends Exception {
     }
 
     public void message() {
+        error = true;
         System.setOut(Assert.actualOut);
         String reset = "\u001B[0m";
         String red = "\u001B[31m";
