@@ -30,7 +30,7 @@ public class MenuPanel extends HoverPanel {
     private JTextField nameInput;
     private JPanel playPanel;
     private PButton play;
-    private Image texture, background, archerBackground, warriorBackground, magicianBackground;
+    private Image texture, background, archerBackground, warriorBackground, magicianBackground, title;
     public static Role classePlayer;
     public static boolean magicianPicked;
     public static boolean warriorPicked;
@@ -109,29 +109,8 @@ public class MenuPanel extends HoverPanel {
 
         JPanel title = new JPanel();
         title.setLayout(new GridLayout(3,1,10,10));
+        title.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 200));
         title.setOpaque(false);
-
-        JLabel upTitle = new JLabel("Tales");
-        upTitle.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 50));
-        upTitle.setFont(new Font("Courier", Font.BOLD, 80));
-        upTitle.setBorder(new EmptyBorder(0,270,0,0));
-        upTitle.setOpaque(false);
-
-        JLabel middleTitle = new JLabel("Of The");
-        middleTitle.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 50));
-        middleTitle.setFont(new Font("Courier", Font.BOLD, 50));
-        middleTitle.setBorder(new EmptyBorder(0,300,0,0));
-        middleTitle.setOpaque(false);
-
-        JLabel bottomTitle = new JLabel("Conqueror");
-        bottomTitle.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 80));
-        bottomTitle.setFont(new Font("Courier", Font.BOLD, 80));
-        bottomTitle.setBorder(new EmptyBorder(0,180,20,0));
-        bottomTitle.setOpaque(false);
-
-        title.add(upTitle);
-        title.add(middleTitle);
-        title.add(bottomTitle);
 
         JPanel playPanel = new JPanel();
         playPanel.setLayout(new FlowLayout());
@@ -176,6 +155,7 @@ public class MenuPanel extends HoverPanel {
 
     public void loadRessources(){
         try{
+            title = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/menu/logo.png")));
             magicianBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/magician_background.png")));
             warriorBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/warrior_background.png")));
             archerBackground = ImageIO.read(Objects.requireNonNull(this.getClass().getResourceAsStream("/textures/fight/Archer_Background.png")));
@@ -202,7 +182,16 @@ public class MenuPanel extends HoverPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Graphics2D g2 = (Graphics2D) g;
+
         g.drawImage(background, 0, 0, null);
+        g2.setColor(new Color(0,255,0,70));
+        g2.fillRect(0,0,GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT);
+        int width = (int) (299 * 1.5);
+        int height = (int) (107 * 1.5);
+        int x = GamePanel.FRAME_WIDTH/2 - width/2;
+        int y = 150 - height/2;
+        g.drawImage(title, x, y, width, height, null);
         if (changeMenu) {
             g.drawImage(magicianBackground, 500, 0, null);
             g.drawImage(warriorBackground, 250, 0, null);
