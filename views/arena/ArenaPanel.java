@@ -7,19 +7,20 @@ import controller.entities.Entity;
 import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
+import controller.manager.AudioManager;
 import controller.manager.FighterClasseManager;
 import models.Action;
 import models.Role;
 import models.fighters.Fighter;
 import views.GamePanel;
 import views.WorldPanel;
-import views.customwidgets.PTextPane;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public class ArenaPanel extends JPanel {
 
@@ -36,11 +37,15 @@ public class ArenaPanel extends JPanel {
     long currentTime = 0;
     boolean fighter1DamageTaken = false;
     boolean fighter2DamageTaken = false;
-
     private final Player player;
     private final NotPlayableCharacter encounter;
 
+    AudioManager[] fightMusics = new AudioManager[2];
+
+    AudioManager fightMusic;
+
     public ArenaPanel(Game game, GameState gs, Arena arena, ActionsPanel da, Player player, NotPlayableCharacter encounter) {
+        loadRessources();
         this.da = da;
         this.arena = arena;
         this.keyHandler = game.getKeyH();
@@ -50,7 +55,10 @@ public class ArenaPanel extends JPanel {
         this.game = game;
         this.launchFightAnimationDuration = 1;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        loadRessources();
+        fightMusics[0] = new AudioManager("fight/music", "fight1.wav");
+        fightMusics[1] = new AudioManager("fight/music", "fight2.wav");
+        fightMusic = fightMusics[new Random().nextInt(2)];
+        fightMusic.playSound();
 
     }
 
@@ -131,6 +139,8 @@ public class ArenaPanel extends JPanel {
     public void quitArena(Entity looser) {
         if (initAnimation == 0) {
             initAnimation = System.currentTimeMillis();
+            fightMusic.stopSoundFadeOut();
+            game.getGp().getWorldPanel().getWorldMusic().playSound();
         }
         currentTime = System.currentTimeMillis();
         if (currentTime >= initAnimation + 2500) {

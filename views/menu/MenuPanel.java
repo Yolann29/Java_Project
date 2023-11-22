@@ -1,9 +1,10 @@
 package views.menu;
 
+import controller.Game;
 import controller.entities.Player;
+import controller.manager.AudioManager;
 import models.Role;
 import models.fighters.Warrior;
-import models.types.Type;
 import models.weapons.FireSword;
 import views.GamePanel;
 import views.WorldPanel;
@@ -24,6 +25,7 @@ import java.util.Objects;
 
 public class MenuPanel extends HoverPanel {
 
+    private Game game;
     private WarriorPanel warriorPanel;
     private ArcherPanel archerPanel;
     private MagePanel magePanel;
@@ -37,16 +39,20 @@ public class MenuPanel extends HoverPanel {
     public static boolean archerPicked;
     private boolean changeMenu;
 
-    public MenuPanel(GamePanel gp) {
+    public MenuPanel(GamePanel gp, Game game) {
+        loadRessources();
+        this.game = game;
         this.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
 
-        loadRessources();
-
         this.warriorPanel = new WarriorPanel();
         this.archerPanel = new ArcherPanel();
         this.magePanel = new MagePanel();
+
+        AudioManager music = new AudioManager("menu","mainMenu.wav");
+        music.playSound();
+        music.setVolume(-5);
 
         JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new GridLayout(1, 2, 10, 10));
@@ -64,6 +70,7 @@ public class MenuPanel extends HoverPanel {
 
         play.addActionListener(e1 -> {
             System.out.println("Menu -> Play button clicked");
+            music.stopSoundFadeOut();
             gp.removeAll();
             Player player = new Player(gp.getGame(), gp.getGame().getKeyH(), classePlayer);
             String name = nameInput.getText();

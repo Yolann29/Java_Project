@@ -2,6 +2,7 @@ package controller.entities;
 
 import controller.Game;
 import controller.Main;
+import controller.manager.AudioManager;
 import controller.manager.FighterClasseManager;
 import models.Action;
 import models.Pattern;
@@ -12,6 +13,7 @@ import views.GamePanel;
 
 import java.awt.*;
 import java.util.Objects;
+import java.util.Random;
 
 public class NotPlayableCharacter extends Entity {
 
@@ -24,6 +26,13 @@ public class NotPlayableCharacter extends Entity {
     final private int positionX;
     final private int positionY;
 
+    //CAT ATTRIBUTES
+    final private AudioManager[] meows = new AudioManager[2];
+    final private Random r = new Random();
+    private boolean hasMeow = false;
+
+    private int meowChoice = 0;
+
     public NotPlayableCharacter(Game game, int positionX, int positionY, int speed, Pattern movement, Role classe) {
         this.game = game;
         this.movement = movement;
@@ -31,6 +40,10 @@ public class NotPlayableCharacter extends Entity {
         this.positionX = positionX;
         this.positionY = positionY;
         setDefault(positionX, positionY, speed);
+        meows[0] = new AudioManager("cats","meow1.wav");
+        meows[1] = new AudioManager("cats","meow2.wav");
+//        meows[2] = new AudioManager("cats","meow3.wav");
+
     }
 
     public void setDefault(int positionX, int positionY, int speed) {
@@ -43,6 +56,20 @@ public class NotPlayableCharacter extends Entity {
 
     public void update() {
         if (isDead) return;
+
+        //MIAULEMENT DU CHAT
+        if(this.classe == Role.CAT_BLACK || this.classe == Role.CAT_GRAY || this.classe == Role.CAT_ORANGE){
+            int random = r.nextInt(600);
+            if(!meows[meowChoice].getClip().isActive()){
+                hasMeow = false;
+            }
+            if(random == 1){
+                meowChoice = r.nextInt(meows.length);
+                hasMeow = true;
+                meows[meowChoice].playSound();
+            }
+        }
+
         switch (movement) {
             case CIRCLE:
                 if (Main.imageCount <= 50 && Main.imageCount > 0) {
@@ -273,6 +300,14 @@ public class NotPlayableCharacter extends Entity {
     }
     public void drawInfoBar(Graphics2D g2, int x, int y){
         if(this.classe == Role.CAT_GRAY || this.classe == Role.CAT_ORANGE || this.classe == Role.CAT_BLACK){
+            if(hasMeow){
+                if(this.classe == Role.CAT_BLACK) g2.setColor(Color.BLACK);
+                else if(this.classe == Role.CAT_GRAY) g2.setColor(Color.GRAY);
+                else g2.setColor(Color.ORANGE);
+                g2.setFont(GamePanel.gloucester.deriveFont(14f));
+                g2.drawString("Meooww", x - 10, y - 10);
+
+            }
             return;
         }
 

@@ -14,7 +14,10 @@ import models.weapons.IceSword;
 import models.weapons.Weapon;
 import views.GamePanel;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Game {
@@ -60,6 +63,7 @@ public class Game {
             arena.update();
         }
     }
+
 
     public Player getPlayer(){
         return this.player;

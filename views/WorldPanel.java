@@ -6,6 +6,7 @@ import controller.entities.Entity;
 import controller.entities.NotPlayableCharacter;
 import controller.entities.Player;
 import controller.handler.KeyHandler;
+import controller.manager.AudioManager;
 import controller.manager.TileManager;
 import models.Pattern;
 import models.Role;
@@ -37,17 +38,22 @@ public class WorldPanel extends JPanel {
     public static ArrayList<NotPlayableCharacter> npcs = new ArrayList<>();
     int npcExperience = 1;
 
+    private AudioManager worldMusic;
+
     public WorldPanel(GameState gs, GamePanel gamePanel, KeyHandler keyHandler, Player player, Game game) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
         this.player = player;
         this.gs = gs;
         this.game = game;
+        worldMusic = new AudioManager("world/music", "worldmusic1.wav");
+        worldMusic.playSound();
+        worldMusic.setVolume(-8);
 
         //FIGHTERS
         createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, new ElectricGauntlet(), false);
         createNPC(7, 14, 6, Pattern.SCARED, Role.ARCHER, new Lasso(), false);
-        createNPC(10, 5, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, new IceSword(), false);
+        createNPC(14, 6, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, new Lasso(), false);
         createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN,new IceSword(), false);
         createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, new GroundSpear(), false);
         createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, new ElectricGauntlet(), false);
@@ -131,6 +137,7 @@ public class WorldPanel extends JPanel {
             if(launchFightAnimationDuration == 0){
                 launchFightAnimationDuration = 1;
                 game.setFightTransition(true);
+                worldMusic.stopSound();
             }
 
             return true;
@@ -211,5 +218,9 @@ public class WorldPanel extends JPanel {
 
         }
         g2.dispose();
+    }
+
+    public AudioManager getWorldMusic() {
+        return worldMusic;
     }
 }

@@ -46,7 +46,7 @@ public class GamePanel extends JPanel{
             e.printStackTrace();
         }
 
-        this.menuPanel = new MenuPanel(this);
+        this.menuPanel = new MenuPanel(this, game);
         this.merchantShop = new MerchantShop(this, game);
         this.game = game;
         this.gs = gs;

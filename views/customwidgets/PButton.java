@@ -1,25 +1,64 @@
 package views.customwidgets;
 
+import controller.manager.AudioManager;
 import views.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.InputStream;
 
 public class PButton extends JButton {
 
     Color dialogColor = new Color(13, 81, 96);
-    Color color;
+
+    PButton pbutton;
 
     public PButton(String text){
         super(text);
+        this.pbutton = this;
         this.setPreferredSize(new Dimension(120, 60));
         this.setBackground(new Color(0,0,0,0));
         this.setForeground(Color.WHITE);
         this.setFocusPainted(false);
         this.setFont(GamePanel.gloucester.deriveFont(10F));
+        AudioManager hoverBtnSound = new AudioManager("widgets","hoverButton.wav");
+        AudioManager clickBtnSound = new AudioManager("widgets","clickButton.wav");
+//        hoverBtnSound.setVolume(-10);
+//        clickBtnSound.setVolume(-10);
+
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(pbutton.isEnabled()) clickBtnSound.playSound();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(pbutton.isEnabled()) hoverBtnSound.playSound();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+
+        });
 
     }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {

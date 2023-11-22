@@ -2,7 +2,11 @@ package controller;
 
 import controller.handler.KeyHandler;
 import views.GamePanel;
+
+import javax.sound.sampled.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Main implements Runnable{
 
@@ -54,4 +58,5 @@ public class Main implements Runnable{
             }
         }
     }
+
 }
