@@ -1,8 +1,8 @@
-public class ComparisonFailureTests extends Exception {
+public class ComparisonFailure extends Exception {
     private final Object expected;
     private final Object actual;
 
-    public ComparisonFailureTests(String message, Object expected, Object actual) {
+    public ComparisonFailure(String message, Object expected, Object actual) {
         super(message);
         this.expected = expected;
         this.actual = actual;
