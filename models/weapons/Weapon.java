@@ -1,9 +1,10 @@
 package models.weapons;
 import models.types.Type;
-import models.weapons.attacks.Attack;
+import models.weapons.attacks.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +16,18 @@ public abstract class Weapon {
     protected int damage;
     protected int initialDamage;
     protected int level;
+
+    private List<Attack> availableWeaponAttacks = new ArrayList<>(Arrays.asList(
+            new Eclipse(),
+            new Explose(),
+            new Fireball(),
+            new Nebula(),
+            new Stellar(),
+            new Strike(),
+            new Tornado(),
+            new Ultima(),
+            new Wave()
+    ));
     protected Attack[] weaponAttacks;
     protected int numberAttacks;
 
@@ -25,43 +38,37 @@ public abstract class Weapon {
         this.initialDamage = damage;
         this.level = level;
         this.weaponAttacks = new Attack[4];
+
         this.numberAttacks = Math.min(numberAttacks, 4);
 
-        List<Class<?>> allAttacks = getAllAttacks();
         Random random = new Random();
-
-        try {
-            int index;
-            for (int i = 0; i < numberAttacks; i++) {
-                index = random.nextInt(allAttacks.size());
-                Class<?> attackClass = allAttacks.get(index);
-                allAttacks.remove(index);
-                this.weaponAttacks[i] = (Attack) attackClass.getDeclaredConstructor().newInstance();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        int index;
+        for (int i = 0; i < numberAttacks; i++) {
+            index = random.nextInt(availableWeaponAttacks.size());
+            this.weaponAttacks[i] = availableWeaponAttacks.get(index);
+            availableWeaponAttacks.remove(index);
         }
     }
 
-    public static List<Class<?>> getAllAttacks() {
-        List<Class<?>> allAttacks = new ArrayList<>();
-
-        String packageName = Attack.class.getPackage().getName();
-        String packagePath = packageName.replace('.', '/');
-        String[] subClasses = new File(packagePath).list();
-
-        for (String subClass : subClasses) {
-            try {
-                Class<?> sub = Class.forName(packageName + "." + subClass.replace(".java", ""));
-                if (Attack.class.isAssignableFrom(sub) && !sub.equals(Attack.class)) {
-                    allAttacks.add(sub);
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return allAttacks;
-    }
+//    public static List<Class<?>> getAllAttacks() {
+//        List<Class<?>> allAttacks = new ArrayList<>();
+//
+//        String packageName = Attack.class.getPackage().getName();
+//        String packagePath = packageName.replace('.', '/');
+//        String[] subClasses = new File(packagePath).list();
+//
+//        for (String subClass : subClasses) {
+//            try {
+//                Class<?> sub = Class.forName(packageName + "." + subClass.replace(".java", ""));
+//                if (Attack.class.isAssignableFrom(sub) && !sub.equals(Attack.class)) {
+//                    allAttacks.add(sub);
+//                }
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return allAttacks;
+//    }
 
 
     public void boostDamage(int damage){

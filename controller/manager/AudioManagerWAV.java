@@ -1,7 +1,9 @@
 package controller.manager;
 
 import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.util.Objects;
 
 public class AudioManagerWAV {
 
@@ -15,7 +17,7 @@ public class AudioManagerWAV {
     public void setSoundFile(String folderName, String fileName) {
         String path = "/ressources/sounds/" + folderName + "/" + fileName;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(path));
+            audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Objects.requireNonNull(this.getClass().getResourceAsStream(path))));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (Exception e){
