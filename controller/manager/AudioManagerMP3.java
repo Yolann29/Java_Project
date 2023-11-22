@@ -48,7 +48,6 @@ public class AudioManagerMP3 {
             float step = audioDevice.getVolume() / 10;
             for (int i = 0; i < 10; i++) {
                 audioDevice.setVolume(audioDevice.getVolume() - step);
-                System.out.println("Volume : " + audioDevice.getVolume());
                 try {
                     Thread.sleep((long) (time * 100));
                 } catch (InterruptedException e) {
