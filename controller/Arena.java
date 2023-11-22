@@ -38,7 +38,7 @@ public class Arena {
         if (attack != null && attacker.getWalkingTime() == 0) {
             this.attacker.setWalkingTime(System.currentTimeMillis());
             this.textPane.setTextWithTypingEffect(String.format("%s use %s on %s! \nTotal damage : " + (attacker.getLevel() + attacker.getWeapon().getDamage() + attack.getDamage()), attacker.getName(), attack.getName(), target.getName()));
-            System.out.println(String.format("%s use %s on %s! Total damage : " + (attacker.getLevel() + attacker.getWeapon().getDamage() + attack.getDamage()), attacker.getName(), attack.getName(), target.getName()));
+            System.out.println(String.format("Arena -> %s use %s on %s! Total damage : " + (attacker.getLevel() + attacker.getWeapon().getDamage() + attack.getDamage()), attacker.getName(), attack.getName(), target.getName()));
 
         }
     }
@@ -46,6 +46,11 @@ public class Arena {
     public void applyAttack(Graphics g2){
         if(attack != null){
             if(attacker.attack(target, attack)){
+                System.out.println(String.format("Arena -> %s HP %s/%s", target.getName(), target.getHp(), target.getMaxHp()));
+                if(target.getHp() < 1){
+                    System.out.println(String.format("Arena -> %s is dead!", target.getName()));
+                    System.out.println(String.format("Arena -> %s won!", attacker.getName()));
+                }
                 this.target = null;
                 this.attack = null;
             }
@@ -55,7 +60,8 @@ public class Arena {
 
     public void switchTurn(){
         this.isYourTurn = !this.isYourTurn;
-        if(isYourTurn){
+        if(isYourTurn && !this.fighter1.isDead()){
+            System.out.println("Arena -> Your turn!");
             this.textPane.setTextWithTypingEffect("Your turn!");
         }
         this.attacker = null;

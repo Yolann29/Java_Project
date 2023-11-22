@@ -53,9 +53,11 @@ public class ActionsPanel extends JPanel {
         cancel = new PButton("> Return");
         cancel.setPreferredSize(new Dimension(120, 35));
         cancel.setBackground(Color.RED.darker());
+        System.out.println("Arena -> Your turn!");
         textPane = new PTextPane("Your turn !", arena);
 
         cancel.addActionListener(e1 -> {
+            System.out.println("Arena -> Your turn ! ");
             textPane.setTextWithTypingEffect("Your turn !");
             returnPannel.remove(cancel);
             buttonsPannel.removeAll();
@@ -76,6 +78,7 @@ public class ActionsPanel extends JPanel {
         //ATTACK BUTTON
         attack.addActionListener(e -> {
 
+            System.out.println("Arena -> Choose your attack !");
             textPane.setTextWithTypingEffect("Choose your attack !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
@@ -102,6 +105,7 @@ public class ActionsPanel extends JPanel {
 
         //ITEMS BUTTON
         items.addActionListener(e -> {
+            System.out.println("Arena -> Choose your item !");
             textPane.setTextWithTypingEffect("Choose your item !");
             buttonsPannel.remove(attack);
             buttonsPannel.remove(items);
@@ -114,6 +118,7 @@ public class ActionsPanel extends JPanel {
                 itemButton.addActionListener(e1 -> {
                     arena.getFighter1().useItem(item);
                     this.setInteraction(false);
+                    System.out.println(String.format("Arena -> %s used %s!", arena.getFighter1().getName(), item.getName()));
                     textPane.setTextWithTypingEffect(String.format("%s used %s!", arena.getFighter1().getName(), item.getName()));
                     returnPannel.remove(cancel);
                     buttonsPannel.removeAll();

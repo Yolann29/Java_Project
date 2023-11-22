@@ -40,9 +40,9 @@ public abstract class Fighter {
 
     public void pickWeapon(Weapon weapon) {
         if(this.weapon == null){
-            System.out.println(String.format("%s picked %s", this.name, weapon.getName()));
+            System.out.println(String.format("Fighter -> %s picked %s", this.name, weapon.getName()));
         } else {
-            System.out.println(String.format("%s replaced his %s by %s", this.name, this.weapon.getName(), weapon.getName()));
+            System.out.println(String.format("Fighter -> %s replaced his %s by %s", this.name, this.weapon.getName(), weapon.getName()));
         }
         this.weapon = weapon;
 
@@ -169,9 +169,8 @@ public abstract class Fighter {
         this.experience += amount;
     }
 
-    public void restoreHpMax() {
-        System.out.println(this.getLevel() * 10 + 100);
-        System.out.println("maxHp" + this.maxHp + " hp" + this.hp);
+    public void restoreHpMax() {;
+//        System.out.println("Fighter -> MaxHP: " + this.maxHp + ", HP: " + this.hp);
         this.maxHp = this.getLevel() * 10 + 100;
         this.hp = maxHp;
     }

@@ -88,6 +88,7 @@ public class GamePanel extends JPanel{
 
     public void openMerchantShop(){
         if(isNotPanelAdded(this, merchantShop)){
+            System.out.println("World -> Open merchant shop");
             this.add(merchantShop, BorderLayout.SOUTH);
             this.revalidate();
         }
@@ -95,8 +96,11 @@ public class GamePanel extends JPanel{
     }
 
     public void closeMerchantShop(){
-        this.remove(merchantShop);
-        this.revalidate();
+        if(!isNotPanelAdded(this,merchantShop)) {
+            System.out.println("World -> Close merchant shop");
+            this.remove(merchantShop);
+            this.revalidate();
+        }
     }
 
     public void paintComponent(Graphics g){

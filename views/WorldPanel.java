@@ -73,7 +73,7 @@ public class WorldPanel extends JPanel {
         if(isMerchant){
             npc.fighter = new Merchant("Marchand");
         } else {
-            npcExperience += 16;
+            npcExperience += 17;
             npc.fighter = new Warrior(className.getName(), type, Math.max(100,new Random().nextInt((int) Math.pow(npcExperience, 2))));
         }
         if (weapon != null) {

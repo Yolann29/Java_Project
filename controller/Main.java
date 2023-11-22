@@ -33,7 +33,7 @@ public class Main implements Runnable{
 
         imageCount = 0;
 
-        System.out.println("start run");
+        System.out.println("Main -> Start Game Loop");
         while(gameLoop != null){
 
             if (!game.getKeyH().pause) {
