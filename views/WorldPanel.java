@@ -45,14 +45,22 @@ public class WorldPanel extends JPanel {
         this.game = game;
         worldMusic.playSound(0.5f);
 
+        Weapon[] weapons = {
+                new ElectricGauntlet(),
+                new FireSword(),
+                new GroundSpear(),
+                new IceSword(),
+                new Lasso(),
+        };
+
         //FIGHTERS
-        createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, new ElectricGauntlet(), false);
-        createNPC(7, 14, 6, Pattern.SCARED, Role.ARCHER, new Lasso(), false);
-        createNPC(14, 6, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, new Lasso(), false);
-        createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN,new IceSword(), false);
-        createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, new GroundSpear(), false);
-        createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, new ElectricGauntlet(), false);
-        createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, new IceSword(), false);
+        createNPC(15, 11, 4, Pattern.CIRCLE, Role.VAGRANT, weapons[new Random().nextInt(weapons.length)], false);
+        createNPC(7, 14, 6, Pattern.SCARED, Role.ARCHER, weapons[new Random().nextInt(weapons.length)], false);
+        createNPC(14, 6, 3, Pattern.LEFT_RIGHT, Role.MAGICIAN, weapons[new Random().nextInt(weapons.length)], false);
+        createNPC(18, 1, 4, Pattern.SLOW_PURSUER, Role.MAGICIAN,weapons[new Random().nextInt(weapons.length)], false);
+        createNPC(22, 14, 5, Pattern.SCARED, Role.WARRIOR, weapons[new Random().nextInt(weapons.length)], false);
+        createNPC(27, 11, 10, Pattern.FAST_PURSUER, Role.WARRIOR, weapons[new Random().nextInt(weapons.length)], false);
+        createNPC(36, 7, 4, Pattern.LEFT_RIGHT, Role.ARCHER, weapons[new Random().nextInt(weapons.length)], false);
 
         //PETS
         createNPC(9, 9, 6, Pattern.SCARED, Role.CAT_BLACK, new GroundSpear(), false);
@@ -74,7 +82,7 @@ public class WorldPanel extends JPanel {
         if(isMerchant){
             npc.fighter = new Merchant("Marchand");
         } else {
-            npcExperience += 17;
+            npcExperience += 18;
             npc.fighter = new Warrior(className.getName(), Math.max(100,new Random().nextInt((int) Math.pow(npcExperience, 2))));
         }
         if (weapon != null) {
