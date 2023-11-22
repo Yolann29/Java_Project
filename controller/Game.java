@@ -30,7 +30,6 @@ public class Game {
     private Arena arena;
     private Player player;
     public NotPlayableCharacter encounter;
-    public Fighter encounterFighter;
 
     public Game(){
 
@@ -42,19 +41,7 @@ public class Game {
         window.setResizable(false);
         window.setIgnoreRepaint(true);
 
-        encounterFighter = new Warrior("First Encounter", Type.WATER, new Random().nextInt(10) + 1);
-        Weapon firesword = new FireSword();
-        Weapon icesword = new IceSword();
-        encounterFighter.pickWeapon(icesword);
-
-        this.player = new Player(this, keyH, Role.WARRIOR);
-        player.fighter = new Warrior("Nathan", Type.FIRE, 50);
-        player.fighter.pickWeapon(firesword);
-
-        this.encounter = new NotPlayableCharacter(this, 0,0, 0, Pattern.LEFT_RIGHT, Role.VAGRANT);
-        this.encounter.fighter = encounterFighter;
-        this.arena = new Arena(player.fighter, encounterFighter);
-        this.gp = new GamePanel(gs, keyH, arena, player, encounter, this);
+        this.gp = new GamePanel(gs, keyH, this);
 
         window.add(gp);
         window.pack();
@@ -63,16 +50,23 @@ public class Game {
     }
 
     public void update(){
-        if (gs.getOverWorld() && !fightTransition) {
+        if (gs.getMenu()) {
+            gp.getMenuPanel().update();
+
+        } else if (gs.getOverWorld() && !fightTransition) {
             gp.getWorldPanel().update();
-        } else {
+
+        } else if (arena != null) {
             arena.update();
         }
-
     }
 
     public Player getPlayer(){
         return this.player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Collision getCollision() {
@@ -99,6 +93,10 @@ public class Game {
         return keyH;
     }
 
+    public GameState getGs() {
+        return gs;
+    }
+
     public GamePanel getGp() {
         return gp;
     }
@@ -109,6 +107,10 @@ public class Game {
 
     public void setFightTransition(boolean fightTransition) {
         this.fightTransition = fightTransition;
+    }
+
+    public JFrame getWindow() {
+        return window;
     }
 }
 

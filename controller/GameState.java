@@ -3,6 +3,7 @@ package controller;
 public class GameState {
 
     private boolean overWorld = true;
+    private boolean menu = true;
     public GameState(){
 
     }
@@ -13,5 +14,13 @@ public class GameState {
 
     public boolean getOverWorld(){
         return overWorld;
+    }
+
+    public void setMenu(boolean menu) {
+        this.menu = menu;
+    }
+
+    public boolean getMenu() {
+        return menu;
     }
 }
