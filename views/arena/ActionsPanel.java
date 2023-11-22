@@ -18,11 +18,11 @@ public class ActionsPanel extends JPanel {
 
     private double launchFightAnimationDuration = 0;
     private Image texture;
-    private PButton attack;
-    private PButton items;
-    private PButton cancel;
+    private final PButton attack;
+    private final PButton items;
+    private final PButton cancel;
 
-    private JPanel buttonsPannel;
+    private final JPanel buttonsPannel;
     PTextPane textPane;
 
     public ActionsPanel(Arena arena){
