@@ -1,4 +1,5 @@
 package models.fighters;
+
 import models.types.Type;
 
 public class Warrior extends Fighter {

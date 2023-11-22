@@ -3,8 +3,6 @@ package views;
 import controller.Arena;
 import controller.Game;
 import controller.GameState;
-import controller.entities.NotPlayableCharacter;
-import controller.entities.Player;
 import controller.handler.KeyHandler;
 import views.arena.ActionsPanel;
 import views.arena.ArenaPanel;
@@ -18,8 +16,6 @@ import java.io.InputStream;
 public class GamePanel extends JPanel{
 
     final public static int tileSize = 64;
-    final public static int columns = 23; //736
-    final public static int rows = 18; //576
     final public static int worldColumns = 38;
     final public static int worldRows = 17;
     final public static int worldWidth = worldColumns * tileSize;
@@ -31,11 +27,11 @@ public class GamePanel extends JPanel{
     public static Font gloucester;
     public WorldPanel worldPanel;
     public MenuPanel menuPanel;
-    private MerchantShop merchantShop;
+    private final MerchantShop merchantShop;
     private ArenaPanel arenaPanel;
     private ActionsPanel actionsPanel;
-    private Game game;
-    private GameState gs;
+    private final Game game;
+    private final GameState gs;
 
     public GamePanel(GameState gs, KeyHandler keyH, Game game) {
 

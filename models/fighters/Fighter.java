@@ -1,4 +1,5 @@
 package models.fighters;
+
 import models.items.DamageBooster;
 import models.items.HealPotion;
 import models.types.Type;
@@ -8,7 +9,6 @@ import models.weapons.attacks.Attack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class Fighter {
     protected String name;
@@ -18,7 +18,6 @@ public abstract class Fighter {
     protected int defense;
     protected Weapon weapon;
     protected ArrayList<Item> items;
-//    protected int level = 1;
     protected int experience = 1;
     protected long walkingTime = 0;
     protected long damageTime = 0;
@@ -48,44 +47,12 @@ public abstract class Fighter {
 
     }
 
-    public void pickItem(Item item){
-        this.items.add(item);
-        System.out.println(String.format("%s picked %s", this.name, item.getName()));
-    }
-
-    public void pickItems(List<Item> items){
-        for (Item item : items) {
-            this.pickItem(item);
-        }
-    }
-
-    public Item item(int index){
-        if(index >= this.items.size()){
-            return null;
-        }
-        return this.items.get(index);
-    }
-
-    public Item item(Item item){
-        if(this.items.contains(item)){
-            return item;
-        }
-        return null;
-    }
-
     public void useItem(Item item){
         if(this.items.contains(item)){
             this.items.remove(item);
             ItemEffection(item);
             this.setUsingItem(true);
         }
-    }
-
-    public void useItem(int index){
-        Item item = this.item(index);
-        this.getItems().remove(index);
-        ItemEffection(item);
-        this.setUsingItem(true);
     }
 
     private void ItemEffection(Item item) {
@@ -135,10 +102,6 @@ public abstract class Fighter {
 
     public int getLevel() {
         return (int) Math.floor(Math.sqrt(experience) / 10 * 2);
-    }
-
-    public int getExperience() {
-        return experience;
     }
 
     public long getWalkingTime() {

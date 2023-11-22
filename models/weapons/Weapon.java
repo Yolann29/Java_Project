@@ -25,10 +25,7 @@ public abstract class Weapon {
         this.initialDamage = damage;
         this.level = level;
         this.weaponAttacks = new Attack[4];
-        this.numberAttacks = numberAttacks;
-        if (numberAttacks > 4) {
-            this.numberAttacks = 4;
-        }
+        this.numberAttacks = Math.min(numberAttacks, 4);
 
         List<Class<?>> allAttacks = getAllAttacks();
         Random random = new Random();
@@ -93,21 +90,6 @@ public abstract class Weapon {
 
     public Attack[] getWeaponAttacks() {
         return weaponAttacks;
-    }
-
-
-    public Attack[] getAttack(Attack attack) {
-        return weaponAttacks;
-    }
-
-    public String[] getNameAttacks() {
-        String[] attackNames = new String[weaponAttacks.length];
-        for (int i = 0; i < weaponAttacks.length; i++) {
-            if (weaponAttacks[i] != null) {
-                attackNames[i] = weaponAttacks[i].getName();
-            }
-        }
-        return attackNames;
     }
 
     public int getNumberAttacks() {

@@ -1,10 +1,14 @@
+import java.io.OutputStream;
+import java.io.PrintStream;
 
-public class Assert {
+public class Assert2 {
+
     private static final String green = "\u001B[32m";
     private static final String reset = "\u001B[0m";
-
-    protected Assert() {
-    }
+    public static PrintStream originalOut = System.out;
+    public static PrintStream newOut = new PrintStream(new OutputStream() {
+        public void write(int b) {}
+    });
 
     private static boolean isEquals(Object expected, Object actual) {
         return expected.equals(actual);
@@ -22,10 +26,10 @@ public class Assert {
         if (!equalsRegardingNull(expected, actual)) {
             if (expected instanceof String && actual instanceof String) {
                 String cleanMessage = message == null ? "" : message;
-                throw new ComparisonFailure(cleanMessage, (String)expected, (String)actual);
+                throw new ComparisonFailure(cleanMessage, expected, actual);
             } else if (expected instanceof Integer && actual instanceof Integer) {
                 String cleanMessage = message == null ? "" : message;
-                throw new ComparisonFailure(cleanMessage, (Integer)expected, (Integer)actual);
+                throw new ComparisonFailure(cleanMessage, expected, actual);
             } else {
                 String expectedString = String.valueOf(expected);
                 String actualString = String.valueOf(actual);
@@ -33,11 +37,13 @@ public class Assert {
                 throw new ComparisonFailure(cleanMessage, expectedString, actualString);
             }
         }
-        Output.update("<span style=\"color: green;\">Test passed!</span>");
+        System.setOut(originalOut);
+        System.out.println(green + "Test passed!" + reset);
+        System.setOut(newOut);
     }
 
     public static void assertEquals(Object expected, Object actual) throws ComparisonFailure {
-        assertEquals((String)null, (Object)expected, (Object)actual);
+        assertEquals(null, expected, actual);
     }
 
     public static void assertEqual(String message, Object expected, Object actual) {

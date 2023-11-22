@@ -1,10 +1,8 @@
-public class ComparisonFailure extends Exception {
-    private Object expected;
-    private Object actual;
-    private final String reset = "\u001B[0m";
-    private final String red = "\u001B[31m";
+public class ComparisonFailureTests extends Exception {
+    private final Object expected;
+    private final Object actual;
 
-    public ComparisonFailure(String message, Object expected, Object actual) {
+    public ComparisonFailureTests(String message, Object expected, Object actual) {
         super(message);
         this.expected = expected;
         this.actual = actual;
@@ -16,6 +14,10 @@ public class ComparisonFailure extends Exception {
     }
 
     public void message() {
-        Output.update("<span style=\"color: red;\">this.getMessage()</span>");
+        System.setOut(AssertTests.originalOut);
+        String reset = "\u001B[0m";
+        String red = "\u001B[31m";
+        System.out.println(red + this.getMessage() + reset);
+        System.setOut(AssertTests.newOut);
     }
 }

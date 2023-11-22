@@ -10,9 +10,9 @@ public enum Type {
     ELECTRICITY("Elec", "Ground", new Color(220, 207, 0));
 
 
-    private String name;
-    private String weakness;
-    private Color color;
+    private final String name;
+    private final String weakness;
+    private final Color color;
 
     Type(String name, String weakness, Color color) {
         this.name = name;
