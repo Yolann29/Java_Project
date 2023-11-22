@@ -25,10 +25,7 @@ public abstract class Weapon {
         this.initialDamage = damage;
         this.level = level;
         this.weaponAttacks = new Attack[4];
-        this.numberAttacks = numberAttacks;
-        if (numberAttacks > 4) {
-            this.numberAttacks = 4;
-        }
+        this.numberAttacks = Math.min(numberAttacks, 4);
 
         List<Class<?>> allAttacks = getAllAttacks();
         Random random = new Random();

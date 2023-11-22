@@ -1,7 +1,7 @@
 package models.weapons.attacks;
 
-public class Explosion extends Attack{
-    public Explosion() {
+public class Explose extends Attack{
+    public Explose() {
         super("Explose", 15);
     }
 }
