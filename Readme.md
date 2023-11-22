@@ -1,5 +1,6 @@
 # Tales of Conqueror ⚔️
 
+![Screenshot of our Home on Joboard](ressources/textures/menu/logo.png)
 ## Introduction 📖
 This project aims to realise a 2D Game to put our OOP principles into practice.
 We can move our game in any direction we want. <br>
