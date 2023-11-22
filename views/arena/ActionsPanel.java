@@ -16,11 +16,8 @@ import java.util.Objects;
 
 public class ActionsPanel extends JPanel {
 
-    private Color dialogColor = new Color(40, 79, 104);
-
     private double launchFightAnimationDuration = 0;
     private Image texture;
-    private Arena arena;
     private PButton attack;
     private PButton items;
     private PButton cancel;
@@ -30,7 +27,6 @@ public class ActionsPanel extends JPanel {
 
     public ActionsPanel(Arena arena){
         loadRessources();
-        this.arena = arena;
         this.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, 150));
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.setBackground(new Color(141, 141, 141,255));
