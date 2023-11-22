@@ -24,7 +24,6 @@ import java.util.Objects;
 
 public class MenuPanel extends HoverPanel {
 
-    private GamePanel gp;
     private WarriorPanel warriorPanel;
     private ArcherPanel archerPanel;
     private MagePanel magePanel;
@@ -39,7 +38,6 @@ public class MenuPanel extends HoverPanel {
     private boolean changeMenu;
 
     public MenuPanel(GamePanel gp) {
-        this.gp = gp;
         this.setPreferredSize(new Dimension(GamePanel.FRAME_WIDTH, GamePanel.FRAME_HEIGHT));
         this.setDoubleBuffered(true);
         this.setLayout(new BorderLayout());
@@ -68,7 +66,7 @@ public class MenuPanel extends HoverPanel {
             gp.removeAll();
             Player player = new Player(gp.getGame(), gp.getGame().getKeyH(), classePlayer);
             String name = nameInput.getText();
-            if (nameInput.getText().length() > 12) name = nameInput.getText().substring(0,12);
+            if (nameInput.getText().length() > 10) name = nameInput.getText().substring(0,10);
             if (nameInput.getText().isEmpty()) name = "YOU";
             player.fighter = new Warrior(name, Type.FIRE, 50);
             player.fighter.pickWeapon(new FireSword());

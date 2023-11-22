@@ -13,8 +13,10 @@ import models.fighters.Merchant;
 import models.fighters.Warrior;
 import models.types.Type;
 import models.weapons.*;
+import views.customwidgets.PButton;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -78,7 +80,6 @@ public class WorldPanel extends JPanel {
             fightersNpc.add(npc);
         }
         npcs.add(npc);
-
     }
 
     public void update() {
@@ -105,7 +106,6 @@ public class WorldPanel extends JPanel {
         }
     }
 
-
     public boolean distanceBetween(NotPlayableCharacter npc){
         if (player.getWorldX() < (npc.getWorldX() + GamePanel.tileSize) && player.getWorldX() > (npc.getWorldX() - GamePanel.tileSize) && player.getWorldY() < (npc.getWorldY() + GamePanel.tileSize) && player.getWorldY() > (npc.getWorldY() - GamePanel.tileSize) && !npc.isDead && !player.isDead) {
 
@@ -123,7 +123,6 @@ public class WorldPanel extends JPanel {
             npcEncounter = npc;
             game.getGp().switchToArena();
             return true;
-
         }
 
         return false;
@@ -178,7 +177,6 @@ public class WorldPanel extends JPanel {
                     g2.setColor(Color.GREEN.darker());
                     g2.setFont(new Font("Courier", Font.BOLD, 64));
                     g2.drawString("You won !", GamePanel.FRAME_WIDTH/2 - 128, GamePanel.FRAME_HEIGHT/2 - 32);
-
                 }
                 player.draw(g2);
             }
