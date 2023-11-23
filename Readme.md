@@ -1,4 +1,4 @@
-# Tales of Conqueror ⚔️
+# Tales of Conqueror (T-JAV-501) ⚔️
 
 ![Screenshot of our Home on Joboard](ressources/textures/menu/logo.png)
 ## Introduction 📖
