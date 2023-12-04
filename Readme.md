@@ -29,7 +29,7 @@ The game has been created with Javaswing and must respect the MVC architecture a
 ![Screenshot of our Home on Joboard](ressources/screenshots/character_selection_menu.png)
 
 
-<br>Display of our fight panel.<br>
+<br>Display of our world panel.<br>
 
 ![Screenshot of our Home on Joboard](ressources/screenshots/worldpanel.png)
 
