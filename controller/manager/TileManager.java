@@ -88,7 +88,7 @@ public class TileManager {
 
             tiles[12] = new Tile();
             tiles[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/floor/floor-cobble.png")));
-            tiles[12].collision = true;
+            tiles[12].exterior = true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -155,6 +155,8 @@ public class TileManager {
                     row++;
                 }
             }
+            mapTileNum1[23][GamePanel.worldRows-1] = 12;
+            mapTileNum1[24][GamePanel.worldRows-1] = 12;
             mapTileNum2 = mapTileNum;
             bufferedReader.close();
         } catch (Exception e) {

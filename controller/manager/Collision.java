@@ -32,6 +32,9 @@ public class Collision {
                 if (TileManager.tiles[indexTileNordOuest].isDoor() || TileManager.tiles[indexTileNordEst].isDoor()) {
                     entity.doorHere = true;
                 }
+                if (TileManager.tiles[indexTileNordOuest].isExterior() || TileManager.tiles[indexTileNordEst].isExterior()) {
+                    entity.exteriorNear = true;
+                }
                 break;
             case DOWN:
                 bottomY = (solidAreaBottom + entity.getSpeed()) / GamePanel.tileSize;
@@ -42,6 +45,9 @@ public class Collision {
                 }
                 if (TileManager.tiles[indexTileSudOuest].isDoor() || TileManager.tiles[indexTileSudEst].isDoor()) {
                     entity.doorHere = true;
+                }
+                if (TileManager.tiles[indexTileSudOuest].isExterior() || TileManager.tiles[indexTileSudEst].isExterior()) {
+                    entity.exteriorNear = true;
                 }
                 break;
             case LEFT:
@@ -54,6 +60,9 @@ public class Collision {
                 if (TileManager.tiles[indexTileNordOuest].isDoor() || TileManager.tiles[indexTileSudOuest].isDoor()) {
                     entity.doorHere = true;
                 }
+                if (TileManager.tiles[indexTileNordOuest].isExterior() || TileManager.tiles[indexTileSudOuest].isExterior()) {
+                    entity.exteriorNear = true;
+                }
                 break;
             case RIGHT:
                 rightX = (solidAreaRight + entity.getSpeed()) / GamePanel.tileSize;
@@ -64,6 +73,9 @@ public class Collision {
                 }
                 if (TileManager.tiles[indexTileNordEst].isDoor() || TileManager.tiles[indexTileSudEst].isDoor()) {
                     entity.doorHere = true;
+                }
+                if (TileManager.tiles[indexTileNordEst].isExterior() || TileManager.tiles[indexTileSudEst].isExterior()) {
+                    entity.exteriorNear = true;
                 }
         }
     }

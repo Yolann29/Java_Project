@@ -7,6 +7,7 @@ public class Tile {
     protected BufferedImage image;
     protected boolean collision = false;
     protected boolean door = false;
+    protected boolean exterior = false;
 
     public boolean isCollision() {
         return collision;
@@ -15,4 +16,6 @@ public class Tile {
     public boolean isDoor() {
         return door;
     }
+
+    public boolean isExterior() { return exterior; }
 }

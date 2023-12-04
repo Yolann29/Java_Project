@@ -9,7 +9,7 @@ public class Entity {
     private int worldX, worldY, x, y, speed;
     private Action direction;
     protected boolean reversed;
-    public boolean collisionOn, doorHere, isDead = false;
+    public boolean collisionOn, doorHere, exteriorNear, isDead = false;
     protected Rectangle solidArea = new Rectangle(12, 40, 40, 24);
 
 

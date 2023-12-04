@@ -58,7 +58,7 @@ public class Player extends Entity {
             game.getCollision().checkTile(this);
             if (!collisionOn) {
                 if (doorHere) {
-                    switch(this.getDirection()) {
+                    switch (this.getDirection()) {
                         case UP:
                             this.setWorldY(this.getWorldY() - this.getSpeed());
                             break;
@@ -72,6 +72,23 @@ public class Player extends Entity {
                         case RIGHT:
                             changeMap = true;
                             this.setWorldX(this.getSpeed());
+                            break;
+                    }
+                } else if (exteriorNear) {
+                    switch(this.getDirection()) {
+                        case UP:
+                            changeMap = true;
+                            this.setWorldY(GamePanel.worldHeight - 65 - this.getSpeed());
+                            break;
+                        case DOWN:
+                            changeMap = true;
+                            this.setWorldY(this.getSpeed());
+                            break;
+                        case LEFT:
+                            this.setWorldX(this.getWorldX() - this.getSpeed());
+                            break;
+                        case RIGHT:
+                            this.setWorldX(this.getWorldX() + this.getSpeed());
                             break;
                     }
                 } else {
